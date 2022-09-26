@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
 }
+
 .constructor_element {
     display: flex;
     justify-content: flex-end;
@@ -19,13 +20,6 @@
     padding-left: 0;
     height: 590px;
     overflow-y: scroll;
-}
-
-.product {
-    padding-bottom: 16px;
-}
-.product:last-of-type {
-    padding-bottom: 0;
 }
 
 .layer_element {

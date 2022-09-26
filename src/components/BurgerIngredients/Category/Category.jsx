@@ -1,6 +1,7 @@
 import React from "react";
 import CategoryStyles from "./Category.module.css";
-import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 export default function Category({ cards, type, onClick }) {
     const types = {
@@ -25,6 +26,11 @@ export default function Category({ cards, type, onClick }) {
         </>
     )
 }
+Category.propTypes = {
+    cards: PropTypes.array.isRequired,
+    type: PropTypes.string.isRequired,
+    onClick: PropTypes.func
+}
 function Card({ card, onClick }) {
     return (
         <div className={CategoryStyles.card} key={card._id} onClick={onClick} >
@@ -36,4 +42,9 @@ function Card({ card, onClick }) {
             </div>
         </div>
     )
+}
+
+Card.propTypes = {
+    card: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
 }

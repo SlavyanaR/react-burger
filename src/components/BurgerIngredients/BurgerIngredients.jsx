@@ -1,6 +1,6 @@
 import React from "react";
 import BurgerIngredientsStyles from './BurgerIngredients.module.css';
-import { Tab} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Category from "./Category/Category";
 import PropTypes from 'prop-types';
 
@@ -31,5 +31,9 @@ export default function BurgerIngredients({ cards, onClick }) {
         </section>
     )
 }
+BurgerIngredients.propTypes = {
+    cards: PropTypes.array.isRequired,
+}
+
 
 
