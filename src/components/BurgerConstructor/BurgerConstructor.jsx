@@ -40,7 +40,7 @@ export default function BurgerConstructor({ cards, onClick }) {
                     <span className="text text_type_digits-medium pr-2">610</span>
                     <CurrencyIcon />
                 </div>
-                <Button type="primary" size="large">
+                <Button type="primary" size="large" onClick={onClick}>
                     Сделать заказ
                 </Button>
             </div>

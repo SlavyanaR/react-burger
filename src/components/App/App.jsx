@@ -68,7 +68,7 @@ function App() {
                     </Modal>
                 }
                 {openingDetails &&
-                    <Modal title='Детали заказа' onClose={closePopup} element={element}>
+                    <Modal title='Детали ингредиента' onClose={closePopup} element={element}>
                         <IngredientDetail element={element} />
                     </Modal>
                 }
