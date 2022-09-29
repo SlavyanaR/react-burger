@@ -43,7 +43,8 @@ function App() {
     const [element, setElement] = React.useState(null);
 
     function openOrderDetails() {
-        setOpeningOrder(true)
+        setOpeningOrder(true);
+        
     }
     function openIngridientsDetail(card) {
         setOpeningDetails(true);
@@ -58,8 +59,8 @@ function App() {
         <div className={Appstyles.page}>
             <AppHeader />
             <div className={Appstyles.main}>
-                <BurgerIngredients cards={cards} />
-                <BurgerConstructor cards={cards} />
+                <BurgerIngredients cards={cards} onClick={openIngridientsDetail}  />
+                <BurgerConstructor cards={cards}  onClick={openOrderDetails}/>
                 <div id="modals"></div>
                 {openingOrder &&
                     <Modal title=' ' onClose={closePopup}>
