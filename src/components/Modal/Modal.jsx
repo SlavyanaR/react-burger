@@ -13,7 +13,7 @@ export default function Modal({ title, children, onClose }) {
         if (isOpen) {
             document.addEventListener('keydown', onKey)
             return () => {
-                document.removeEventListener('keydown', onKey);
+                document.removeEventListener('keyup', onKey);
             }
         }
     }, [isOpen])
