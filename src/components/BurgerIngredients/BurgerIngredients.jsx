@@ -26,7 +26,7 @@ export default function BurgerIngredients({ cards, onClick }) {
             <div className={BurgerIngredientsStyles.menu}>
                 <Category cards={cardsData} type='bun' onClick={onClick} />
                 <Category cards={cardsData} type='sauce' onClick={onClick} />
-                <Category cards={cardsData} type='inside' onClick={onClick} />
+                <Category cards={cardsData} type='main' onClick={onClick} />
             </div>
         </section>
     )

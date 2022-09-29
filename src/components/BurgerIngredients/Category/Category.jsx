@@ -7,7 +7,7 @@ export default function Category({ cards, type, onClick }) {
     const types = {
         bun: 'Булки',
         sauce: 'Соусы',
-        inside: 'Начинки'
+        main: 'Начинки'
     }
     const cardsData = cards;
     return (
