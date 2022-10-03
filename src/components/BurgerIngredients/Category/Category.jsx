@@ -12,8 +12,8 @@ export default function Category({ cards, type, onClick }) {
     const cardsData = cards;
     return (
         <>
-            <h2 className={CategoryStyles.title + " pt-10 pb-6 text text_type_main-medium"}>{types[type]}</h2>
-            <div className={CategoryStyles.category + " " + "pl-4 pr-4"}>
+            <h2 className={`${CategoryStyles.title} pt-10 pb-6 text text_type_main-medium`}>{types[type]}</h2>
+            <div className={`${CategoryStyles.category} pl-4 pr-4`}>
                 {
                     cards.filter(prod => prod.type === type)
                         .map(card => {
@@ -31,6 +31,7 @@ Category.propTypes = {
     type: PropTypes.string.isRequired,
     onClick: PropTypes.func
 }
+
 function Card({ card, onClick }) {
     return (
         <div className={CategoryStyles.card} key={card._id} onClick={onClick} >

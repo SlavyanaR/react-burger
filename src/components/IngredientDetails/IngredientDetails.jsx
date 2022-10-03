@@ -9,7 +9,7 @@ export default function IngredientDetail({ element }) {
             <p className=" text text_type_main-medium pt-4 pb-8">
                 {element.name}
             </p>
-            <ul className={IngredientDetailsStyles.description + " " + "pr-15 pl-15"}>
+            <ul className={`${IngredientDetailsStyles.description} pr-15 pl-15`}>
                 <li className={IngredientDetailsStyles.description_element}>
                     <p className="text text_type_main-default text_color_inactive pb-2">Калории,ккал</p>
                     <p className="text text_type_main-default text_color_inactive">{element.calories}</p>
