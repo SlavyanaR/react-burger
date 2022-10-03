@@ -58,7 +58,7 @@ function App() {
     return (
         <div className={Appstyles.page}>
             <AppHeader />
-            <div className={Appstyles.main}>
+            <main className={Appstyles.main}>
                 <BurgerIngredients cards={cards} onClick={openIngridientsDetail}  />
                 <BurgerConstructor cards={cards}  onClick={openOrderDetails}/>
                 <div id="modals"></div>
@@ -72,7 +72,7 @@ function App() {
                         <IngredientDetail element={element} />
                     </Modal>
                 }
-            </div>
+            </main>
 
         </div>
     )

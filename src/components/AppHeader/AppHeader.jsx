@@ -5,8 +5,8 @@ import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-devel
 
 export default function AppHeader() {
     return (
-        <header className={AppHeaderStyles.header + ' ' + 'p-4'}>            
-            <div className={AppHeaderStyles.button + ' ' + 'pl-5 pr-5' }>
+        <header className={`${AppHeaderStyles.header} p-4`}>            
+            <div className={`${AppHeaderStyles.button} pl-5 pr-5`}>
                 <BurgerIcon />
                 <p className="text text_type_main-default ml-2">Конструктор</p>
             </div>
