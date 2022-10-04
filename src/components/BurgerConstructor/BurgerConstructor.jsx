@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
+import {ingredientItemTypes} from '../../utils/propTypes';
 
 export default function BurgerConstructor({ cards }) {
     const [openingOrder, setOpeningOrder] = React.useState(false);
@@ -83,5 +84,5 @@ function Layer({ prod }) {
     )
 }
 Layer.propTypes = {
-    prod: PropTypes.object.isRequired
+    prod: ingredientItemTypes
 }

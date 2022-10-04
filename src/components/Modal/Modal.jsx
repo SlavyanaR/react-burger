@@ -2,6 +2,7 @@ import React from "react";
 import ModalStyles from './Modal.module.css';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 
 export default function Modal({ title, children, onClose }) {
     const [isOpen, setIsOpen] = React.useState(true);
@@ -32,4 +33,9 @@ export default function Modal({ title, children, onClose }) {
         </section>),
         document.getElementById('modals')
     )
+}
+Modal.propTypes = {
+    title: PropTypes.string.isRequired,
+    children: PropTypes.element.isRequired,
+    onClose: PropTypes.func.isRequired
 }

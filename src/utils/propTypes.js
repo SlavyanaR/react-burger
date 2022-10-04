@@ -5,7 +5,10 @@ const ingredientTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-
+    calories: PropTypes.number.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
 }
 
 export const ingredientItemTypes = PropTypes.shape(ingredientTypes).isRequired;
