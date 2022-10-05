@@ -68,8 +68,7 @@ export default function BurgerConstructor({ cards }) {
 
 BurgerConstructor.propTypes = {
     cards: PropTypes.array.isRequired,
-    onClick: PropTypes.func.isRequired,
-}
+   }
 
 function Layer({ prod }) {
     return (

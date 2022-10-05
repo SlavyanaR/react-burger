@@ -51,8 +51,7 @@ export default function BurgerIngredients({ cards, onClick }) {
     )
 }
 BurgerIngredients.propTypes = {
-    cards: PropTypes.array.isRequired,
-    onClick: PropTypes.func.isRequired
+    cards: PropTypes.array.isRequired
 }
 
 
