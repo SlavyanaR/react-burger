@@ -1,12 +1,13 @@
 import React from "react";
 import doneImage from "../../images/done.png";
+import PropTypes from "prop-types";
 import OrderDaetailsStyle from './OrderDetails.module.css'
 
-export default function OrderDetails() {
-    return(
+export default function OrderDetails(number) {
+    return (
         <>
             <p className="text text_type_digits-large pb-8">
-                034536
+                {number}
             </p>
             <p className=" text text_type_main-medium">
                 идентификатор заказа
@@ -22,3 +23,6 @@ export default function OrderDetails() {
     )
 }
 
+OrderDetails.propTypes = {
+    number: PropTypes.number.isRequired
+}

@@ -1,74 +1,99 @@
-import React from "react";
+import React, { useContext, useEffect, useMemo, useReducer }  from "react";
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import {ingredientItemTypes} from '../../utils/propTypes';
+import { ingredientItemTypes } from '../../utils/propTypes';
+import { DataContext, OrderContext } from "../../services/appContect";
 
-export default function BurgerConstructor({ cards }) {
-    const [openingOrder, setOpeningOrder] = React.useState(false);
-
-    function openOrderDetails() {
-        setOpeningOrder(true);
+export default function BurgerConstructor({ onClick }) {
+    const { cards } = useContext(DataContext);
+    const { setOrderList } = useContext(OrderContext);
+    const [bunEl, setBunEl] = React.useState({});
+    const currentOrder = [];
+    currentOrder.push(useMemo(() => { return cards.find(el => el.type === 'bun') }, [cards]));
+    useMemo(() => {
+        return cards.forEach(el => {
+            if (el.type != 'bun') { currentOrder.push(el) }
+        })
+    }, [cards])
+    React.useEffect(() => {
+        if (cards.length) setBunEl(cards.find(el => el.type === 'bun'));
+    }, [cards.length]);
+    const [state, dispatch] = useReducer(reducer, { price: 0 });
+    function reducer(state, item) {
+        switch (item.type) {
+            case ('bun'): return ({ price: state.price + (item.price * 2) })
+            case ('main'): return ({ price: state.price + item.price })
+            case ('sauce'): return ({ price: state.price + item.price })
+            default: throw new Error();
+        }
     }
 
-    function closePopup() {
-        setOpeningOrder(false);
+    useEffect(() => {
+        if (cards.length) {
+            currentOrder.forEach(item => {
+                dispatch(item)
+            })
+            setOrderList(currentOrder);
+        }
     }
+        , [cards.length]
+    )
+    const totalPrice = state.price;
 
     return (
         <section className={`${BurgerConstructorStyles.constructor} pt-25 pl-4 pr-4`}>
-            <div className={BurgerConstructorStyles.constructor_element}>
-                <ConstructorElement
-                    type="top"
-                    isLocked={true}
-                    text="Краторная булка N-200i (верх)"
-                    price="1255"
-                    thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
-                />
-            </div>
-            <ul className={`${BurgerConstructorStyles.layers_list} pt-4 pb-4`}>
-                {
-                    cards
-                        .filter(prod => prod.type == 'main')
-                        .map(item => {
-                            return (
-                                <Layer prod={item} key={item._id} />
-                            )
-                        })
-                }
-            </ul>
-            <div className={BurgerConstructorStyles.constructor_element}>
-                <ConstructorElement
-                    type="bottom"
-                    isLocked={true}
-                    text="Краторная булка N-200i (низ)"
-                    price="1255"
-                    thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
-                />
-            </div>
-            <div className={`${BurgerConstructorStyles.order_box} pt-10 pb-10`}>
-                <div className={`${BurgerConstructorStyles.price_container} pr-10`}>
-                    <span className="text text_type_digits-medium pr-2">610</span>
-                    <CurrencyIcon />
+            {cards.length ?
+                <><div className={BurgerConstructorStyles.constructor_element}>
+                    <ConstructorElement
+                        type="top"
+                        isLocked={true}
+                        text={bunEl.name + " (верх)"}
+                        price={bunEl.price}
+                        thumbnail={bunEl.image}
+                    />
                 </div>
-                <Button type="primary" size="large" onClick={openOrderDetails}>
-                    Оформить заказ
-                </Button>
-                {openingOrder &&
-                    <Modal title=' ' onClose={closePopup}>
-                        <OrderDetails />
-                    </Modal>
-                }
-            </div>
+                    <ul className={`${BurgerConstructorStyles.layers_list} pt-4 pb-4`}>
+                        {
+                            cards
+                                .filter(prod => prod.type == 'main')
+                                .map(item => {
+                                    return (
+                                        <Layer prod={item} key={item._id} />
+                                    )
+                                })
+                        }
+                    </ul>
+                    <div className={BurgerConstructorStyles.constructor_element}>
+                        <ConstructorElement
+                            type="bottom"
+                            isLocked={true}
+                            text={bunEl.name + " (низ)"}
+                            price={bunEl.price}
+                            thumbnail={bunEl.image}
+                        />
+                    </div>
+                    <div className={`${BurgerConstructorStyles.order_box} pt-10 pb-10`}>
+                        <div className={`${BurgerConstructorStyles.price_container} pr-10`}>
+                            <span className="text text_type_digits-medium pr-2">610</span>
+                            <CurrencyIcon />
+                        </div>
+                        <Button type="primary" size="large" onClick={onClick}>
+                            Оформить заказ
+                        </Button>
+                    </div>
+                </>
+                : 'loading'
+            }
         </section>
     )
 }
 
 BurgerConstructor.propTypes = {
     cards: PropTypes.array.isRequired,
-   }
+}
 
 function Layer({ prod }) {
     return (
