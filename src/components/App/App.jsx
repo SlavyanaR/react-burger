@@ -7,7 +7,7 @@ import { DataContext, OrderContext } from "../../services/appContect";
 import { config } from "../Api/Api";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import IngredientDetail from "../IngredientDetails/IngredientDetails";
+
 
 function App() {
 

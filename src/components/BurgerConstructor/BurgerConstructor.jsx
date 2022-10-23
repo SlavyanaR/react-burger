@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useReducer }  from "react";
+import React, { useContext, useEffect, useMemo, useReducer } from "react";
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,19 +10,19 @@ export default function BurgerConstructor({ onClick }) {
     const { setOrderList } = useContext(OrderContext);
     const [bunEl, setBunEl] = React.useState({});
     const currentOrder = [];
-   
+
     currentOrder.push(useMemo(() => { return cards.find(el => el.type === 'bun') }, [cards]));
     useMemo(() => {
         return cards.forEach(el => {
             if (el.type != 'bun') { currentOrder.push(el) }
         })
     }, [cards])
-    
+
     React.useEffect(() => {
         if (cards.length) setBunEl(cards.find(el => el.type === 'bun'));
     }, [cards.length]);
     const [state, dispatch] = useReducer(reducer, { price: 0 });
-    
+
     function reducer(state, item) {
         switch (item.type) {
             case ('bun'): return ({ price: state.price + (item.price * 2) })
