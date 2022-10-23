@@ -4,12 +4,26 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Category from "./Category/Category";
 import PropTypes from 'prop-types';
 import { DataContext } from "../../services/appContect";
+import IngredientDetail from "../IngredientDetails/IngredientDetails";
+import Modal from "../Modal/Modal";
 
 export default function BurgerIngredients({ onClick }) {
     const [current, setCurrent] = React.useState('one');
     const {cards} = useContext(DataContext);
     const cardsData = cards;
 
+    const [openingDetails, setOpeningDetails] = React.useState(false);
+    const [element, setElement] = React.useState(null);
+
+
+    function openIngridientsDetail(card) {
+        setOpeningDetails(true);
+        setElement(card);
+    }
+    function closePopup(e) {
+        setOpeningDetails(false);
+    }
+    
 
     return (
         <section className={BurgerIngredientsStyles.ingridients}>
@@ -26,16 +40,18 @@ export default function BurgerIngredients({ onClick }) {
                 </Tab>
             </div>
             <div className={BurgerIngredientsStyles.menu}>
-                <Category cards={cardsData} type='bun' onClick={onClick} />
-                <Category cards={cardsData} type='sauce' onClick={onClick} />
-                <Category cards={cardsData} type='main' onClick={onClick} />
+                <Category cards={cardsData} type='bun' onClick={openIngridientsDetail} />
+                <Category cards={cardsData} type='sauce' onClick={openIngridientsDetail} />
+                <Category cards={cardsData} type='main' onClick={openIngridientsDetail} />
             </div>
+            {openingDetails &&
+                <Modal title='Детали ингредиента' onClose={closePopup} element={element}>
+                    <IngredientDetail element={element} />
+                </Modal>
+            }
                     </section>
     )
 }
 BurgerIngredients.propTypes = {
     cards: PropTypes.array.isRequired
 }
-
-
-

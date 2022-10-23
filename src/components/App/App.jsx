@@ -47,8 +47,7 @@ function App() {
     const [orderList, setOrderList] = React.useState([]);
     const [orderNumber, setOrderNumber] = React.useState('');
     const [openingOrder, setOpeningOrder] = React.useState(false);
-    const [openingDetails, setOpeningDetails] = React.useState(false);
-    const [element, setElement] = React.useState(null);
+
 
     function openOrderDetails() {
         postOrder(orderList)
@@ -59,14 +58,10 @@ function App() {
             })
             .catch(err => console.log(`Ошибка: ${err}`));
     }
-    function openIngridientsDetail(card) {
-        setOpeningDetails(true);
-        setElement(card);
-    }
+    
     function closePopup(e) {
         setOpeningOrder(false);
-        setOpeningDetails(false);
-    }
+            }
 
     return (
         <div className={Appstyles.page}>
@@ -74,17 +69,12 @@ function App() {
             <DataContext.Provider value={{ cards, setCards }} >
                 <OrderContext.Provider value={{ orderList, setOrderList }} >
                     <div className={Appstyles.main}>
-                        <BurgerIngredients onClick={openIngridientsDetail} />
+                        <BurgerIngredients/>
                         <BurgerConstructor onClick={openOrderDetails} />
                     </div>
                     {openingOrder &&
                         <Modal title=' ' onClose={closePopup} number={orderNumber}>
                             <OrderDetails number={orderNumber} />
-                        </Modal>
-                    }
-                    {openingDetails &&
-                        <Modal title='Детали заказа' onClose={closePopup} element={element}>
-                            <IngredientDetail element={element} />
                         </Modal>
                     }
                 </OrderContext.Provider>
