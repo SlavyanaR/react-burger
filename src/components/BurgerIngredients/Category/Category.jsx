@@ -2,7 +2,7 @@ import React, { useMemo }  from "react";
 import CategoryStyles from "./Category.module.css";
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { DataContext } from "../../../services/appContect";
+
 
 export default function Category({ cards, type, onClick }) {
     const types = {
@@ -10,7 +10,7 @@ export default function Category({ cards, type, onClick }) {
         sauce: 'Соусы',
         main: 'Начинки'
     }
-    const cardsData = cards;
+   
     return (
         <>
             <h2 className={`${CategoryStyles.title} pt-10 pb-6 text text_type_main-medium`}>{types[type]}</h2>

@@ -3,8 +3,6 @@ import BurgerIngredientsStyles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Category from "./Category/Category";
 import PropTypes from 'prop-types';
-import IngredientDetail from "../IngredientDetails/IngredientDetails";
-import Modal from "../Modal/Modal";
 import { DataContext } from "../../services/appContect";
 
 export default function BurgerIngredients({ onClick }) {
