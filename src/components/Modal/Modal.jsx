@@ -26,9 +26,7 @@ export default function Modal({ title, children, onClose }) {
                 <h2 className={`${ModalStyles.title} text text_type_main-large`}>
                     {title}
                 </h2>
-                <>
-                    {children}
-                </>
+                {children}
             </div>
         </section>),
         document.getElementById('modals')

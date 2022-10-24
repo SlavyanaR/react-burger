@@ -2,6 +2,9 @@
     width: 600px;
 }
 
+.tab {
+    display: flex;
+}
 .menu {
     overflow-y: scroll;
     height: 800px;

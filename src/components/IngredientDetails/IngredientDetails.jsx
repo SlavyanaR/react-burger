@@ -1,11 +1,10 @@
 import React from "react";
 import IngredientDetailsStyles from './IngredientDetails.module.css';
-import {ingredientItemTypes} from '../../utils/propTypes';
+import { ingredientItemTypes } from '../../utils/propTypes';
 
 export default function IngredientDetail({ element }) {
     return (
         <>
-        <h2></h2>
             <img src={element.image} className={IngredientDetailsStyles.image} />
             <p className=" text text_type_main-medium mt-4 mb-8">
                 {element.name}
