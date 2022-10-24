@@ -3,11 +3,11 @@ import BurgerIngredientsStyles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Category from "./Category/Category";
 import PropTypes from 'prop-types';
-import { DataContext } from "../../services/appContect";
 import IngredientDetail from "../IngredientDetails/IngredientDetails";
 import Modal from "../Modal/Modal";
+import { DataContext } from "../../services/appContect";
 
-export default function BurgerIngredients({ onClick }) {
+export default function BurgerIngredients({onClick }) {
     const [current, setCurrent] = React.useState('one');
     const {cards} = useContext(DataContext);
     const cardsData = cards;
@@ -53,5 +53,5 @@ export default function BurgerIngredients({ onClick }) {
     )
 }
 BurgerIngredients.propTypes = {
-    cards: PropTypes.array.isRequired
+    onClick: PropTypes.func
 }

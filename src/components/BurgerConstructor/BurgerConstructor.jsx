@@ -93,7 +93,7 @@ export default function BurgerConstructor({ onClick }) {
 }
 
 BurgerConstructor.propTypes = {
-    cards: PropTypes.array.isRequired,
+    onClick: PropTypes.func.isRequired,
 }
 
 function Layer({ prod }) {
