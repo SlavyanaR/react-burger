@@ -1,55 +1,87 @@
-import React, { useContext }  from "react";
+import React, { useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import BurgerIngredientsStyles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Category from "./Category/Category";
 import PropTypes from 'prop-types';
 import IngredientDetail from "../IngredientDetails/IngredientDetails";
 import Modal from "../Modal/Modal";
-import { DataContext } from "../../services/appContect";
+import {
+    SET_INFO_CHOSEN_INGREDIENT,
+    DELETE_INFO_CHOSEN_INGREDIENT
+} from "../../services/actions/chosenIngredient";
 
-export default function BurgerIngredients({onClick }) {
-    const [current, setCurrent] = React.useState('one');
-    const {cards} = useContext(DataContext);
-    const cardsData = cards;
-
+export default function BurgerIngredients() {
+    const dispatch = useDispatch();
+    const items = useSelector(store => store.ingredientsApi);
     const [openingDetails, setOpeningDetails] = React.useState(false);
-    const [element, setElement] = React.useState(null);
+    const chosenItem = useSelector(store => store.chosenIngredient);
 
+    const [current, setCurrent] = React.useState('bun');
+    const containerRef = useRef();
+    const bunRef = useRef();
+    const mainRef = useRef();
+    const sauceRef = useRef();
+
+
+    const hightlightTab = () => {
+        const refs = [bunRef, mainRef, sauceRef];
+        const positions = refs.map(item => {
+            return Math.abs(item.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top)
+        })
+        const currentTabRef = refs[positions.indexOf(Math.min.apply(null, positions))];
+        const currentSection = currentTabRef.current.dataset.type; // dataset.type - чтение атрибута data-type, см. MenuCategory -> h2.data-type (так и называется data-* атрибуты)
+        setCurrent(currentSection)
+    }
+
+    const handlerScroll = (value) => {
+        setCurrent(value);
+        if (value === 'bun') { bunRef.current.scrollIntoView() }
+        else if (value === 'sauce') { sauceRef.current.scrollIntoView() }
+        else { mainRef.current.scrollIntoView() }
+    }
 
     function openIngridientsDetail(card) {
+        dispatch({
+            type: SET_INFO_CHOSEN_INGREDIENT,
+            item: card
+        })
         setOpeningDetails(true);
-        setElement(card);
     }
-    function closePopup(e) {
+
+    function closePopup() {
         setOpeningDetails(false);
+        dispatch({
+            type: DELETE_INFO_CHOSEN_INGREDIENT
+        })
     }
-    
+
 
     return (
         <section className={BurgerIngredientsStyles.ingridients}>
             <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
             <div style={{ display: 'flex' }}>
-                <Tab value="one" active={current === 'one'} onClick={setCurrent} >
+                <Tab value="bun" active={current === 'bun'} onClick={handlerScroll} >
                     Булки
                 </Tab>
-                <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+                <Tab value="sauce" active={current === 'sauce'} onClick={handlerScroll}>
                     Соусы
                 </Tab>
-                <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+                <Tab value="main" active={current === 'main'} onClick={handlerScroll}>
                     Начинки
                 </Tab>
             </div>
-            <div className={BurgerIngredientsStyles.menu}>
-                <Category cards={cardsData} type='bun' onClick={openIngridientsDetail} />
-                <Category cards={cardsData} type='sauce' onClick={openIngridientsDetail} />
-                <Category cards={cardsData} type='main' onClick={openIngridientsDetail} />
+            <div className={BurgerIngredientsStyles.menu} ref={containerRef} onScroll={hightlightTab}>
+                <Category cards={items} type='bun' refer={bunRef} onClick={openIngridientsDetail} headerKey='bun' />
+                <Category cards={items} type='sauce' refer={sauceRef} onClick={openIngridientsDetail} headerKey='main' />
+                <Category cards={items} type='main' refer={mainRef} onClick={openIngridientsDetail} headerKey='main' />
             </div>
             {openingDetails &&
-                <Modal title='Детали ингредиента' onClose={closePopup} element={element}>
-                    <IngredientDetail element={element} />
+                <Modal title='Детали ингредиента' onClose={closePopup} >
+                    <IngredientDetail element={chosenItem} />
                 </Modal>
             }
-                    </section>
+        </section>
     )
 }
 BurgerIngredients.propTypes = {
