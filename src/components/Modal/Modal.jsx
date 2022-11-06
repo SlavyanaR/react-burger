@@ -4,7 +4,7 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 
-export default function Modal({ title, children, onClose }) {
+export default function Modal({ title = '', children, onClose }) {
     const [isOpen, setIsOpen] = React.useState(true);
 
     function onKey(e) {
