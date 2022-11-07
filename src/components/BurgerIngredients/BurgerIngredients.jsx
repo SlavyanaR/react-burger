@@ -2,14 +2,10 @@ import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import BurgerIngredientsStyles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import Category from "./Category/Category";
-import PropTypes from 'prop-types';
+import Category from "../Category/Category";
 import IngredientDetail from "../IngredientDetails/IngredientDetails";
 import Modal from "../Modal/Modal";
-import {
-    SET_INFO_CHOSEN_INGREDIENT,
-    DELETE_INFO_CHOSEN_INGREDIENT
-} from "../../services/actions/chosenIngredient";
+import {SET_INFO_CHOSEN_INGREDIENT, DELETE_INFO_CHOSEN_INGREDIENT} from "../../services/actions/chosenIngredient";
 
 export default function BurgerIngredients() {
     const dispatch = useDispatch();
@@ -83,7 +79,4 @@ export default function BurgerIngredients() {
             }
         </section>
     )
-}
-BurgerIngredients.propTypes = {
-    onClick: PropTypes.func
 }

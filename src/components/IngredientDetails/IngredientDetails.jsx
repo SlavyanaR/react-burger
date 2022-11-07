@@ -6,7 +6,7 @@ export default function IngredientDetail({ element }) {
     return (
         <>
         <h2></h2>
-            <img src={element.image} className={IngredientDetailsStyles.image} />
+            <img src={element.image} className={IngredientDetailsStyles.image} alt={"Детали"} />
             <p className=" text text_type_main-medium mt-4 mb-8">
                 {element.name}
             </p>

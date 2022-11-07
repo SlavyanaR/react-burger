@@ -16,7 +16,7 @@ export default function Category({ cards, type, refer, onClick, headerKey }) {
             <div className={`${CategoryStyles.category} pl-4 pr-4`}>
                 {typeArray.map(card => {
                     return (
-                        <Card card={card} key={card._id} onClick={() => onClick(card)} />
+                        <Card card={card} key={card._id} />
                     )
                 })
                 }

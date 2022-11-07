@@ -1,11 +1,8 @@
 import { getCards, postOrderRequest  } from "../../components/Api/Api";
-import { GET_API_ITEMS_REQUEST, GET_API_ITEMS_SUCCESS, GET_API_ITEMS_FAILED } from "./ingredientsApi";
+import { GET_API_ITEMS_REQUEST, GET_API_ITEMS_SUCCESS, GET_API_ITEMS_FAILED, } from "./ingredientsApi";
 import { RESET_INGREDIENTS_IN_CONSTRUCTOR } from "./constructorItems";
-import {
-    POST_CONSTRUCTOR_ITEMS_REQUEST,
-    POST_CONSTRUCTOR_ITEMS_SUCCESS,
-    POST_CONSTRUCTOR_ITEMS_FAILED
-} from "./order";
+import { POST_CONSTRUCTOR_ITEMS_SUCCESS, POST_CONSTRUCTOR_ITEMS_FAILED, POST_CONSTRUCTOR_ITEMS_REQUEST} from "./order";
+import { SET_LOADING_MODE, RESET_LOADING_MODE } from "./loading";
 
 
 export function getApiItems() {

@@ -18,12 +18,16 @@
     box-sizing: border-box;
     margin: 0;
     padding-left: 0;
-    height: 590px;
+    max-height: 590px;
+    min-height: 100px;
     overflow-y: scroll;
+    scrollbar-color: #8585AD #2F2F37;
+    scrollbar-width: 8px;
 }
 
 .layers_list::-webkit-scrollbar {
     width: 8px;
+    height: auto;
 }
 
 .layers_list::-webkit-scrollbar-track {
@@ -33,13 +37,6 @@
 .layers_list::-webkit-scrollbar-thumb {
     background-color: #8585AD;
     border: 8px solid #8585AD;
-}
-
-.layer_element {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .order_box {
@@ -53,4 +50,12 @@
 .price_container {
     height: 64px;
     align-items: center;
+}
+.start {
+    padding-top: 50%;
+}
+
+.add_ingredients{
+    text-align: center;
+    padding-top: 30px;
 }

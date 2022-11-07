@@ -3,7 +3,7 @@ import doneImage from "../../images/done.png";
 import PropTypes from "prop-types";
 import OrderDaetailsStyle from './OrderDetails.module.css'
 
-export default function OrderDetails({number}) {
+export default function OrderDetails({ number }) {
     return (
         <>
             <p className="text text_type_digits-large pb-8">
@@ -12,7 +12,7 @@ export default function OrderDetails({number}) {
             <p className=" text text_type_main-medium">
                 идентификатор заказа
             </p>
-            <img src={doneImage} className={`${OrderDaetailsStyle.image} pt-15 pb-15`} />
+            <img src={doneImage} className={`${OrderDaetailsStyle.image} pt-15 pb-15`} alt={"Детали заказа"} />
             <p className='text text_type_main-default pb-2'>
                 Ваш заказ начали готовить
             </p>
