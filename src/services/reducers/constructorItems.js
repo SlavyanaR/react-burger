@@ -1,6 +1,6 @@
 import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
-    ADD_OR_CHANGE_BUN_IN_CONSTRUCTOR,
+    ADD_BUN_IN_CONSTRUCTOR,
     SORT_INGREDIENTS_IN_CONSTRUCTOR,
     DELETE_INGREDIENT_FROM_CONSTRUCTOR,
     RESET_INGREDIENTS_IN_CONSTRUCTOR
@@ -31,7 +31,7 @@ export const constructorItemsReducer = (state = {
 
             }
         }
-        case ADD_OR_CHANGE_BUN_IN_CONSTRUCTOR: {
+        case ADD_BUN_IN_CONSTRUCTOR: {
             const hasBun = state.ingredientsConstructor.some(item => item.type === 'bun');
             const currentBun = hasBun ? state.ingredientsConstructor.find(item => item.type === 'bun') : null;
             return {

@@ -9,6 +9,6 @@ const ingredientTypes = {
     proteins: PropTypes.number.isRequired,
     fat: PropTypes.number.isRequired,
     carbohydrates: PropTypes.number.isRequired,
-}
+   }
 
 export const ingredientItemTypes = PropTypes.shape(ingredientTypes).isRequired;

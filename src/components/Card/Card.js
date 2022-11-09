@@ -1,11 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import CardStyles from './Card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
-
-
+import PropTypes from 'prop-types';
 
 export function Card({ card, onClick }) {
     const [{ opacity }, dragRef] = useDrag({
@@ -16,8 +14,7 @@ export function Card({ card, onClick }) {
         })
     })
     const counter = useSelector(state => state.constructorItems.counter[card._id]);
-   
-   
+
     return (
         <div className={CardStyles.card_available} key={card._id} onClick={onClick} ref={dragRef} style={{ opacity }} draggable >
             <img src={card.image} alt={card.name} />
@@ -33,5 +30,5 @@ export function Card({ card, onClick }) {
 
 Card.propTypes = {
     card: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
 }

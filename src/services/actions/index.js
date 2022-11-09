@@ -11,7 +11,7 @@ export function getApiItems() {
             type: GET_API_ITEMS_REQUEST
         });
         dispatch({
-            type: SET_LOADING_MODE // модалка с ожиданием
+            type: SET_LOADING_MODE 
         })
         getCards()
             .then(res => {

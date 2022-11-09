@@ -6,20 +6,17 @@ import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-de
 import Layer from "../Layer/Layer";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import {ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_OR_CHANGE_BUN_IN_CONSTRUCTOR, SORT_INGREDIENTS_IN_CONSTRUCTOR, DELETE_INGREDIENT_FROM_CONSTRUCTOR} from '../../services/actions/constructorItems'
-import {RESET_ORDER_NUMBER} from '../../services/actions/order';
+import { ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_BUN_IN_CONSTRUCTOR, SORT_INGREDIENTS_IN_CONSTRUCTOR, DELETE_INGREDIENT_FROM_CONSTRUCTOR } from '../../services/actions/constructorItems'
+import { RESET_ORDER_NUMBER } from '../../services/actions/order';
 import { postOrder } from "../../services/actions/index";
-import { v4 as uuidv4 } from 'uuid';
+
 
 export default function BurgerConstructor() {
     const dispatch = useDispatch();
     const itemsMenu = useSelector(store => store.ingredientsApi);
     const ingredientsConstructor = useSelector(store => store.constructorItems.ingredientsConstructor);
-
-
     const orderNum = useSelector(store => store.order.number.toString());
-
-    const [bunEl, setBunEl] = useState(null);
+    const [BunElement, setBunElement] = useState(null);
     const notBunsIngredients = ingredientsConstructor.filter(prod => prod.type !== 'bun')
     const [isSort, setIsSort] = useState(false);
     const [droppedIndex, setDroppedIndex] = useState(null);
@@ -30,6 +27,7 @@ export default function BurgerConstructor() {
         setIsSort(true);
         setDraggedIndex(draggedTargetIndex)
     };
+
     const handleDrop = (e, droppedTargetIndex) => {
         e.preventDefault();
         setDroppedIndex(droppedTargetIndex)
@@ -58,15 +56,17 @@ export default function BurgerConstructor() {
             item: prod
         })
     }
+
     const changeBunInConstructor = (bun) => {
         dispatch({
-            type: ADD_OR_CHANGE_BUN_IN_CONSTRUCTOR,
+            type: ADD_BUN_IN_CONSTRUCTOR,
             item: bun
         })
         dispatchPrice({
             item: bun
         })
     }
+
     const sortIngredientsInConstructor = (item, droppedIndex, draggedIndex) => {
         dispatch({
             type: SORT_INGREDIENTS_IN_CONSTRUCTOR,
@@ -78,6 +78,7 @@ export default function BurgerConstructor() {
         setDraggedIndex(null);
         setDroppedIndex(null);
     };
+
     const handleDeleteItem = (e, index) => {
         const id = notBunsIngredients[index]._id;
         const item = notBunsIngredients.splice(index, 1)[0];
@@ -91,10 +92,12 @@ export default function BurgerConstructor() {
             item: item
         })
     };
+
     const makeOrder = () => {
         dispatch(postOrder(ingredientsConstructor));
         setOpeningOrder(true);
     }
+
     function closePopup() {
         setOpeningOrder(false);
         dispatch({
@@ -103,16 +106,17 @@ export default function BurgerConstructor() {
     }
 
     useEffect(() => {
-        if (ingredientsConstructor.length) setBunEl(ingredientsConstructor.find(el => el.type === 'bun') || null);
+        if (ingredientsConstructor.length) setBunElement(ingredientsConstructor.find(el => el.type === 'bun') || null);
     }, [ingredientsConstructor]);
 
     const [state, dispatchPrice] = useReducer(reducer, { price: 0 });
+
     function reducer(state, action) {
         switch (action.item.type) {
-            case ('bun'): return (bunEl ?
-                { price: state.price - (bunEl.price * 2) + (action.item.price * 2) } :
+            case ('bun'): return (BunElement ?
+                { price: state.price - (BunElement.price * 2) + (action.item.price * 2) } :
                 { price: state.price + (action.item.price * 2) })
-            case ('main'): 
+            case ('main'):
             case ('sauce'):
                 switch (action.type) {
                     case ('increment'): {
@@ -126,19 +130,21 @@ export default function BurgerConstructor() {
             default: throw new Error();
         }
     }
+
     const totalPrice = state.price;
+
     return (
         <section className={`${BurgerConstructorStyles.constructor} pt-25 pl-4 pr-4`} ref={targetDrop}>
             {itemsMenu.length && ingredientsConstructor.length ?
                 <>
-                    {bunEl &&
+                    {BunElement &&
                         (<div className={`${BurgerConstructorStyles.constructor_element} pb-4`} >
                             <ConstructorElement
                                 type="top"
                                 isLocked={true}
-                                text={bunEl.name + " (верх)"}
-                                price={bunEl.price}
-                                thumbnail={bunEl.image}
+                                text={BunElement.name + " (верх)"}
+                                price={BunElement.price}
+                                thumbnail={BunElement.image}
                             />
                         </div>)
                     }
@@ -150,7 +156,7 @@ export default function BurgerConstructor() {
                                         <Layer
                                             prod={item}
                                             index={index}
-                                            key={uuidv4()}
+                                            key={item._id}
                                             handleDelete={handleDeleteItem}
                                             handleDrag={handleDrag}
                                             handleDrop={handleDrop}
@@ -160,14 +166,14 @@ export default function BurgerConstructor() {
                             (<p className={`${BurgerConstructorStyles.add_ingredients} text text_type_main-default`}>Добавь ингредиенты</p>)
                         }
                     </ul>
-                    {bunEl &&
+                    {BunElement &&
                         <div className={`${BurgerConstructorStyles.constructor_element} pt-4`}>
                             <ConstructorElement
                                 type="bottom"
                                 isLocked={true}
-                                text={bunEl.name + " (низ)"}
-                                price={bunEl.price}
-                                thumbnail={bunEl.image}
+                                text={BunElement.name + " (низ)"}
+                                price={BunElement.price}
+                                thumbnail={BunElement.image}
                             />
                         </div>}
 
@@ -176,7 +182,7 @@ export default function BurgerConstructor() {
                             <span className="text text_type_digits-medium pr-2">{totalPrice}</span>
                             <CurrencyIcon type="primary" />
                         </div>
-                        <Button type="primary" size="large" onClick={makeOrder} disabled={!bunEl}>
+                        <Button type="primary" size="large" onClick={makeOrder} disabled={!BunElement}>
                             Оформить заказ
                         </Button>
                     </div>
@@ -187,7 +193,7 @@ export default function BurgerConstructor() {
                 </p>
             }
             {openingOrder &&
-                (<Modal onClose={closePopup} >
+                (<Modal title=' ' onClose={closePopup} >
                     <OrderDetails number={orderNum} />
                 </Modal>)
             }

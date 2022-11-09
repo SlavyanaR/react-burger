@@ -18,6 +18,7 @@ export default function Modal({ title = '', children, onClose }) {
             }
         }
     }, [isOpen])
+    
     return ReactDOM.createPortal(
         (<section className={ModalStyles.popup}>
             <ModalOverlay onClick={onClose} />
@@ -34,6 +35,7 @@ export default function Modal({ title = '', children, onClose }) {
         document.getElementById('modals')
     )
 }
+
 Modal.propTypes = {
     title: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired
