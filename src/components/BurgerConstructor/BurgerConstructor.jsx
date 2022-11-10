@@ -157,7 +157,7 @@ export default function BurgerConstructor() {
                                         <Layer
                                             prod={item}
                                             index={index}
-                                            key={uuidv4()}
+                                            key={item.uuidv4}
                                             handleDelete={handleDeleteItem}
                                             handleDrag={handleDrag}
                                             handleDrop={handleDrop}
