@@ -2,7 +2,6 @@ import React from "react";
 import ModalStyles from './Modal.module.css';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 import {ingredientItemTypes} from "../../utils/propTypes";
 
 export default function Modal({ title = '', children, onClose }) {

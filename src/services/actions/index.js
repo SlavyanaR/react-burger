@@ -1,4 +1,4 @@
-import { getCards, postOrderRequest  } from "../../components/Api/Api";
+import { getCards, postOrderRequest  } from "../../utils/Api";
 import { GET_API_ITEMS_REQUEST, GET_API_ITEMS_SUCCESS, GET_API_ITEMS_FAILED, } from "./ingredientsApi";
 import { RESET_INGREDIENTS_IN_CONSTRUCTOR } from "./constructorItems";
 import { POST_CONSTRUCTOR_ITEMS_SUCCESS, POST_CONSTRUCTOR_ITEMS_FAILED, POST_CONSTRUCTOR_ITEMS_REQUEST} from "./order";

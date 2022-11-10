@@ -9,6 +9,7 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import { ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_BUN_IN_CONSTRUCTOR, SORT_INGREDIENTS_IN_CONSTRUCTOR, DELETE_INGREDIENT_FROM_CONSTRUCTOR } from '../../services/actions/constructorItems'
 import { RESET_ORDER_NUMBER } from '../../services/actions/order';
 import { postOrder } from "../../services/actions/index";
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function BurgerConstructor() {
@@ -156,7 +157,7 @@ export default function BurgerConstructor() {
                                         <Layer
                                             prod={item}
                                             index={index}
-                                            key={item._id}
+                                            key={uuidv4()}
                                             handleDelete={handleDeleteItem}
                                             handleDrag={handleDrag}
                                             handleDrop={handleDrop}
