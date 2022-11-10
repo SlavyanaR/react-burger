@@ -15,6 +15,10 @@ export const constructorItemsReducer = (state = {
     ingredientsConstructor: initialState.ingredientsConstructor,
     counter: initialState.counter
 }, action) => {
+    function checkExistence(state, action) {
+        return state.ingredientsConstructor.some(item => item._id === action.item._id)
+    }
+    
     switch (action.type) {
         case ADD_INGREDIENT_TO_CONSTRUCTOR: {
             return {
@@ -97,6 +101,3 @@ export const constructorItemsReducer = (state = {
     }
 }
 
-function checkExistence(state, action) {
-    return state.ingredientsConstructor.some(item => item._id === action.item._id)
-}
