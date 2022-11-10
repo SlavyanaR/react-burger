@@ -3,6 +3,7 @@ import ModalStyles from './Modal.module.css';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
+import {ingredientItemTypes} from "../../utils/propTypes";
 
 export default function Modal({ title = '', children, onClose }) {
     const [isOpen, setIsOpen] = React.useState(true);
@@ -37,6 +38,6 @@ export default function Modal({ title = '', children, onClose }) {
 }
 
 Modal.propTypes = {
-    title: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired
+    title: ingredientItemTypes,
+    onClose: ingredientItemTypes
 }
