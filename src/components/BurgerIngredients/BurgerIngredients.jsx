@@ -32,9 +32,9 @@ export default function BurgerIngredients() {
 
     const handlerScroll = (value) => {
         setCurrent(value);
-        if (value === 'bun') { bunRef.current.scrollIntoView() }
-        else if (value === 'sauce') { sauceRef.current.scrollIntoView() }
-        else { mainRef.current.scrollIntoView() }
+        if (value === 'bun') { bunRef.current.scrollIntoView({behavior: "smooth"}) }
+        else if (value === 'sauce') { sauceRef.current.scrollIntoView({behavior: "smooth"}) }
+        else { mainRef.current.scrollIntoView({behavior: "smooth"}) }
     }
 
     function openIngridientsDetail(card) {
