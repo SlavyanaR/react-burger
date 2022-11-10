@@ -6,7 +6,6 @@ import {
 const initialState = {};
 
 export const chosenIngredientReducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
         case SET_INFO_CHOSEN_INGREDIENT: {
             debugger
