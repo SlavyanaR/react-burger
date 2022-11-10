@@ -16,15 +16,15 @@ function App() {
     }, [dispatch])
 
     return (
-        <main className={Appstyles.page}>
+        <div className={Appstyles.page}>
             <AppHeader />
             <DndProvider backend={HTML5Backend}>
-                <div className={Appstyles.main}>
+                <main className={Appstyles.main}>
                     <BurgerIngredients />
                     <BurgerConstructor />
-                </div>
+                </main>
             </DndProvider>
-        </main>
+        </div>
     );
 }
 
