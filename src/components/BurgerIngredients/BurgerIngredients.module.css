@@ -19,3 +19,7 @@
     background-color: #8585AD;
     border: 8px solid #8585AD;
 }
+
+.tab {
+    display: flex;
+}
