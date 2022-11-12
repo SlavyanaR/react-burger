@@ -8,9 +8,7 @@ const initialState = {};
 export const chosenIngredientReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_INFO_CHOSEN_INGREDIENT: {
-            debugger
             return action.item
-
         }
         case DELETE_INFO_CHOSEN_INGREDIENT: {
             return initialState
