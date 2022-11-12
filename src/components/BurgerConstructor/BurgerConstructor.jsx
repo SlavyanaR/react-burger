@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,18 +52,11 @@ export default function BurgerConstructor() {
             type: ADD_INGREDIENT_TO_CONSTRUCTOR,
             item: prod
         });
-        dispatchPrice({
-            type: 'increment',
-            item: prod
-        })
     }
 
     const changeBunInConstructor = (bun) => {
         dispatch({
             type: ADD_BUN_IN_CONSTRUCTOR,
-            item: bun
-        })
-        dispatchPrice({
             item: bun
         })
     }
@@ -88,10 +81,6 @@ export default function BurgerConstructor() {
             ingredients: notBunsIngredients,
             id: id,
         })
-        dispatchPrice({
-            type: 'decrement',
-            item: item
-        })
     };
 
     const makeOrder = () => {
@@ -110,29 +99,12 @@ export default function BurgerConstructor() {
         if (ingredientsConstructor.length) setBunElement(ingredientsConstructor.find(el => el.type === 'bun') || null);
     }, [ingredientsConstructor]);
 
-    const [state, dispatchPrice] = useReducer(reducer, { price: 0 });
-
-    function reducer(state, action) {
-        switch (action.item.type) {
-            case ('bun'): return (BunElement ?
-                { price: state.price - (BunElement.price * 2) + (action.item.price * 2) } :
-                { price: state.price + (action.item.price * 2) })
-            case ('main'):
-            case ('sauce'):
-                switch (action.type) {
-                    case ('increment'): {
-                        return ({ price: state.price + action.item.price })
-                    }
-                    case ('decrement'): {
-                        return ({ price: state.price - action.item.price })
-                    }
-                    default: throw new Error();
-                }
-            default: throw new Error();
-        }
-    }
-
-    const totalPrice = state.price;
+    const totalPrice = useMemo(() => {
+        return ingredientsConstructor.reduce((price, current) => {
+            if (current.type == 'bun') { return price + 2 * current.price }
+            else { return price + current.price }
+        }, 0)
+    }, [ingredientsConstructor])
 
     return (
         <section className={`${BurgerConstructorStyles.constructor} pt-25 pl-4 pr-4`} ref={targetDrop}>

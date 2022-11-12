@@ -28,3 +28,4 @@ export async function postOrderRequest (orderList) {
     })
         .then(checkRes))
 }
+
