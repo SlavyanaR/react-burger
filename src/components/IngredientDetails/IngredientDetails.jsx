@@ -1,6 +1,6 @@
 import React from "react";
 import IngredientDetailsStyles from './IngredientDetails.module.css';
-import { ingredientItemTypes } from '../../utils/propTypes';
+import { itemTypesingredientItem } from '../../utils/propTypes';
 
 export default function IngredientDetail({ element }) {
     return (
@@ -31,5 +31,5 @@ export default function IngredientDetail({ element }) {
     )
 }
 IngredientDetail.propTypes = {
-    element: ingredientItemTypes
+    element: itemTypesingredientItem
 }

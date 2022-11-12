@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import CategoryStyles from './Category.module.css';
 import { Card } from "../Card/Card";
-import { ingredientItemTypes } from "../../utils/propTypes";
+import { itemTypesCategory } from "../../utils/propTypes";
 
 const types = {
     bun: 'Булки',
@@ -28,9 +28,9 @@ export default function Category({ cards, type, refer, onClick, headerKey }) {
     )
 }
 Category.propTypes = {
-    cards: ingredientItemTypes,
-    type: ingredientItemTypes,
-    refer: ingredientItemTypes,
-    onClick: ingredientItemTypes,
-    headerKey: ingredientItemTypes
+    cards: itemTypesCategory,
+    type: itemTypesCategory,
+    refer: itemTypesCategory,
+    onClick: itemTypesCategory,
+    headerKey: itemTypesCategory
 }

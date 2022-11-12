@@ -1,25 +1,46 @@
 import PropTypes from "prop-types";
 
-const ingredientTypes = {
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    onClick: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired,
-    handleDelete: PropTypes.func.isRequired,
-    handleDrag: PropTypes.func.isRequired,
-    handleDrop: PropTypes.func.isRequired,
-    number: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired,
-    cards: PropTypes.array.isRequired,
-    refer: PropTypes.object.isRequired,
-    headerKey: PropTypes.string.isRequired
-  }
+ const TypesCategory = {
+  cards: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
+  refer: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+  headerKey: PropTypes.string.isRequired
+}
+export const itemTypesCategory = PropTypes.shape(TypesCategory).isRequired;
 
-export const ingredientItemTypes = PropTypes.shape(ingredientTypes).isRequired;
+const TypesCard = {
+  card: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+}
+export const itemTypesCard = PropTypes.shape(TypesCard).isRequired;
+
+const TypesingredientItem = {
+  element: PropTypes.object.isRequired,
+}
+export const itemTypesingredientItem = PropTypes.shape(TypesingredientItem).isRequired;
+
+const TypesLayer = {
+  prod: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  handleDrag: PropTypes.func.isRequired,
+  handleDrop: PropTypes.func.isRequired
+}
+export const itemTypesLayer = PropTypes.shape(TypesLayer).isRequired;
+
+const TypesModal = {
+  title: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
+}
+export const itemTypesModal = PropTypes.shape(TypesModal).isRequired;
+
+const TypesModalOverlay = {
+  onClick: PropTypes.func.isRequired,
+}
+export const itemTypesModalOverlay = PropTypes.shape(TypesModalOverlay).isRequired;
+
+const TypesOrderDetails = {
+  number: PropTypes.string.isRequired,
+}
+export const itemTypesOrderDetails = PropTypes.shape(TypesOrderDetails).isRequired;

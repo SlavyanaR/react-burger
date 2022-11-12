@@ -1,7 +1,7 @@
 import React from "react";
 import doneImage from "../../images/done.png";
 import OrderDaetailsStyle from './OrderDetails.module.css'
-import {ingredientItemTypes} from "../../utils/propTypes";
+import {itemTypesOrderDetails} from "../../utils/propTypes";
 
 export default function OrderDetails({ number }) {
     return (
@@ -24,5 +24,6 @@ export default function OrderDetails({ number }) {
 }
 
 OrderDetails.propTypes = {
-    number: ingredientItemTypes
+    number: itemTypesOrderDetails,
+ 
 }
