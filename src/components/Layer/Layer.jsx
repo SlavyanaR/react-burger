@@ -1,6 +1,7 @@
 import { useDrag } from "react-dnd";
 import LayerStyles from './Layer.module.css';
-import { itemTypesLayer } from '../../utils/propTypes';
+import { ingredientType } from '../../utils/propTypes';
+import PropTypes from "prop-types";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export default function Layer({ prod, index, handleDelete, handleDrag, handleDrop }) {
@@ -30,9 +31,9 @@ export default function Layer({ prod, index, handleDelete, handleDrag, handleDro
 }
 
 Layer.propTypes = {
-    prod: itemTypesLayer,
-    index: itemTypesLayer,
-    handleDelete: itemTypesLayer,
-    handleDrag: itemTypesLayer,
-    handleDrop: itemTypesLayer,
+    prod: ingredientType,
+    index: PropTypes.number.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+    handleDrag: PropTypes.func.isRequired,
+    handleDrop: PropTypes.func.isRequired,
 }

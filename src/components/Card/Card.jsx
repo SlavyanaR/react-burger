@@ -3,7 +3,8 @@ import CardStyles from './Card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
-import {itemTypesCard} from "../../utils/propTypes";
+import PropTypes from "prop-types";
+import { ingredientType } from "../../utils/propTypes";
 
 export function Card({ card, onClick }) {
     const [{ opacity }, dragRef] = useDrag({
@@ -29,6 +30,6 @@ export function Card({ card, onClick }) {
 }
 
 Card.propTypes = {
-    card: itemTypesCard,
-    onClick: itemTypesCard,
+    card: ingredientType,
+    onClick: PropTypes.func.isRequired,
 }

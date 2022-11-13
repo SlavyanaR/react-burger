@@ -40,16 +40,14 @@ export function getApiItems() {
 }
 
 export const postOrder = (orderList) => {
-    const orderListId = orderList.map(item => item._id);
-    orderListId.push(orderList[0]._id);
-    return function (dispatch) {
+      return function (dispatch) {
         dispatch({
             type: POST_CONSTRUCTOR_ITEMS_REQUEST
         });
         dispatch({
             type: SET_LOADING_MODE
         })
-        postOrderRequest(orderListId)
+        postOrderRequest(orderList)
             .then(res => {
                 if (res && res.success) {
                     dispatch({

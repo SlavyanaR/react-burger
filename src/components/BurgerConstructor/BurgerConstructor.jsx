@@ -14,11 +14,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function BurgerConstructor() {
     const dispatch = useDispatch();
-    const itemsMenu = useSelector(store => store.ingredientsApi);
-    const ingredientsConstructor = useSelector(store => store.constructorItems.ingredientsConstructor);
-    const orderNum = useSelector(store => store.order.number.toString());
+    const itemsMenu = useSelector((store) => store.ingredientsApi);
+    const ingredientsConstructor = useSelector((store) => store.constructorItems.ingredientsConstructor);
+    const idList = useMemo(() => {
+        return ingredientsConstructor.map((item) => item._id);
+      }, [ingredientsConstructor]);
+    const orderNum = useSelector((store) => store.order.number.toString());
     const [BunElement, setBunElement] = useState(null);
-    const notBunsIngredients = ingredientsConstructor.filter(prod => prod.type !== 'bun')
+    const notBunsIngredients = ingredientsConstructor.filter((prod) => prod.type !== 'bun')
     const [isSort, setIsSort] = useState(false);
     const [droppedIndex, setDroppedIndex] = useState(null);
     const [draggedIndex, setDraggedIndex] = useState(null);
@@ -84,7 +87,7 @@ export default function BurgerConstructor() {
     };
 
     const makeOrder = () => {
-        dispatch(postOrder(ingredientsConstructor));
+        dispatch(postOrder(idList));
         setOpeningOrder(true);
     }
 

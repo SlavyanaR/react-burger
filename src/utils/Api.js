@@ -20,11 +20,10 @@ function checkRes(res) {
 }
 
 export async function postOrderRequest (orderList) {
-    const idList = { "ingredients": orderList.map(item => item._id) }
     return (await fetch(`${config.baseUrl}/orders`, {
         headers: config.headers,
         method: 'POST',
-        body: JSON.stringify(idList)
+        body: JSON.stringify({ingredients : orderList })
     })
         .then(checkRes))
 }

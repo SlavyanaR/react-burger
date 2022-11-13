@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import CategoryStyles from './Category.module.css';
 import { Card } from "../Card/Card";
-import { itemTypesCategory } from "../../utils/propTypes";
+import PropTypes from "prop-types";
 
 const types = {
     bun: 'Булки',
@@ -28,9 +28,9 @@ export default function Category({ cards, type, refer, onClick, headerKey }) {
     )
 }
 Category.propTypes = {
-    cards: itemTypesCategory,
-    type: itemTypesCategory,
-    refer: itemTypesCategory,
-    onClick: itemTypesCategory,
-    headerKey: itemTypesCategory
+    refer: PropTypes.object.isRequired,
+    cards: PropTypes.array.isRequired,
+    type: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+    headerKey: PropTypes.string.isRequired,
 }
