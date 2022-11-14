@@ -18,7 +18,7 @@ export default function BurgerConstructor() {
     const ingredientsConstructor = useSelector((store) => store.constructorItems.ingredientsConstructor);
     const idList = useMemo(() => {
         return ingredientsConstructor.map((item) => item._id);
-      }, [ingredientsConstructor]);
+    }, [ingredientsConstructor]);
     const orderNum = useSelector((store) => store.order.number.toString());
     const [BunElement, setBunElement] = useState(null);
     const notBunsIngredients = ingredientsConstructor.filter((prod) => prod.type !== 'bun')
@@ -53,14 +53,17 @@ export default function BurgerConstructor() {
     const addIngredientToConstructor = (prod) => {
         dispatch({
             type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-            item: prod
+            item: {
+                ...prod,
+                uuid: uuidv4()
+            }
         });
     }
 
     const changeBunInConstructor = (bun) => {
         dispatch({
             type: ADD_BUN_IN_CONSTRUCTOR,
-            item: bun
+            item: bun,
         })
     }
 
@@ -132,8 +135,7 @@ export default function BurgerConstructor() {
                                         <Layer
                                             prod={item}
                                             index={index}
-                                            id={`${item._id}_${uuidv4()}`}
-                                            key={`${item._id}_${uuidv4()}`}
+                                            key={item.uuid}
                                             handleDelete={handleDeleteItem}
                                             handleDrag={handleDrag}
                                             handleDrop={handleDrop}
