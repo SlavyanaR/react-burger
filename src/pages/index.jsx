@@ -1,5 +1,5 @@
-import { NotFound404 } from './not-found-404/not-found-404';
+import { Profile } from './profile/profile';
 
 export {
-    NotFound404
+       Profile
 }

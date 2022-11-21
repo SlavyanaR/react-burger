@@ -1,10 +1,12 @@
 import React from "react";
 import AppHeaderStyles from "./AppHeader.module.css";
-import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 export default function AppHeader() {
+    const location = useLocation();
     return (
-        <header className={`${AppHeaderStyles.header} p-4`}>            
+        <header className={`${AppHeaderStyles.header} p-4`}>
             <div className={`${AppHeaderStyles.button} pl-5 pr-5`}>
                 <BurgerIcon />
                 <p className="text text_type_main-default ml-2">Конструктор</p>
@@ -14,11 +16,19 @@ export default function AppHeader() {
                 <p className="text text_type_main-default ml-2">Лента заказов</p>
             </div>
             <div className={AppHeaderStyles.logo}>
-                <Logo />
+                <Link to='/'>
+                    <Logo />
+                </Link>
             </div>
             <div className={`${AppHeaderStyles.button} pl-5 pr-5`}>
-                <ProfileIcon />
-                <p className="text text_type_main-default ml-2">Личный кабинет</p>
+                <NavLink
+                    to='/profile'
+                    className={`${AppHeaderStyles.link} text text_type_main-default`}
+                    activeClassName={`${AppHeaderStyles.linkActive} text text_type_main-default`}
+                >
+                    <ProfileIcon />
+                    <p className="text text_type_main-default ml-2">Личный кабинет</p>
+                </NavLink>
             </div>
         </header>
     )
