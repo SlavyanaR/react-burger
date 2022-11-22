@@ -3,9 +3,9 @@
 	flex-direction: column;
 	max-width: 860px;
 	margin: 60px auto 0;
-	background: #1c1c21;
 	border-radius: 10px;
-	
+	background: #1c1c21;
+	align-items: center;
 }
 
 .link {

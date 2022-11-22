@@ -1,23 +1,45 @@
 import React, { useEffect } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import Appstyles from "./App.module.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { useDispatch } from 'react-redux';
+import IngredientDetail from "../IngredientDetails/IngredientDetails";
+
 import { getApiItems } from "../../services/actions/index";
-import { Switch, Route, useLocation } from 'react-router-dom';
-import { Profile } from '../../pages';
+import { Login, Register, ForgotPassword, ResetPassword, Profile, NotFound404 } from '../../pages';
+import { getCookie } from "../../utils/utils";
+import { getUser, updateToken } from "../../services/actions/authorization";
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 
+import Appstyles from "./App.module.css";
 
 function App() {
     const dispatch = useDispatch();
-    
+
+    const token = localStorage.getItem('refreshToken');
+    const cookie = getCookie('token');
+    const location = useLocation();
+    const history = useHistory();
+    const background = location.state?.background;
+
     useEffect(() => {
         dispatch(getApiItems())
     }, [dispatch])
+
+    useEffect(() => {
+        dispatch(getUser());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!cookie && token) {
+            dispatch(updateToken());
+        }
+    }, [dispatch, token, cookie]);
+
 
     return (
         <div className={Appstyles.page}>
@@ -32,8 +54,26 @@ function App() {
                             </main>
                         </DndProvider>
                     </Route>
-                    <Route path='/profile'>
+                    <Route path='/login' exact>
+                        <Login />
+                    </Route>
+                    <Route path='/register' exact>
+                        <Register />
+                    </Route>
+                    <Route path='/forgot-password' exact>
+                        <ForgotPassword />
+                    </Route>
+                    <Route path='/reset-password' exact>
+                        <ResetPassword />
+                    </Route>
+                    <Route path='/ingredients/:id' exact={true}>
+                        <IngredientDetail />
+                    </Route>
+                    <ProtectedRoute path='/profile'>
                         <Profile />
+                    </ProtectedRoute>
+                    <Route>
+                        <NotFound404 />
                     </Route>
                 </Switch>
             </>
