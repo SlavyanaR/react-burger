@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
-import { resetPassword, setResetFormValue } from '../../services/actions/authorization';
+import { resetPassword, setResetFormValue } from '../../services/actions/auth';
 import { getCookie } from '../../utils/utils';
 import ResetPasswordStyles from './reset-password.module.css';
 

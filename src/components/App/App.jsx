@@ -12,7 +12,7 @@ import IngredientDetail from "../IngredientDetails/IngredientDetails";
 import { getApiItems } from "../../services/actions/index";
 import { Login, Register, ForgotPassword, ResetPassword, Profile, NotFound404 } from '../../pages';
 import { getCookie } from "../../utils/utils";
-import { getUser, updateToken } from "../../services/actions/authorization";
+import { getUser, updateToken } from "../../services/actions/auth";
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 
 import Appstyles from "./App.module.css";

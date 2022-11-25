@@ -2,7 +2,7 @@ import React from "react";
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
-import { registerUser, setRegisterFormValue } from "../../services/actions/authorization";
+import { registerUser, setRegisterFormValue } from "../../services/actions/auth";
 import { getCookie } from "../../utils/utils";
 import RegisterStyles from './register.module.css';
 

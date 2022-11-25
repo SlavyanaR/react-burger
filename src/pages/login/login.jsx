@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, EmailInput, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
-import { setLoginFormValue, singIn } from '../../services/actions/authorization';
+import { setLoginFormValue, singIn } from '../../services/actions/auth';
 import { getCookie } from '../../utils/utils';
 import LoginStyles from './login.module.css';
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import { singOut, updateUser } from '../../services/actions/authorization';
+import { singOut, updateUser } from '../../services/actions/auth';
 import { Orders } from './orders/orders';
 import ProfileStyles from './profile.module.css';
 
