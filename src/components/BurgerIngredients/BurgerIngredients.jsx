@@ -5,6 +5,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Category from "../Category/Category";
 import IngredientDetail from "../IngredientDetails/IngredientDetails";
 import Modal from "../Modal/Modal";
+import { Route, useHistory } from 'react-router-dom';
 import { SET_INFO_CHOSEN_INGREDIENT, DELETE_INFO_CHOSEN_INGREDIENT } from "../../services/actions/chosenIngredient";
 
 export default function BurgerIngredients() {
@@ -19,6 +20,8 @@ export default function BurgerIngredients() {
     const mainRef = useRef();
     const sauceRef = useRef();
 
+    const history = useHistory();
+
 
     const hightlightTab = () => {
         const refs = [bunRef, mainRef, sauceRef];
@@ -32,9 +35,9 @@ export default function BurgerIngredients() {
 
     const handlerScroll = (value) => {
         setCurrent(value);
-        if (value === 'bun') { bunRef.current.scrollIntoView({behavior: "smooth"}) }
-        else if (value === 'sauce') { sauceRef.current.scrollIntoView({behavior: "smooth"}) }
-        else { mainRef.current.scrollIntoView({behavior: "smooth"}) }
+        if (value === 'bun') { bunRef.current.scrollIntoView({ behavior: "smooth" }) }
+        else if (value === 'sauce') { sauceRef.current.scrollIntoView({ behavior: "smooth" }) }
+        else { mainRef.current.scrollIntoView({ behavior: "smooth" }) }
     }
 
     function openIngridientsDetail(card) {
@@ -43,13 +46,15 @@ export default function BurgerIngredients() {
             item: card
         })
         setOpeningDetails(true);
+
     }
 
     function closePopup() {
         setOpeningDetails(false);
         dispatch({
             type: DELETE_INFO_CHOSEN_INGREDIENT
-        })
+        });
+        history.replace('/');
     }
 
     return (
@@ -71,10 +76,13 @@ export default function BurgerIngredients() {
                 <Category cards={items} type='sauce' refer={sauceRef} onClick={openIngridientsDetail} headerKey='main' />
                 <Category cards={items} type='main' refer={mainRef} onClick={openIngridientsDetail} headerKey='main' />
             </div>
-            {openingDetails &&
-                <Modal title='Детали ингредиента' onClose={closePopup} >
-                    <IngredientDetail element={chosenItem} />
-                </Modal>
+            {openingDetails && (
+                <Route path='/ingredients/:id' exact={true}>
+                    <Modal title='Детали ингредиента' onClose={closePopup} >
+                        <IngredientDetail element={chosenItem} />
+                    </Modal>
+                </Route>
+            )
             }
         </section>
     )

@@ -15,7 +15,7 @@ const AppHeader = () => {
                     className={`${AppHeaderStyles.link} text text_type_main-default `}
                     activeClassName={`${AppHeaderStyles.linkActive} text text_type_main-default`}
                 >
-                    <BurgerIcon />
+                    <BurgerIcon type={location.pathname === '/' ? 'primary' : 'secondary'} />
                     <p className="text text_type_main-default ml-2">Конструктор</p>
                 </NavLink>
             </div>
@@ -26,7 +26,7 @@ const AppHeader = () => {
                     className={`${AppHeaderStyles.link} text text_type_main-default`}
                     activeClassName={`${AppHeaderStyles.linkActive} text text_type_main-default`}
                 >
-                    <ListIcon />
+                    <ListIcon type={location.pathname === '/feed' ? 'primary' : 'secondary'} />
                     <p className="text text_type_main-default ml-2">Лента заказов</p>
                 </NavLink>
             </div>
@@ -41,8 +41,8 @@ const AppHeader = () => {
                     className={`${AppHeaderStyles.link} text text_type_main-default`}
                     activeClassName={`${AppHeaderStyles.linkActive} text text_type_main-default`}
                 >
-                    <ProfileIcon />
-                    <p className="text text_type_main-default ml-2">Личный кабинет</p>
+                    <ProfileIcon type={location.pathname === '/profile' || location.pathname === '/profile/orders' ? 'primary' : 'secondary'} />
+                        <p className="text text_type_main-default ml-2">Личный кабинет</p>
                 </NavLink>
             </div>
         </header>

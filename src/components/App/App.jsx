@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 
 import AppHeader from '../AppHeader/AppHeader';
@@ -23,7 +23,7 @@ function App() {
     const token = localStorage.getItem('refreshToken');
     const cookie = getCookie('token');
     const location = useLocation();
-    const history = useHistory();
+
     const background = location.state?.background;
 
     useEffect(() => {
@@ -45,7 +45,7 @@ function App() {
         <div className={Appstyles.page}>
             <AppHeader />
             <>
-                <Switch >
+                <Switch location={background || location}>
                     <Route path='/' exact>
                         <DndProvider backend={HTML5Backend}>
                             <main className={Appstyles.main}>
