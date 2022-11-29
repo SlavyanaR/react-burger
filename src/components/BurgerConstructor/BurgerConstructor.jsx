@@ -10,6 +10,8 @@ import { ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_BUN_IN_CONSTRUCTOR, SORT_INGREDIENTS
 import { RESET_ORDER_NUMBER } from '../../services/actions/order';
 import { postOrder } from "../../services/actions/index";
 import { v4 as uuidv4 } from 'uuid';
+import { getCookie } from "../../utils/utils";
+import { useHistory } from 'react-router-dom';
 
 
 export default function BurgerConstructor() {
@@ -26,6 +28,8 @@ export default function BurgerConstructor() {
     const [droppedIndex, setDroppedIndex] = useState(null);
     const [draggedIndex, setDraggedIndex] = useState(null);
     const [openingOrder, setOpeningOrder] = React.useState(false);
+    const cookie = getCookie('token');
+    const history = useHistory();
 
     const handleDrag = (draggedTargetIndex) => {
         setIsSort(true);
@@ -90,8 +94,10 @@ export default function BurgerConstructor() {
     };
 
     const makeOrder = () => {
-        dispatch(postOrder(idList));
+        cookie && dispatch(postOrder(idList));
+        !cookie && history.push('/login')
         setOpeningOrder(true);
+
     }
 
     function closePopup() {
@@ -161,9 +167,13 @@ export default function BurgerConstructor() {
                             <span className="text text_type_digits-medium pr-2">{totalPrice}</span>
                             <CurrencyIcon type="primary" />
                         </div>
-                        <Button type="primary" size="large" onClick={makeOrder} disabled={!BunElement}>
-                            Оформить заказ
-                        </Button>
+                        {itemsMenu.length === 0
+                            ? (<Button type="primary" size="large">
+                                Оформить заказ
+                            </Button>)
+                            : (<Button type="primary" size="large" onClick={makeOrder} disabled={!BunElement}>
+                                Оформить заказ
+                            </Button>)}
                     </div>
                 </>
                 :
