@@ -85,7 +85,6 @@ export default function BurgerConstructor() {
 
     const handleDeleteItem = (e, index) => {
         const id = notBunsIngredients[index]._id;
-        const item = notBunsIngredients.splice(index, 1)[0];
         dispatch({
             type: DELETE_INGREDIENT_FROM_CONSTRUCTOR,
             ingredients: notBunsIngredients,

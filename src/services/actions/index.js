@@ -39,7 +39,7 @@ export function getApiItems() {
     };
 }
 
-export const postOrder = (orderList) => {
+export function postOrder (orderList)  {
       return function (dispatch) {
         dispatch({
             type: POST_CONSTRUCTOR_ITEMS_REQUEST
