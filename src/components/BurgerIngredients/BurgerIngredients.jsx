@@ -5,8 +5,8 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Category from "../Category/Category";
 import IngredientDetail from "../IngredientDetails/IngredientDetails";
 import Modal from "../Modal/Modal";
-import { Route, useHistory } from 'react-router-dom';
 import { SET_INFO_CHOSEN_INGREDIENT, DELETE_INFO_CHOSEN_INGREDIENT } from "../../services/actions/chosenIngredient";
+import {openIngridientsDetail, closePopup} from '../../services/actions/chosenIngredient';
 
 export default function BurgerIngredients() {
     const dispatch = useDispatch();
@@ -19,8 +19,6 @@ export default function BurgerIngredients() {
     const bunRef = useRef();
     const mainRef = useRef();
     const sauceRef = useRef();
-
-    const history = useHistory();
 
 
     const hightlightTab = () => {
@@ -35,27 +33,14 @@ export default function BurgerIngredients() {
 
     const handlerScroll = (value) => {
         setCurrent(value);
-        if (value === 'bun') { bunRef.current.scrollIntoView({ behavior: "smooth" }) }
-        else if (value === 'sauce') { sauceRef.current.scrollIntoView({ behavior: "smooth" }) }
-        else { mainRef.current.scrollIntoView({ behavior: "smooth" }) }
+        if (value === 'bun') { bunRef.current.scrollIntoView({behavior: "smooth"}) }
+        else if (value === 'sauce') { sauceRef.current.scrollIntoView({behavior: "smooth"}) }
+        else { mainRef.current.scrollIntoView({behavior: "smooth"}) }
     }
 
-    function openIngridientsDetail(card) {
-        dispatch({
-            type: SET_INFO_CHOSEN_INGREDIENT,
-            item: card
-        })
-        setOpeningDetails(true);
-
-    }
-
-    function closePopup() {
-        setOpeningDetails(false);
-        dispatch({
-            type: DELETE_INFO_CHOSEN_INGREDIENT
-        });
-        history.replace('/');
-    }
+    const handleopenIngridientsDetail = (card) => {
+		dispatch(openIngridientsDetail(card));
+	};
 
     return (
         <section className={BurgerIngredientsStyles.ingridients}>
@@ -72,17 +57,14 @@ export default function BurgerIngredients() {
                 </Tab>
             </div>
             <div className={BurgerIngredientsStyles.menu} ref={containerRef} onScroll={hightlightTab}>
-                <Category cards={items} type='bun' refer={bunRef} onClick={openIngridientsDetail} headerKey='bun' />
-                <Category cards={items} type='sauce' refer={sauceRef} onClick={openIngridientsDetail} headerKey='main' />
-                <Category cards={items} type='main' refer={mainRef} onClick={openIngridientsDetail} headerKey='main' />
+                <Category cards={items} type='bun' refer={bunRef} onClick={handleopenIngridientsDetail} headerKey='bun' />
+                <Category cards={items} type='sauce' refer={sauceRef} onClick={handleopenIngridientsDetail} headerKey='main' />
+                <Category cards={items} type='main' refer={mainRef} onClick={handleopenIngridientsDetail} headerKey='main' />
             </div>
-            {openingDetails && (
-                <Route path='/ingredients/:id' exact={true}>
-                    <Modal title='Детали ингредиента' onClose={closePopup} >
-                        <IngredientDetail element={chosenItem} />
-                    </Modal>
-                </Route>
-            )
+            {openingDetails &&
+                <Modal title='Детали ингредиента' onClose={closePopup} >
+                    <IngredientDetail element={chosenItem} />
+                </Modal>
             }
         </section>
     )
