@@ -1,17 +1,16 @@
 import React, { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import BurgerIngredientsStyles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Category from "../Category/Category";
-import IngredientDetail from "../IngredientDetails/IngredientDetails";
-import Modal from "../Modal/Modal";
-import { SET_INFO_CHOSEN_INGREDIENT, DELETE_INFO_CHOSEN_INGREDIENT } from "../../services/actions/chosenIngredient";
+
+//import { SET_INFO_CHOSEN_INGREDIENT, DELETE_INFO_CHOSEN_INGREDIENT } from "../../services/actions/chosenIngredient";
 
 export default function BurgerIngredients() {
-    const dispatch = useDispatch();
+   // const dispatch = useDispatch();
     const items = useSelector(store => store.ingredientsApi);
-    const [openingDetails, setOpeningDetails] = React.useState(false);
-    const chosenItem = useSelector(store => store.chosenIngredient);
+    //const [openingDetails, setOpeningDetails] = React.useState(false);
+    //const chosenItem = useSelector(store => store.chosenIngredient);
 
     const [current, setCurrent] = React.useState('bun');
     const containerRef = useRef();
@@ -32,27 +31,12 @@ export default function BurgerIngredients() {
 
     const handlerScroll = (value) => {
         setCurrent(value);
-        if (value === 'bun') { bunRef.current.scrollIntoView({behavior: "smooth"}) }
-        else if (value === 'sauce') { sauceRef.current.scrollIntoView({behavior: "smooth"}) }
-        else { mainRef.current.scrollIntoView({behavior: "smooth"}) }
+        if (value === 'bun') { bunRef.current.scrollIntoView({ behavior: "smooth" }) }
+        else if (value === 'sauce') { sauceRef.current.scrollIntoView({ behavior: "smooth" }) }
+        else { mainRef.current.scrollIntoView({ behavior: "smooth" }) }
     }
 
-    function openIngridientsDetail(card) {
-        dispatch({
-            type: SET_INFO_CHOSEN_INGREDIENT,
-            item: card
-        })
-        setOpeningDetails(true);
-    }
-
-    function closePopup() {
-        setOpeningDetails(false);
-        dispatch({
-            type: DELETE_INFO_CHOSEN_INGREDIENT
-        })
-    }
-
-    return (
+       return (
         <section className={BurgerIngredientsStyles.ingridients}>
             <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
             <div className={BurgerIngredientsStyles.tab}>
@@ -67,15 +51,10 @@ export default function BurgerIngredients() {
                 </Tab>
             </div>
             <div className={BurgerIngredientsStyles.menu} ref={containerRef} onScroll={hightlightTab}>
-                <Category cards={items} type='bun' refer={bunRef} onClick={openIngridientsDetail} headerKey='bun' />
-                <Category cards={items} type='sauce' refer={sauceRef} onClick={openIngridientsDetail} headerKey='main' />
-                <Category cards={items} type='main' refer={mainRef} onClick={openIngridientsDetail} headerKey='main' />
+                <Category cards={items} type='bun' refer={bunRef}  headerKey='bun' />
+                <Category cards={items} type='sauce' refer={sauceRef} headerKey='main' />
+                <Category cards={items} type='main' refer={mainRef}  headerKey='main' />
             </div>
-            {openingDetails &&
-                <Modal title='Детали ингредиента' onClose={closePopup} >
-                    <IngredientDetail element={chosenItem} />
-                </Modal>
-            }
         </section>
     )
 }

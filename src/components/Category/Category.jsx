@@ -31,6 +31,5 @@ Category.propTypes = {
     refer: PropTypes.object.isRequired,
     cards: PropTypes.array.isRequired,
     type: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
     headerKey: PropTypes.string.isRequired,
 }

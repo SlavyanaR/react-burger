@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import IngredientDetail from "../IngredientDetails/IngredientDetails";
+import { closeIngridientsDetail } from '../../services/actions/chosenIngredient';
+import Modal from "../Modal/Modal";
 
 import { getApiItems } from "../../services/actions/index";
 import { Login, Register, ForgotPassword, ResetPassword, Profile, NotFound404 } from '../../pages';
@@ -15,16 +17,19 @@ import { getCookie } from "../../utils/utils";
 import { getUser, updateToken } from "../../services/actions/auth";
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 
+
 import Appstyles from "./App.module.css";
 
 function App() {
     const dispatch = useDispatch();
+    const chosenItem = useSelector(store => store.chosenIngredient);
 
     const token = localStorage.getItem('refreshToken');
     const cookie = getCookie('token');
     const location = useLocation();
 
     const background = location.state?.background;
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(getApiItems())
@@ -40,6 +45,10 @@ function App() {
         }
     }, [dispatch, token, cookie]);
 
+    const handlecloseIngridientsDetail = useCallback(() => {
+        dispatch(closeIngridientsDetail());
+        history.replace('/');
+    }, [dispatch]);
 
     return (
         <div className={Appstyles.page}>
@@ -76,6 +85,14 @@ function App() {
                         <NotFound404 />
                     </Route>
                 </Switch>
+                {background && (
+                    <Route path='/ingredients/:id' exact={true}>
+                        <Modal title='Детали ингредиента' onClickClose={handlecloseIngridientsDetail} >
+                            <IngredientDetail element={chosenItem} />
+                        </Modal>
+                    </Route>
+                )
+                }
             </>
         </div>
     );
