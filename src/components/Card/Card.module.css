@@ -13,3 +13,8 @@
     flex-direction: row;
     justify-content: center;
 }
+
+.link {
+	text-decoration: none;
+	color: inherit
+}

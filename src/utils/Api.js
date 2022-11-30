@@ -29,114 +29,114 @@ export async function postOrderRequest(orderList) {
     })
         .then(checkRes))
 }
-export async function forgotPassRequest(email) {
-    return (await fetch(`${config.baseUrl}/password-reset`, {
-        method: 'POST',
-        body: JSON.stringify(email),
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-    })
-        .then(checkRes));
+export const forgotPassRequest = async email => {
+	return await fetch(`${config.url}password-reset`, {
+		method: 'POST',
+		body: JSON.stringify(
+			email
+		),
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		redirect: 'follow',
+		referrerPolicy: 'no-referrer',
+	})
+		.then(checkRes);
 }
 
-export async function getUserRequest() {
-    return (await fetch(`${config.baseUrl}/auth/user`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + getCookie('token'),
-        },
-    })
-        .then(checkRes));
+export const getUserRequest = async () => {
+	return await fetch(`${config.url}auth/user`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + getCookie('token'),
+		},
+	})
+		.then(checkRes);
 }
 
-export async function loginRequest(email, password) {
-    return await fetch(`${config.baseUrl}/auth/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            email: email,
-            password: password,
-        }),
-    })
-        .then(checkRes);
+export const loginRequest = async (email, password) => {
+	return await fetch(`${config.url}auth/login`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			email: email,
+			password: password,
+		}),
+	})
+		.then(checkRes);
 }
 
-export async function logoutRequest() {
-    return await fetch(`${config.baseUrl}/auth/logout`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            token: localStorage.getItem('refreshToken'),
-        }),
-    })
-        .then(checkRes);
+export const logoutRequest = async () => {
+	return await fetch(`${config.url}auth/logout`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			token: localStorage.getItem('refreshToken'),
+		}),
+	})
+		.then(checkRes);
 }
 
-export async function resetPassRequest(password, token) {
-    return await fetch(`${config.baseUrl}/password-reset/reset`, {
-        method: 'POST',
-        body: JSON.stringify(
-            password,
-            token,
-        ),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(checkRes);
+export const resetPassRequest = async (password, token) => {
+	return await fetch(`${config.url}password-reset/reset`, {
+		method: 'POST',
+		body: JSON.stringify(
+			password,
+			token,
+		),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	})
+		.then(checkRes);
 }
 
-export async function updateUserRequest(email, name, password) {
-    return await fetch(`${config.baseUrl}/auth/user`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + getCookie('token'),
-        },
-        body: JSON.stringify({
-            email: email,
-            name: name,
-            password: password,
-        }),
-    })
-        .then(checkRes);
+export const updateUserRequest = async (email, name, password) => {
+	return await fetch(`${config.url}auth/user`, {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + getCookie('token'),
+		},
+		body: JSON.stringify({
+			email: email,
+			name: name,
+			password: password,
+		}),
+	})
+		.then(checkRes);
 }
 
-export async function updateTokenRequest() {
-    return await fetch(`${config.baseUrl}/auth/token`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            token: localStorage.getItem('refreshToken'),
-        }),
-    })
-        .then(checkRes);
+export const updateTokenRequest = async () => {
+	return await fetch(`${config.url}auth/token`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			token: localStorage.getItem('refreshToken'),
+		}),
+	})
+		.then(checkRes);
 }
 
-export async function resgisterUserRequest(email, password, name) {
-    return await fetch(`${config.baseUrl}auth/register`, {
-        method: 'POST',
-        body: JSON.stringify({
-            email: email,
-            password: password,
-            name: name,
-        }),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(checkRes);
+export const resgisterUserRequest = async (email, password, name) => {
+	return await fetch(`${config.url}auth/register`, {
+		method: 'POST',
+		body: JSON.stringify({
+			email: email,
+			password: password,
+			name: name,
+		}),
+        headers: config.headers,
+	})
+		.then(checkRes);
 }
