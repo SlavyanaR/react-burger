@@ -30,7 +30,7 @@ export async function postOrderRequest(orderList) {
         .then(checkRes))
 }
 export const forgotPassRequest = async email => {
-	return await fetch(`${config.url}password-reset`, {
+	return await fetch(`${config.baseUrl}/password-reset`, {
 		method: 'POST',
 		body: JSON.stringify(
 			email
@@ -48,7 +48,7 @@ export const forgotPassRequest = async email => {
 }
 
 export const getUserRequest = async () => {
-	return await fetch(`${config.url}auth/user`, {
+	return await fetch(`${config.baseUrl}/auth/user`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const getUserRequest = async () => {
 }
 
 export const loginRequest = async (email, password) => {
-	return await fetch(`${config.url}auth/login`, {
+	return await fetch(`${config.baseUrl}/auth/login`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export const loginRequest = async (email, password) => {
 }
 
 export const logoutRequest = async () => {
-	return await fetch(`${config.url}auth/logout`, {
+	return await fetch(`${config.baseUrl}/auth/logout`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ export const logoutRequest = async () => {
 }
 
 export const resetPassRequest = async (password, token) => {
-	return await fetch(`${config.url}password-reset/reset`, {
+	return await fetch(`${config.baseUrl}/password-reset/reset`, {
 		method: 'POST',
 		body: JSON.stringify(
 			password,
@@ -100,7 +100,7 @@ export const resetPassRequest = async (password, token) => {
 }
 
 export const updateUserRequest = async (email, name, password) => {
-	return await fetch(`${config.url}auth/user`, {
+	return await fetch(`${config.baseUrl}/auth/user`, {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ export const updateUserRequest = async (email, name, password) => {
 }
 
 export const updateTokenRequest = async () => {
-	return await fetch(`${config.url}auth/token`, {
+	return await fetch(`${config.baseUrl}/auth/token`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ export const updateTokenRequest = async () => {
 }
 
 export const resgisterUserRequest = async (email, password, name) => {
-	return await fetch(`${config.url}auth/register`, {
+	return await fetch(`${config.baseUrl}/auth/register`, {
 		method: 'POST',
 		body: JSON.stringify({
 			email: email,
