@@ -87,7 +87,7 @@ function App() {
                 </Switch>
                 {background && (
                     <Route path='/ingredients/:id' exact={true}>
-                        <Modal title='Детали ингредиента' onClickClose={handlecloseIngridientsDetail} >
+                        <Modal title='Детали ингредиента' onClose={handlecloseIngridientsDetail} >
                             <IngredientDetail element={chosenItem} />
                         </Modal>
                     </Route>
