@@ -22,7 +22,7 @@ import Appstyles from "./App.module.css";
 
 function App() {
     const dispatch = useDispatch();
-    const chosenItem = useSelector(store => store.chosenIngredient);
+
 
     const token = localStorage.getItem('refreshToken');
     const cookie = getCookie('token');
@@ -88,7 +88,7 @@ function App() {
                 {background && (
                     <Route path='/ingredients/:id' exact={true}>
                         <Modal title='Детали ингредиента' onClose={handlecloseIngridientsDetail} >
-                            <IngredientDetail element={chosenItem} />
+                            <IngredientDetail />
                         </Modal>
                     </Route>
                 )

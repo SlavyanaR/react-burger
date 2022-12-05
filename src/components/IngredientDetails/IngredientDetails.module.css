@@ -21,3 +21,12 @@
 .popup {
     max-width: 2080px;
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 520px;
+    width: 100%;
+    margin: auto;
+}
