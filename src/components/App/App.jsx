@@ -12,7 +12,7 @@ import { closeIngridientsDetail } from '../../services/actions/chosenIngredient'
 import Modal from "../Modal/Modal";
 
 import { getApiItems } from "../../services/actions/index";
-import { Login, Register, ForgotPassword, ResetPassword, Profile, NotFound404 } from '../../pages';
+import { Login, Register, ForgotPassword, ResetPassword, Profile, NotFound404, Feed } from '../../pages';
 import { getCookie } from "../../utils/utils";
 import { getUser, updateToken } from "../../services/actions/auth";
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
@@ -53,47 +53,54 @@ function App() {
     return (
         <div className={Appstyles.page}>
             <AppHeader />
-            <>
-                <Switch location={background || location}>
-                    <Route path='/' exact>
-                        <DndProvider backend={HTML5Backend}>
-                            <main className={Appstyles.main}>
-                                <BurgerIngredients />
-                                <BurgerConstructor />
-                            </main>
-                        </DndProvider>
-                    </Route>
-                    <Route path='/login' exact>
-                        <Login />
-                    </Route>
-                    <Route path='/register' exact>
-                        <Register />
-                    </Route>
-                    <Route path='/forgot-password' exact>
-                        <ForgotPassword />
-                    </Route>
-                    <Route path='/reset-password' exact>
-                        <ResetPassword />
-                    </Route>
-                    <Route path='/ingredients/:id' exact={true}>
+            <Switch location={background || location}>
+                <Route path='/' exact>
+                    <DndProvider backend={HTML5Backend}>
+                        <main className={Appstyles.main}>
+                            <BurgerIngredients />
+                            <BurgerConstructor />
+                        </main>
+                    </DndProvider>
+                </Route>
+                <Route path='/login' exact>
+                    <Login />
+                </Route>
+                <Route path='/register' exact>
+                    <Register />
+                </Route>
+                <Route path='/forgot-password' exact>
+                    <ForgotPassword />
+                </Route>
+                <Route path='/reset-password' exact>
+                    <ResetPassword />
+                </Route>
+                <Route path='/ingredients/:id' exact={true}>
+                    <IngredientDetail />
+                </Route>
+                <Route path='/feed' exact>
+                    <Feed />
+                </Route>
+                <Route path='/feed/:id' exact>
+                    <OrdersInfo />
+                </Route>
+                <ProtectedRoute path='/profile'>
+                    <Profile />
+                </ProtectedRoute>
+                <ProtectedRoute path='/profile/orders/:id'>
+                    <OrdersInfo />
+                </ProtectedRoute>
+                <Route>
+                    <NotFound404 />
+                </Route>
+            </Switch>
+            {background && (
+                <Route path='/ingredients/:id' exact={true}>
+                    <Modal title='Детали ингредиента' onClose={handlecloseIngridientsDetail} >
                         <IngredientDetail />
-                    </Route>
-                    <ProtectedRoute path='/profile'>
-                        <Profile />
-                    </ProtectedRoute>
-                    <Route>
-                        <NotFound404 />
-                    </Route>
-                </Switch>
-                {background && (
-                    <Route path='/ingredients/:id' exact={true}>
-                        <Modal title='Детали ингредиента' onClose={handlecloseIngridientsDetail} >
-                            <IngredientDetail />
-                        </Modal>
-                    </Route>
-                )
-                }
-            </>
+                    </Modal>
+                </Route>
+            )
+            }
         </div>
     );
 }
