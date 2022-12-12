@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { wsConnectionClosed, wsConnectionOpen } from '../../services/actions/wsAction';
+
 
 import FeedStyles from '.feed.module.css';
 
