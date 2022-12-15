@@ -2,7 +2,8 @@ import React, { useEffect, useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useRouteMatch } from 'react-router-dom';
-import uniqid from 'uniqid';
+//import uniqid from 'uniqid';
+import { v4 as uuidv4 } from 'uuid';
 import OrderInfoStyles from './OrderInfo.module.css';
 import { OrdersInfoDetails } from '../OrderInfoDetails/OrderInfoDetails';
 import { wsConnectionClosed, wsConnectionOpen } from '../../services/actions/wsAction';
@@ -80,7 +81,7 @@ export const OrdersInfo = () => {
 							<p className="text text_type_main-default text_color_inactive">{formatDate(order.createdAt)}</p>
 							<div className={OrderInfoStyles.price}>
 								<p className='text text_type_digits-default pr-2'>{orderTotalPrice}</p>
-								<CurrencyIcon type="primary" key={uniqid()} />
+								<CurrencyIcon type="primary" key={uuidv4()} />
 							</div>
 						</div>
 					</div >

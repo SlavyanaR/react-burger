@@ -7,7 +7,7 @@ import Layer from "../Layer/Layer";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_BUN_IN_CONSTRUCTOR, SORT_INGREDIENTS_IN_CONSTRUCTOR, DELETE_INGREDIENT_FROM_CONSTRUCTOR } from '../../services/actions/constructorItems'
-import { RESET_ORDER_NUMBER } from '../../services/actions/order';
+import { RESET_ORDER_NUMBER } from '../../services/action-types/orderTypes';
 import { postOrder } from "../../services/actions/index";
 import { v4 as uuidv4 } from 'uuid';
 import { getCookie } from "../../utils/utils";

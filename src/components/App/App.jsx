@@ -11,14 +11,14 @@ import IngredientDetail from "../IngredientDetails/IngredientDetails";
 import { closeIngridientsDetail } from '../../services/actions/chosenIngredient';
 import Modal from "../Modal/Modal";
 
+
 import { getApiItems } from "../../services/actions/index";
 import { Login, Register, ForgotPassword, ResetPassword, Profile, NotFound404, Feed } from '../../pages';
 import { getCookie } from "../../utils/utils";
 import { getUser, updateToken } from "../../services/actions/auth";
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
-import { closeOrderInfo } from '../../services/actions/order-info-details';
+import { closeOrderInfo } from "../../services/actions/orderInfoDetail";
 import { OrdersInfo } from "../OrderInfo/OrderInfo";
-
 import Appstyles from "./App.module.css";
 
 function App() {
@@ -38,12 +38,11 @@ function App() {
     }, [dispatch])
 
     useEffect(() => {
-        dispatch(getUser());
-    }, [dispatch]);
-
-    useEffect(() => {
         if (!cookie && token) {
             dispatch(updateToken());
+        }
+        if (cookie && token) {
+            dispatch(getUser());
         }
     }, [dispatch, token, cookie]);
 

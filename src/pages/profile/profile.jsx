@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, Route, Switch } from 'react-router-dom';
-import { singOut, updateUser } from '../../services/actions/auth';
+import { NavLink, Route, Switch, useLocation, useRouteMatch } from 'react-router-dom';
+import { singOut, updateUser, getUser } from '../../services/actions/auth';
 import { Orders } from './orders/orders';
+import { OrdersInfo } from '../../components/OrderInfo/OrderInfo';
+import { wsAuthConnectionClosed, wsAuthConnectionOpen } from '../../services/actions/wsAuthAction';
 import ProfileStyles from './profile.module.css';
 
 export const Profile = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
+    const matchOrderDetails = !!useRouteMatch({ path: '/profile/orders/:id' });
+    const background = location.state?.background;
     const { email, name } = useSelector(state => state.auth.user);
+
+    useEffect(() => {
+        dispatch(getUser());
+        dispatch(wsAuthConnectionOpen());
+        return () => {
+            dispatch(wsAuthConnectionClosed())
+        }
+    }, [dispatch]);
 
     const [form, setForm] = useState({
         name: name,
@@ -39,7 +52,7 @@ export const Profile = () => {
 
     return (
         <div className={`${ProfileStyles.profile} pt-30`}>
-            <nav className={`${ProfileStyles.container} pr-15`}>
+            {!matchOrderDetails && <nav className={`${ProfileStyles.container} pr-15`}>
                 <ul className={`${ProfileStyles.list}`}>
                     <li className={`${ProfileStyles.item}`}>
                         <NavLink
@@ -77,9 +90,13 @@ export const Profile = () => {
                     В этом разделе вы можете изменить свои персональные данные
                 </p>
             </nav>
-            <Switch>
-                <Route exact path="/profile/orders">
+            }
+            <Switch location={background || location}>
+                <Route path="/profile/orders" exact>
                     <Orders />
+                </Route>
+                <Route path='/profile/orders/:id' exact>
+                    <OrdersInfo />
                 </Route>
                 <Route exact path="/profile">
                     <form className={ProfileStyles.form} onSubmit={onSubmit}>

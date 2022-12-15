@@ -5,6 +5,7 @@ import { NotFound404 } from './non-found-404/non-found-404';
 import { Login } from './login/login';
 import { ForgotPassword } from './forgot-password/forgot-password';
 import { Orders } from './profile/orders/orders';
+import { Feed } from './feed/feed';
 
 export {
        Profile,
@@ -13,5 +14,6 @@ export {
        NotFound404,
        Login,
        ForgotPassword,
-       Orders
+       Orders,
+       Feed
 }

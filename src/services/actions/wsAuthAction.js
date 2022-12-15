@@ -5,7 +5,7 @@ import {
 	WS_AUTH_GET_ORDERS,
 	WS_AUTH_SEND_ORDERS,
 	WS_AUTH_CONNECTION_START
-} from '../action-types';
+} from '../action-types/wsAuthActionTypes';
 
 export const wsAuthConnectionSuccess = () => {
 	return {

@@ -5,6 +5,9 @@ import { orderReducer } from "./order";
 import { chosenIngredientReducer } from "./chosenIngredient";
 import { loadingReducer } from "./loading";
 import { authReducer } from "./auth";
+import { wsAuthReducer } from "./wsAuthReducer";
+import { wsReducer } from "./wsReducer";
+import { orderInfoReducer } from "./orderInfoDetail";
 
 export const rootReducer = combineReducers({
     ingredientsApi: initialItemsReducer,
@@ -12,5 +15,8 @@ export const rootReducer = combineReducers({
     order: orderReducer,
     chosenIngredient: chosenIngredientReducer,
     loading: loadingReducer,
-    auth: authReducer
+    auth: authReducer,
+    wsFeed: wsReducer,
+	wsAuthFeed: wsAuthReducer,
+    orderInfo: orderInfoReducer,
 })

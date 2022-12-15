@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import OrderInfoDetailsStyles from './OrderInfoDetails.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import uniqid from 'uniqid';
+//import uniqid from 'uniqid';
+import { v4 as uuidv4 } from 'uuid';
 import propTypes from "prop-types";
 import { useSelector } from 'react-redux';
 import { OrdersImage } from '../OrdersImage/OrdersImage';
@@ -29,16 +30,16 @@ export const OrdersInfoDetails = ({ details }) => {
 		<div className={OrderInfoDetailsStyles.container}>
 			{orderIngredient && [...new Set(orderIngredient)].map((item) => {
 				return (
-					<li className={`${OrderInfoDetailsStyles.item} pb-3`} key={uniqid()}>
+					<li className={`${OrderInfoDetailsStyles.item} pb-3`} key={uuidv4()}>
 						{item && (
 							<>
 								<div className={OrderInfoDetailsStyles.info}>
-									<OrdersImage image={item.image} alt={item.name} key={uniqid()} />
+									<OrdersImage image={item.image} alt={item.name} key={uuidv4()} />
 									<p className={`${OrderInfoDetailsStyles.text} text text_type_main-default pl-4`}>{item.name}</p>
 								</div>
 								<div className={OrderInfoDetailsStyles.price}>
 									<p className='text text_type_digits-default pr-2'> {count(item)} x {item.type === 'bun' ? item.price * 2 : item.price}</p>
-									<CurrencyIcon type="primary" key={uniqid()} />
+									<CurrencyIcon type="primary" key={uuidv4()} />
 								</div>
 							</>
 						)}
