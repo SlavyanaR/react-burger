@@ -20,8 +20,8 @@ export const OrdersInfo = () => {
 
 	const allOrders = useSelector(store => store.wsFeed.orders);
 	const authOrders = useSelector(store => store.wsAuthFeed.orders);
-	const ingredients = useSelector(store => store.burgerIngredients.ingredients);
-	//const items = useSelector(store => store.ingredientsApi)
+	//const ingredients = useSelector(store => store.burgerIngredients.ingredients);
+	const items = useSelector(store => store.ingredientsApi)
 
 	let orders = match.path === isProfile ? authOrders : allOrders;
 	let order = orders?.find((order) => order._id === id);
@@ -29,11 +29,11 @@ export const OrdersInfo = () => {
 
 	const orderIngredientsData = useMemo(() => {
 		return order?.ingredients.map((id) => {
-			return ingredients?.find((item) => {
+			return items?.find((item) => {
 				return id === item._id
 			})
 		})
-	}, [order?.ingredients, ingredients])
+	}, [order?.items, items])
 
 	const orderTotalPrice = useMemo(() => {
 		return orderIngredientsData?.reduce((sum, item) => {
