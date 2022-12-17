@@ -7,7 +7,8 @@ import OrderCardStyles from './OrderCard.module.css';
 import { OrdersImage } from '../OrdersImage/OrdersImage';
 
 export const OrderCard = ({ order, status }) => {
-	const ingredients = useSelector(store => store.burgerIngredients.ingredients)
+	//const ingredients = useSelector(store => store.burgerIngredients.ingredients)
+	const items = useSelector(store => store.ingredientsApi);
 	const { createdAt, number, name } = order;
 
 	const MAX_LENGTH = order.ingredients.length;
@@ -15,11 +16,11 @@ export const OrderCard = ({ order, status }) => {
 
 	const orderIngredientsData = useMemo(() => {
 		return order?.ingredients.map((id) => {
-			return ingredients?.find((item) => {
+			return items?.find((item) => {
 				return id === item._id
 			})
 		})
-	}, [order?.ingredients, ingredients])
+	}, [order?.items, items])
 
 
 	const orderTotalPrice = useMemo(() => {

@@ -61,12 +61,12 @@ function App() {
             <AppHeader />
             <Switch location={background || location}>
                 <Route path='/' exact>
-                    <DndProvider backend={HTML5Backend}>
-                        <main className={Appstyles.main}>
+                    <main className={Appstyles.main}>
+                        <DndProvider backend={HTML5Backend}>
                             <BurgerIngredients />
                             <BurgerConstructor />
-                        </main>
-                    </DndProvider>
+                        </DndProvider>
+                    </main>
                 </Route>
                 <Route path='/login' exact>
                     <Login />

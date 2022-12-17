@@ -36,7 +36,7 @@ export const OrdersStatus = () => {
 			</div>
 			<div className={`${OrdersStatusStyles.completed} pb-15`}>
 				<p className='text text_type_main-medium'>Выполнено за все время:</p>
-				<h2 className={`${OrdersStatusStyles.totalItems} text text_type_digits-large`}>{total}</h2>
+				<h2 className={`${OrdersStatusStyles.total} text text_type_digits-large`}>{total}</h2>
 			</div>
 			<div className={OrdersStatusStyles.completed}>
 				<p className='text text_type_main-medium'>Выполнено за сегодня:</p>

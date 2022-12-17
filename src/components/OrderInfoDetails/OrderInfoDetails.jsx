@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux';
 import { OrdersImage } from '../OrdersImage/OrdersImage';
 
 export const OrdersInfoDetails = ({ details }) => {
-	const ingredients = useSelector(store => store.burgerIngredients.ingredients);
+	//const ingredients = useSelector(store => store.burgerIngredients.ingredients);
+	const items = useSelector(store => store.ingredientsApi);
 
 	const count = (elem) => {
 		let count = details.filter((item) => {
@@ -19,11 +20,11 @@ export const OrdersInfoDetails = ({ details }) => {
 
 	const orderIngredient = useMemo(() => {
 		return details?.map((elem) => {
-			return ingredients?.find((item) => {
+			return items?.find((item) => {
 				return elem._id === item._id
 			})
 		})
-	}, [details, ingredients]);
+	}, [details, items]);
 
 
 	return (

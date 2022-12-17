@@ -21,6 +21,7 @@ export const OrdersInfo = () => {
 	const allOrders = useSelector(store => store.wsFeed.orders);
 	const authOrders = useSelector(store => store.wsAuthFeed.orders);
 	const ingredients = useSelector(store => store.burgerIngredients.ingredients);
+	//const items = useSelector(store => store.ingredientsApi)
 
 	let orders = match.path === isProfile ? authOrders : allOrders;
 	let order = orders?.find((order) => order._id === id);
