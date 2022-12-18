@@ -10,9 +10,9 @@ import { wsReducer } from "./wsReducer";
 import { orderInfoReducer } from "./orderInfoDetail";
 
 export const rootReducer = combineReducers({
+    order: orderReducer,
     ingredientsApi: initialItemsReducer,
     constructorItems: constructorItemsReducer,
-    order: orderReducer,
     chosenIngredient: chosenIngredientReducer,
     loading: loadingReducer,
     auth: authReducer,

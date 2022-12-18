@@ -6,7 +6,7 @@ import {
 } from "../action-types/orderTypes";
 
 const initialState = {
-    number: '',
+    number: null,
     orderDetailsFailed: false,
     orderDetailsRequest: false
 };
@@ -29,7 +29,7 @@ export const orderReducer = (state = initialState, action) => {
             }
         }
         case POST_CONSTRUCTOR_ITEMS_FAILED: {
-            console.error(action.error);
+           
             return {
                 ...state,
                 orderDetailsFailed: true,
@@ -39,7 +39,7 @@ export const orderReducer = (state = initialState, action) => {
         case RESET_ORDER_NUMBER: {
             return {
                 ...state.order,
-                number: '',
+                number: null,
             }
         }
         default: {

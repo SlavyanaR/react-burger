@@ -21,7 +21,7 @@ export default function BurgerConstructor() {
     const idList = useMemo(() => {
         return ingredientsConstructor.map((item) => item._id);
     }, [ingredientsConstructor]);
-    const orderNum = useSelector((store) => store.order.number.toString());
+    const orderNum = useSelector((store) => store.order.number);
     const [BunElement, setBunElement] = useState(null);
     const notBunsIngredients = ingredientsConstructor.filter((prod) => prod.type !== 'bun')
     const [isSort, setIsSort] = useState(false);
@@ -30,6 +30,7 @@ export default function BurgerConstructor() {
     const [openingOrder, setOpeningOrder] = React.useState(false);
     const cookie = getCookie('token');
     const history = useHistory();
+    const { orderDetailsRequest } = useSelector((state) => state.order);
 
     const handleDrag = (draggedTargetIndex) => {
         setIsSort(true);
@@ -167,9 +168,9 @@ export default function BurgerConstructor() {
                             <span className="text text_type_digits-medium pr-2">{totalPrice}</span>
                             <CurrencyIcon type="primary" />
                         </div>
-                        {itemsMenu.length === 0
+                        {itemsMenu.length === 0 || !!orderDetailsRequest
                             ? (<Button type="primary" size="large">
-                                Оформить заказ
+                               { orderDetailsRequest ? '...Заказ оформляется' : 'Оформить заказ' }
                             </Button>)
                             : (<Button type="primary" size="large" onClick={makeOrder} disabled={!BunElement}>
                                 Оформить заказ
