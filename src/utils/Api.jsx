@@ -23,7 +23,10 @@ function checkRes(res) {
 
 export async function postOrderRequest(orderList) {
     return (await fetch(`${config.baseUrl}/orders`, {
-        headers: config.headers,
+        headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + getCookie('token')
+		},
         method: 'POST',
         body: JSON.stringify({ ingredients: orderList })
     })
