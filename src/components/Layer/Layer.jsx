@@ -1,4 +1,5 @@
-import { useDrag } from "react-dnd";
+import React, { useDrag, useDrop } from "react-dnd";
+import { useDispatch } from 'react-redux';
 import LayerStyles from './Layer.module.css';
 import { ingredientType } from '../../utils/propTypes';
 import PropTypes from "prop-types";

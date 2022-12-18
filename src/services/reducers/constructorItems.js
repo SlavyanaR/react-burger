@@ -4,7 +4,7 @@ import {
     SORT_INGREDIENTS_IN_CONSTRUCTOR,
     DELETE_INGREDIENT_FROM_CONSTRUCTOR,
     RESET_INGREDIENTS_IN_CONSTRUCTOR
-} from "../actions/constructorItems";
+} from "../action-types/constructorItemsTypes";
 
 const initialState = {
     ingredientsConstructor: [],
