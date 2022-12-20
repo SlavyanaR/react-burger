@@ -1,9 +1,7 @@
 import { CLOSE_ORDER_INFO_MODAL } from "../action-types/orderInfoDetailTypes";
 
-
-
 const orderInfoInitialState = {
-	openModal: null
+	openModal: ''
 };
 
 export const orderInfoReducer = (state = orderInfoInitialState, action) => {
@@ -11,7 +9,7 @@ export const orderInfoReducer = (state = orderInfoInitialState, action) => {
 		case CLOSE_ORDER_INFO_MODAL: {
 			return {
 				...state,
-				openModal: null,
+				openModal: '',
 			};
 		}
 		default: {

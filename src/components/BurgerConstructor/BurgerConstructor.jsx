@@ -4,10 +4,7 @@ import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Layer from "../Layer/Layer";
-import Modal from "../Modal/Modal";
-import OrderDetails from "../OrderDetails/OrderDetails";
 import { ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_BUN_IN_CONSTRUCTOR, SORT_INGREDIENTS_IN_CONSTRUCTOR, DELETE_INGREDIENT_FROM_CONSTRUCTOR } from '../../services/action-types/constructorItemsTypes'
-import { RESET_ORDER_NUMBER } from '../../services/action-types/orderTypes';
 import { postOrder } from "../../services/actions/index";
 import { v4 as uuidv4 } from 'uuid';
 import { getCookie } from "../../utils/utils";
@@ -21,7 +18,6 @@ export default function BurgerConstructor() {
     const idList = useMemo(() => {
         return ingredientsConstructor.map((item) => item._id);
     }, [ingredientsConstructor]);
-    const orderNum = useSelector((store) => store.order.number);
     const [BunElement, setBunElement] = useState(null);
     const notBunsIngredients = ingredientsConstructor.filter((prod) => prod.type !== 'bun')
     const [isSort, setIsSort] = useState(false);
@@ -98,14 +94,6 @@ export default function BurgerConstructor() {
         cookie && dispatch(postOrder(idList));
         !cookie && history.push('/login')
         setOpeningOrder(true);
-
-    }
-
-    function closePopup() {
-        setOpeningOrder(false);
-        dispatch({
-            type: RESET_ORDER_NUMBER
-        })
     }
 
     useEffect(() => {
@@ -170,7 +158,7 @@ export default function BurgerConstructor() {
                         </div>
                         {itemsMenu.length === 0 || !!orderDetailsRequest
                             ? (<Button type="primary" size="large">
-                               { orderDetailsRequest ? '...Заказ оформляется' : 'Оформить заказ' }
+                                {orderDetailsRequest ? '...Заказ оформляется' : 'Оформить заказ'}
                             </Button>)
                             : (<Button type="primary" size="large" onClick={makeOrder} disabled={!BunElement}>
                                 Оформить заказ
@@ -182,11 +170,7 @@ export default function BurgerConstructor() {
                     Начни собирать бургер
                 </p>
             }
-            {openingOrder &&
-                (<Modal title=' ' onClose={closePopup} >
-                    <OrderDetails number={orderNum} />
-                </Modal>)
-            }
+
         </section>
     )
 }

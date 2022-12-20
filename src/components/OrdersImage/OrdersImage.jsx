@@ -4,7 +4,6 @@ import propTypes from "prop-types";
 
 export const OrdersImage = ({ image, alt }) => {
 
-
 	return (
 		<div className={OrdersImageStyles.border}>
 			<div className={OrdersImageStyles.item}>

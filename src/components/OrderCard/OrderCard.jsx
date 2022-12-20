@@ -7,7 +7,6 @@ import OrderCardStyles from './OrderCard.module.css';
 import { OrdersImage } from '../OrdersImage/OrdersImage';
 
 export const OrderCard = ({ order, status }) => {
-	//const ingredients = useSelector(store => store.burgerIngredients.ingredients)
 	const items = useSelector(store => store.ingredientsApi);
 	const { createdAt, number, name } = order;
 
@@ -22,7 +21,6 @@ export const OrderCard = ({ order, status }) => {
 		})
 	}, [order?.items, items])
 
-
 	const orderTotalPrice = useMemo(() => {
 		return orderIngredientsData?.reduce((sum, item) => {
 			if (item?.type === 'bun') {
@@ -31,7 +29,6 @@ export const OrderCard = ({ order, status }) => {
 			return sum += (item ? item.price : 0);
 		}, 0);
 	}, [orderIngredientsData])
-
 
 	return (
 		<div className={OrderCardStyles.container}>

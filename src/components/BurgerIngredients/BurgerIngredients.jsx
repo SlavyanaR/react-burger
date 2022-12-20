@@ -4,14 +4,8 @@ import BurgerIngredientsStyles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Category from "../Category/Category";
 
-//import { SET_INFO_CHOSEN_INGREDIENT, DELETE_INFO_CHOSEN_INGREDIENT } from "../../services/actions/chosenIngredient";
-
 export default function BurgerIngredients() {
-   // const dispatch = useDispatch();
     const items = useSelector(store => store.ingredientsApi);
-    //const [openingDetails, setOpeningDetails] = React.useState(false);
-    //const chosenItem = useSelector(store => store.chosenIngredient);
-
     const [current, setCurrent] = React.useState('bun');
     const containerRef = useRef();
     const bunRef = useRef();
@@ -36,7 +30,7 @@ export default function BurgerIngredients() {
         else { mainRef.current.scrollIntoView({ behavior: "smooth" }) }
     }
 
-       return (
+    return (
         <section className={BurgerIngredientsStyles.ingridients}>
             <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
             <div className={BurgerIngredientsStyles.tab}>
@@ -51,9 +45,9 @@ export default function BurgerIngredients() {
                 </Tab>
             </div>
             <div className={BurgerIngredientsStyles.menu} ref={containerRef} onScroll={hightlightTab}>
-                <Category cards={items} type='bun' refer={bunRef}  headerKey='bun' />
+                <Category cards={items} type='bun' refer={bunRef} headerKey='bun' />
                 <Category cards={items} type='sauce' refer={sauceRef} headerKey='main' />
-                <Category cards={items} type='main' refer={mainRef}  headerKey='main' />
+                <Category cards={items} type='main' refer={mainRef} headerKey='main' />
             </div>
         </section>
     )

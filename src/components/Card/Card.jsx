@@ -8,7 +8,6 @@ import { ingredientType } from "../../utils/propTypes";
 import { Link, useLocation } from 'react-router-dom';
 import {openIngridientsDetail} from '../../services/actions/chosenIngredient';
 
-
 export function Card({ card }) {
     const dispatch = useDispatch();
     const location = useLocation();

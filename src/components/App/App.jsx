@@ -10,6 +10,7 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import IngredientDetail from "../IngredientDetails/IngredientDetails";
 import { closeIngridientsDetail } from '../../services/actions/chosenIngredient';
 import Modal from "../Modal/Modal";
+import OrderDetails from "../OrderDetails/OrderDetails";
 
 
 import { getApiItems } from "../../services/actions/index";
@@ -20,6 +21,8 @@ import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { closeOrderInfo } from "../../services/actions/orderInfoDetail";
 import { OrdersInfo } from "../OrderInfo/OrderInfo";
 import Appstyles from "./App.module.css";
+import { closePopup } from "../../services/actions/order";
+import { RESET_ORDER_NUMBER } from '../../services/action-types/orderTypes';
 
 function App() {
     const dispatch = useDispatch();
@@ -27,6 +30,7 @@ function App() {
     const cookie = getCookie('token');
     const location = useLocation();
     const background = location.state?.background;
+    const orderNum = useSelector((store) => store.order.number);
     const history = useHistory();
     const idOrderInfo = useRouteMatch([
         '/profile/orders/:id',
@@ -55,6 +59,15 @@ function App() {
         dispatch(closeOrderInfo());
         history.goBack();
     }, [dispatch]);
+
+    const handleCloseOrderDetail = useCallback(() =>  {
+        dispatch(closePopup());
+        dispatch({
+            type: RESET_ORDER_NUMBER
+        })
+    }, [dispatch]);
+
+
 
     return (
         <div className={Appstyles.page}>
@@ -122,6 +135,11 @@ function App() {
                     </Modal>
                 </Route>
             )
+            }
+            {!!orderNum &&
+                (<Modal title=' ' onClose={handleCloseOrderDetail} >
+                    <OrderDetails/>
+                </Modal>)
             }
         </div>
     );

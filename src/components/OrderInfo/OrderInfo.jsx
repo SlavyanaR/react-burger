@@ -2,7 +2,6 @@ import React, { useEffect, useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useRouteMatch } from 'react-router-dom';
-//import uniqid from 'uniqid';
 import { v4 as uuidv4 } from 'uuid';
 import OrderInfoStyles from './OrderInfo.module.css';
 import { OrdersInfoDetails } from '../OrderInfoDetails/OrderInfoDetails';
@@ -20,7 +19,6 @@ export const OrdersInfo = () => {
 
 	const allOrders = useSelector(store => store.wsFeed.orders);
 	const authOrders = useSelector(store => store.wsAuthFeed.orders);
-	//const ingredients = useSelector(store => store.burgerIngredients.ingredients);
 	const items = useSelector(store => store.ingredientsApi)
 
 	let orders = match.path === isProfile ? authOrders : allOrders;
