@@ -31,7 +31,7 @@ export const OrdersInfo = () => {
 				return id === item._id
 			})
 		})
-	}, [order?.items, items])
+	}, [order?.ingredients, items])
 
 	const orderTotalPrice = useMemo(() => {
 		return orderIngredientsData?.reduce((sum, item) => {
