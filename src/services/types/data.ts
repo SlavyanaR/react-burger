@@ -23,3 +23,19 @@ export type TUserResponce = {
 	refreshToken: string;
 	message: string;
 }
+
+export type TFeed = {
+	createdAt: string;
+	ingredients: string[];
+	name: string;
+	number: number;
+	status: string;
+	updatedAt: string;
+	_id: string;
+}
+export type TFeedResponce = {
+	success: boolean;
+	total: number;
+	totalToday: number;
+	orders: Array<TFeed>;
+}

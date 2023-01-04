@@ -4,15 +4,24 @@ import {
 	WS_CONNECTION_CLOSED,
 	WS_GET_ORDERS,
 } from '../action-types/wsActionTypes';
+import { TWsActions} from '../actions/wsAction';
+import { TFeed } from '../types/data';
 
-const initialState = {
+type TWsinitialState = {
+	wsConnected: boolean;
+	orders: TFeed[],
+	total: number;
+	totalToday: number;
+}
+
+const initialState: TWsinitialState = {
 	wsConnected: false,
 	orders: [],
 	total: 0,
 	totalToday: 0,
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (state = initialState, action: TWsActions): TWsinitialState => {
 	switch (action.type) {
 		case WS_CONNECTION_SUCCESS:
 			return {
