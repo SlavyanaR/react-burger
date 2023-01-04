@@ -4,3 +4,5 @@ export * from './orderInfoDetailTypes';
 export * from './orderTypes';
 export * from './wsActionTypes';
 export * from './wsAuthActionTypes';
+export * from './ingredientsApi';
+export * from './loading';

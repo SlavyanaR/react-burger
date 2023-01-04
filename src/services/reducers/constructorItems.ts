@@ -4,8 +4,16 @@ import {
     SORT_INGREDIENTS_IN_CONSTRUCTOR,
     DELETE_INGREDIENT_FROM_CONSTRUCTOR,
     RESET_INGREDIENTS_IN_CONSTRUCTOR
-} from "../action-types/constructorItemsTypes";
+} from "../action-types/index";
+import { TBurgerConstructorActions } from "../actions/constructorItems";
+import { TIngredient } from "../types/data";
 
+export type TInitialState = {
+	items: TIngredient[];
+	bun: TIngredient;
+	itemsId: string[];
+	bunRequestSuccess: boolean;
+}
 const initialState = {
     ingredientsConstructor: [],
     counter: {},
