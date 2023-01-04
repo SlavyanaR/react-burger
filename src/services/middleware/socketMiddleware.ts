@@ -1,6 +1,8 @@
 import { getCookie } from "../../utils/utils";
+import { Middleware, MiddlewareAPI } from "redux";
+import { TWsSocketMiddlewareActions } from "../types/data";
 
-export const socketMiddleware = (wsUrl, wsActions, isAuth = false) => {
+export const socketMiddleware = (wsUrl: string, wsActions: TWsSocketMiddlewareActions, isAuth = false) => {
 	return store => {
 		let socket = null;
 
