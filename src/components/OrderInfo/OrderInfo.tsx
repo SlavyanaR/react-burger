@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, FC } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useRouteMatch } from 'react-router-dom';
@@ -8,11 +8,12 @@ import { OrdersInfoDetails } from '../OrderInfoDetails/OrderInfoDetails';
 import { wsConnectionClosed, wsConnectionOpen } from '../../services/actions/wsAction';
 import { wsAuthConnectionClosed, wsAuthConnectionOpen } from '../../services/actions/wsAuthAction';
 import { formatDate } from '../../utils/utils';
+import { TIngredient } from '../../services/types/data';
 
-export const OrdersInfo = () => {
+export const OrdersInfo: FC = () => {
 	const dispatch = useDispatch();
 
-	let { id } = useParams();
+	let { id } = useParams<{id: string}>();
 	let match = useRouteMatch();
 	const isProfile = '/profile/orders/:id';
 	const isFeed = '/feed/:id';

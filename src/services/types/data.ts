@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, RefObject } from "react";
 
 export type TWsSocketMiddlewareActions = {
 	wsInit: string;
@@ -61,7 +61,7 @@ export type TIngredient = {
 	_id: string;
 	id?: string;
 	count?: number;
-}
+	}
 
 export type TIngredientResponse = {
 	data: Array<TIngredient>;
@@ -99,11 +99,20 @@ export type TLocation = {
 };
 
 export type TModal = {
-	title: string;
-	children: ReactNode;
-	onClickClose: () => void;
+	title?: string,
+    children?: JSX.Element, 
+    onClose: () => void
 }
 
 export type TModalOverlay = {
-	onClickClose: () => void;
+	onClick: () => void;
 }
+
+export type TIngredientsCategory = {
+	cards: Array<TIngredient>,
+	type: string,
+	refer: RefObject<HTMLInputElement>,
+	headerKey: string,
+	onClick: () => void;
+}
+

@@ -1,14 +1,15 @@
-import React, { useMemo } from "react";
+import React, { useMemo, FC } from "react";
 import CategoryStyles from './Category.module.css';
 import { Card } from "../Card/Card";
-import PropTypes from "prop-types";
+import { TIngredientsCategory } from "../../services/types/data";
 
-const types = {
+
+const types : {[name: string]: string}= {
     bun: 'Булки',
     sauce: 'Соусы',
     main: 'Начинки'
 }
-export default function Category({ cards, type, refer, onClick, headerKey }) {
+export const Category: FC<TIngredientsCategory> = ({ cards, type, refer, onClick, headerKey }: TIngredientsCategory) => {
     const typeArray = useMemo(() => { return cards.filter(prod => prod.type === type) }, [cards])
     return (
         <>
@@ -26,10 +27,4 @@ export default function Category({ cards, type, refer, onClick, headerKey }) {
             </div>
         </>
     )
-}
-Category.propTypes = {
-    refer: PropTypes.object.isRequired,
-    cards: PropTypes.array.isRequired,
-    type: PropTypes.string.isRequired,
-    headerKey: PropTypes.string.isRequired,
 }

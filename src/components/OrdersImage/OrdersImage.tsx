@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import OrdersImageStyles from './OrdersImage.module.css';
 import propTypes from "prop-types";
 
-export const OrdersImage = ({ image, alt }) => {
+type TStackedImage = {
+	image: string;
+	alt: string;
+}
+
+export const OrdersImage: FC<TStackedImage> = ({ image, alt }) => {
 
 	return (
 		<div className={OrdersImageStyles.border}>

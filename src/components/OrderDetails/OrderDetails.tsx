@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC }  from "react";
 import doneImage from "../../images/done.png";
 import OrderDaetailsStyle from './OrderDetails.module.css'
 import { useSelector } from 'react-redux';
 
-const  OrderDetails = () => {
-    const orderNum = useSelector((store) => store.order.number);
+const  OrderDetails: FC = () => {
+    const {orderNum}: {orderNum:string} = useSelector((store) => store.order.number);
     return (
         <>
             <p className="text text_type_digits-large pb-8">

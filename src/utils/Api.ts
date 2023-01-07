@@ -1,36 +1,44 @@
 import { getCookie } from "./utils";
+import {
+	TIngredientResponse,
+	TOrderDetailsResponse,
+	TUserLogoutResponse,
+	TUserResponce
+} from "../services/types/data";
 
 export const config = {
-    baseUrl: 'https://norma.nomoreparties.space/api',
-    headers: {
-        'Content-Type': 'application/json'
-    }
+	baseUrl: 'https://norma.nomoreparties.space/api',
+	headers: {
+		'Content-Type': 'application/json'
+	}
 }
 
 export async function getCards() {
-    return (await fetch(`${config.baseUrl}/ingredients`, {
-        headers: config.headers
-    })
-        .then(checkRes))
+	return (await fetch(`${config.baseUrl}/ingredients`, {
+		headers: config.headers
+	})
+		.then(checkRes))
 }
 
-function checkRes(res) {
-    if (res.ok) {
-        return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+
+export const checkRes <T>(res: Response): Promise<T> => {
+	if (res.ok) {
+		return res.json();
+	} else {
+		return Promise.reject(`Ошибка: ${res.status}`);
+	}
 }
 
 export async function postOrderRequest(orderList) {
-    return (await fetch(`${config.baseUrl}/orders`, {
-        headers: {
+	return (await fetch(`${config.baseUrl}/orders`, {
+		headers: {
 			'Content-Type': 'application/json',
 			Authorization: 'Bearer ' + getCookie('token')
 		},
-        method: 'POST',
-        body: JSON.stringify({ ingredients: orderList })
-    })
-        .then(checkRes))
+		method: 'POST',
+		body: JSON.stringify({ ingredients: orderList })
+	})
+		.then(checkRes))
 }
 export const forgotPassRequest = async email => {
 	return await fetch(`${config.baseUrl}/password-reset`, {
@@ -139,7 +147,7 @@ export const resgisterUserRequest = async (email, password, name) => {
 			password: password,
 			name: name,
 		}),
-        headers: config.headers,
+		headers: config.headers,
 	})
 		.then(checkRes);
 }

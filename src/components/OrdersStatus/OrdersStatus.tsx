@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import OrdersStatusStyles from './OrdersStatus.module.css';
 
-export const OrdersStatus = () => {
+export const OrdersStatus: FC = () => {
 	const { total, totalToday, orders } = useSelector(store => store.wsFeed);
 
 	const doneStatusOrder = orders.filter(order => order.status === 'done').filter((order, index) => index < 15);

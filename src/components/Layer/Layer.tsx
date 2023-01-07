@@ -1,11 +1,18 @@
-import React, { useDrag, useDrop } from "react-dnd";
+import React, { FC, DragEvent } from "react";
+import { useDrag } from "react-dnd";
 import { useDispatch } from 'react-redux';
 import LayerStyles from './Layer.module.css';
-import { ingredientType } from '../../utils/propTypes';
-import PropTypes from "prop-types";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TIngredient } from "../../services/types/data";
 
-export default function Layer({ prod, index, handleDelete, handleDrag, handleDrop }) {
+type TLayer = {
+    prod: TIngredient,
+    index: number,
+    handleDrag: (index: number) => void,
+    handleDrop: (e: DragEvent<HTMLLIElement>, index: number) => void
+}
+
+export const Layer: FC<TLayer> = ({ prod, index, handleDelete, handleDrag, handleDrop }: TLayer) => {
     const [{ opacity }, dragRef] = useDrag({
         type: 'item',
         item: prod,
@@ -20,7 +27,7 @@ export default function Layer({ prod, index, handleDelete, handleDrag, handleDro
             onDrag={() => handleDrag(index)}
             onDrop={(e) => handleDrop(e, index)}
             style={{ opacity }}>
-            <DragIcon />
+            <DragIcon type='primary' />
             <ConstructorElement
                 text={prod.name}
                 price={prod.price}
@@ -31,10 +38,3 @@ export default function Layer({ prod, index, handleDelete, handleDrag, handleDro
     )
 }
 
-Layer.propTypes = {
-    prod: ingredientType,
-    index: PropTypes.number.isRequired,
-    handleDelete: PropTypes.func.isRequired,
-    handleDrag: PropTypes.func.isRequired,
-    handleDrop: PropTypes.func.isRequired,
-}
