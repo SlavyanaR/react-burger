@@ -2,17 +2,25 @@ import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
 import { store } from '../store';
 import { rootReducer } from '../reducers';
-import { TWsSocketMiddlewareActions } from './data'; 
-import { TUser } from './data';
-import { TUserResponce } from './data';
+import { TWsActions } from '../actions/wsAction';
+import { TWsAuthActions } from '../actions/wsAuthAction';
+import { TBurgerIngredientsActions } from '../actions/ingredientsApi';
+import { TBurgerConstructorActions } from '../actions/constructorItems';
+import { TOrderDetailsActions } from '../actions/order';
+import { TIngredientModalActions } from '../actions/chosenIngredient';
+import { TOrderInfoDetailsModalActions } from '../actions/orderInfoDetail';
+import { TAuthActions } from '../actions/auth';
 
-type TApplicationActions = 
-| TUser
-| TUserResponce
-| TWsSocketMiddlewareActions;
 
-
-
+type TApplicationActions =
+	| TBurgerConstructorActions
+	| TBurgerIngredientsActions
+	| TIngredientModalActions
+	| TOrderDetailsActions
+	| TOrderInfoDetailsModalActions
+	| TWsActions
+	| TWsAuthActions
+	| TAuthActions;
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;

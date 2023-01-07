@@ -6,3 +6,4 @@ export * from './wsActionTypes';
 export * from './wsAuthActionTypes';
 export * from './ingredientsApi';
 export * from './loading';
+export * from './chosenIngredientTypes';

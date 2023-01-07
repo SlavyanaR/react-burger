@@ -9,98 +9,82 @@ import { TBurgerConstructorActions } from "../actions/constructorItems";
 import { TIngredient } from "../types/data";
 
 export type TInitialState = {
-	items: TIngredient[];
-	bun: TIngredient;
-	itemsId: string[];
-	bunRequestSuccess: boolean;
+    items: TIngredient[];
+    bun: TIngredient;
+    itemsId: string[];
+    bunRequestSuccess: boolean;
 }
-const initialState = {
-    ingredientsConstructor: [],
-    counter: {},
+const initialState: TInitialState = {
+    items: [],
+    bun: {
+        calories: 0,
+        carbohydrates: 0,
+        fat: 0,
+        image: '',
+        image_large: '',
+        image_mobile: '',
+        name: '',
+        price: 0,
+        proteins: 0,
+        type: "bun",
+        __v: 0,
+        _id: '',
+        id: '',
+        count: 0,
+    },
+    bunRequestSuccess: false,
+    itemsId: [],
 }
 
-export const constructorItemsReducer = (state = {
-    ingredientsConstructor: initialState.ingredientsConstructor,
-    counter: initialState.counter
-}, action) => {
-    function checkExistence(state, action) {
-        return state.ingredientsConstructor.some(item => item._id === action.item._id)
-    }
-    
+export const constructorItemsReducer = (
+    state = initialState,
+    action: TBurgerConstructorActions): TInitialState => {
+
     switch (action.type) {
         case ADD_INGREDIENT_TO_CONSTRUCTOR: {
             return {
                 ...state,
-                counter: checkExistence(state, action) ?
-                    {
-                        ...state.counter,
-                        [action.item._id]: state.counter[action.item._id] + 1
-                    } : {
-                        ...state.counter,
-                        [action.item._id]: 1
-                    },
-                ingredientsConstructor: state.ingredientsConstructor.concat(action.item),
-
+                items: [...state.items, action.data],
+                itemsId: [...state.itemsId, action.data._id]
             }
         }
         case ADD_BUN_IN_CONSTRUCTOR: {
-            const hasBun = state.ingredientsConstructor.some(item => item.type === 'bun');
-            const currentBun = hasBun ? state.ingredientsConstructor.find(item => item.type === 'bun') : null;
             return {
                 ...state,
-                counter:
-                    (hasBun && currentBun._id !== action.item._id) ?
-                        {
-                            ...state.counter,
-                            [action.item._id]: 2,
-                            [currentBun._id]: 0
-                        } :
-                        {
-                            ...state.counter,
-                            [action.item._id]: 2
-                        },
-                ingredientsConstructor:
-                    hasBun ?
-                        [action.item, ...state.ingredientsConstructor.slice(1)] :
-                        [action.item, ...state.ingredientsConstructor],
+                bun: action.data,
+                itemsId: [...state.itemsId, action.data._id],
+                bunRequestSuccess: true,
             }
         }
         case SORT_INGREDIENTS_IN_CONSTRUCTOR: {
-            const hasBun = state.ingredientsConstructor.some(item => item.type === 'bun');
-            const notBuns = hasBun ? state.ingredientsConstructor.filter(prod => prod.type !== 'bun') : state.ingredientsConstructor ;
-            if (action.droppedIndex > action.draggedIndex) {
-                notBuns.splice(action.droppedIndex + 1, 0, action.item);
-                notBuns.splice(action.draggedIndex, 1)
-            }
-            if (action.droppedIndex < action.draggedIndex) {
-                notBuns.splice(action.draggedIndex, 1);
-                notBuns.splice(action.droppedIndex, 0, action.item)
-            }
+            const dragConstructor = [...state.items];
+            dragConstructor.splice(
+                action.data.dragIndex,
+                0,
+                dragConstructor.splice(action.data.hoverIndex, 1)[0]
+            );
+
             return {
                 ...state,
-                ingredientsConstructor: hasBun ? state.ingredientsConstructor.slice(0, 1).concat(notBuns) : notBuns
-            }
+                items: dragConstructor
+            };
         }
         case DELETE_INGREDIENT_FROM_CONSTRUCTOR: {
-            if (state.counter[action.id] === 1) { delete state.counter[action.id] };
             return {
                 ...state,
-                ingredientsConstructor: state.ingredientsConstructor
-                    .filter(item => item.type === 'bun')
-                    .concat(action.ingredients),
-                counter: state.counter[action.id] ?
-                    {
-                        ...state.counter,
-                        [action.id]: state.counter[action.id] - 1
-                    } :
-                    state.counter
-
+                items: [...state.items].filter(
+                    (item) => {
+                        return item.id !== action.id;
+                    }
+                ),
             }
         }
         case RESET_INGREDIENTS_IN_CONSTRUCTOR: {
             return {
-                ingredientsConstructor: initialState.ingredientsConstructor,
-                counter: initialState.counter
+                ...state,
+                items: [],
+                bun: initialState.bun,
+                bunRequestSuccess: false
             }
         }
         default: {

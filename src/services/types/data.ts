@@ -24,6 +24,12 @@ export type TUserResponce = {
 	message: string;
 }
 
+export type TUserLogoutResponse = {
+	message: string;
+	success: boolean;
+	refreshToken: string;
+}
+
 export type TFeed = {
 	createdAt: string;
 	ingredients: string[];
@@ -60,4 +66,44 @@ export type TIngredient = {
 export type TIngredientResponse = {
 	data: Array<TIngredient>;
 	success: boolean;
+}
+
+export type TOrder = {
+	createdAt: string;
+	ingredients: TIngredient[];
+	name: string;
+	number: number;
+	owner: TUser;
+	price: number;
+	status: string;
+	updatedAt: string;
+	_id: string;
+}
+
+export type TOrderDetailsResponse = {
+	name: string
+	order: TOrder;
+	success: boolean;
+}
+
+export type TLocation = {
+	background: {
+		pathname: string;
+		search: string;
+		hash: string;
+		state: null;
+		key: string;
+	}
+	from: string;
+	state?: object;
+};
+
+export type TModal = {
+	title: string;
+	children: ReactNode;
+	onClickClose: () => void;
+}
+
+export type TModalOverlay = {
+	onClickClose: () => void;
 }
