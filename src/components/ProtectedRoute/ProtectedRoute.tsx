@@ -11,7 +11,7 @@ interface Props {
 
 export const ProtectedRoute: FC<Props>=({ children, ...rest }) =>{
 	const cookie = getCookie('token');
-	const location = useLocation();
+	const location = useLocation<TLocation>();
 
 	return (
 		<Route

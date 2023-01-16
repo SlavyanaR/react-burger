@@ -1,23 +1,24 @@
-import React from 'react';
+import React, {FC, ChangeEvent, FormEvent} from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { resetPassword, setResetFormValue } from '../../services/actions/auth';
 import { getCookie } from '../../utils/utils';
 import ResetPasswordStyles from './reset-password.module.css';
+import { TLocation } from '../../services/types/data';
 
-export const ResetPassword = () => {
+export const ResetPassword: FC = () => {
     const dispatch = useDispatch();
-    const location = useLocation()
+    const location = useLocation<TLocation>()
     const cookie = getCookie('token');
     const { password, code } = useSelector(state => state.auth.form);
     const { resetPassSuccess, forgetPassSuccess } = useSelector(state => state.auth);
 
-    const onChange = e => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>)  => {
         dispatch(setResetFormValue(e.target.name, e.target.value));
     }
 
-    const onFormSubmit = e => {
+    const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(resetPassword({ password, token: code }));
     }

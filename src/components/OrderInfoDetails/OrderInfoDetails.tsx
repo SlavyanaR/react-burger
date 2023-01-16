@@ -2,7 +2,6 @@ import React, { FC, useMemo } from 'react';
 import OrderInfoDetailsStyles from './OrderInfoDetails.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { v4 as uuidv4 } from 'uuid';
-import propTypes from "prop-types";
 import { useSelector } from 'react-redux';
 import { OrdersImage } from '../OrdersImage/OrdersImage';
 import { TIngredient } from '../../services/types/data';

@@ -100,7 +100,7 @@ export type TLocation = {
 
 export type TModal = {
 	title?: string,
-    children?: JSX.Element, 
+	children: ReactNode;
     onClose: () => void
 }
 

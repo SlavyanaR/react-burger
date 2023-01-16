@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, FC } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,8 +12,7 @@ import { closeIngridientsDetail } from '../../services/actions/chosenIngredient'
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
-
-import { getApiItems } from "../../services/actions/index";
+import { getApiItems } from "../../services/actions/ingredientsApi";
 import { Login, Register, ForgotPassword, ResetPassword, Profile, NotFound404, Feed } from '../../pages';
 import { getCookie } from "../../utils/utils";
 import { getUser, updateToken } from "../../services/actions/auth";
@@ -23,16 +22,23 @@ import { OrdersInfo } from "../OrderInfo/OrderInfo";
 import Appstyles from "./App.module.css";
 import { closePopup } from "../../services/actions/order";
 import { RESET_ORDER_NUMBER } from '../../services/action-types/orderTypes';
+import { TLocation } from "../../services/types/data";
 
-function App() {
+declare module 'react' {
+    interface FunctionComponent<P = {}> {
+      (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
+    }
+  }
+
+const App: FC = () => {
     const dispatch = useDispatch();
     const token = localStorage.getItem('refreshToken');
     const cookie = getCookie('token');
-    const location = useLocation();
+    const location = useLocation<TLocation>();
     const background = location.state?.background;
     const orderNum = useSelector((store) => store.order.number);
     const history = useHistory();
-    const idOrderInfo = useRouteMatch([
+    const idOrderInfo = useRouteMatch<{[id: string] : string} | null>([
         '/profile/orders/:id',
         '/feed/:id',
     ])?.params?.id;

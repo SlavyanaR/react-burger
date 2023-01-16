@@ -13,15 +13,15 @@ export const config = {
 	}
 }
 
-export async function getCards() {
+export const getCards = async () => {
 	return (await fetch(`${config.baseUrl}/ingredients`, {
 		headers: config.headers
 	})
-		.then(checkRes))
+		.then(res =>checkRes<TIngredientResponse>(res)))
 }
 
 
-export const checkRes <T>(res: Response): Promise<T> => {
+export const checkRes = <T>(res: Response): Promise<T> => {
 	if (res.ok) {
 		return res.json();
 	} else {
@@ -29,7 +29,7 @@ export const checkRes <T>(res: Response): Promise<T> => {
 	}
 }
 
-export async function postOrderRequest(orderList) {
+export const postOrderRequest = async (orderList: string[]) => {
 	return (await fetch(`${config.baseUrl}/orders`, {
 		headers: {
 			'Content-Type': 'application/json',
@@ -38,9 +38,10 @@ export async function postOrderRequest(orderList) {
 		method: 'POST',
 		body: JSON.stringify({ ingredients: orderList })
 	})
-		.then(checkRes))
+		.then(res => checkRes<TOrderDetailsResponse>(res)))
 }
-export const forgotPassRequest = async email => {
+
+export const forgotPassRequest = async (email:string) => {
 	return await fetch(`${config.baseUrl}/password-reset`, {
 		method: 'POST',
 		body: JSON.stringify(
@@ -55,7 +56,7 @@ export const forgotPassRequest = async email => {
 		redirect: 'follow',
 		referrerPolicy: 'no-referrer',
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
 export const getUserRequest = async () => {
@@ -66,10 +67,10 @@ export const getUserRequest = async () => {
 			Authorization: 'Bearer ' + getCookie('token'),
 		},
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
-export const loginRequest = async (email, password) => {
+export const loginRequest = async (email: string, password: string) => {
 	return await fetch(`${config.baseUrl}/auth/login`, {
 		method: 'POST',
 		headers: {
@@ -80,7 +81,7 @@ export const loginRequest = async (email, password) => {
 			password: password,
 		}),
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
 export const logoutRequest = async () => {
@@ -93,10 +94,10 @@ export const logoutRequest = async () => {
 			token: localStorage.getItem('refreshToken'),
 		}),
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserLogoutResponse>(res));
 }
 
-export const resetPassRequest = async (password, token) => {
+export const resetPassRequest = async (password: string, token: string | any) => {
 	return await fetch(`${config.baseUrl}/password-reset/reset`, {
 		method: 'POST',
 		body: JSON.stringify(
@@ -107,10 +108,10 @@ export const resetPassRequest = async (password, token) => {
 			'Content-Type': 'application/json',
 		},
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
-export const updateUserRequest = async (email, name, password) => {
+export const updateUserRequest = async (email: string, name: string, password: string) => {
 	return await fetch(`${config.baseUrl}/auth/user`, {
 		method: 'PATCH',
 		headers: {
@@ -123,7 +124,7 @@ export const updateUserRequest = async (email, name, password) => {
 			password: password,
 		}),
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
 export const updateTokenRequest = async () => {
@@ -136,10 +137,10 @@ export const updateTokenRequest = async () => {
 			token: localStorage.getItem('refreshToken'),
 		}),
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
-export const resgisterUserRequest = async (email, password, name) => {
+export const resgisterUserRequest = async (email: string, password: string, name: string) => {
 	return await fetch(`${config.baseUrl}/auth/register`, {
 		method: 'POST',
 		body: JSON.stringify({
@@ -149,5 +150,5 @@ export const resgisterUserRequest = async (email, password, name) => {
 		}),
 		headers: config.headers,
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }

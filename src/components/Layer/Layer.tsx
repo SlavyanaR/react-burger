@@ -12,7 +12,7 @@ type TLayer = {
     handleDrop: (e: DragEvent<HTMLLIElement>, index: number) => void
 }
 
-export const Layer: FC<TLayer> = ({ prod, index, handleDelete, handleDrag, handleDrop }: TLayer) => {
+export const Layer: FC<TLayer> = ({ prod, index, handleDrag, handleDrop }: TLayer) => {
     const [{ opacity }, dragRef] = useDrag({
         type: 'item',
         item: prod,
@@ -20,6 +20,15 @@ export const Layer: FC<TLayer> = ({ prod, index, handleDelete, handleDrag, handl
             opacity: monitor.isDragging() ? 0.5 : 1,
         })
     });
+    const dispatch = useDispatch();
+    const ingredientsConstructor = useSelector(getConstructorIngedients);
+    const notBunsIngredients = ingredientsConstructor.filter(prod => prod.type !== 'bun')
+    const handleDeleteItem = (index: number) => {
+        const id = notBunsIngredients[index]._id;
+        const item = notBunsIngredients.splice(index, 1)[0]; // изменяет notBunsIngredients
+        dispatch(deleteIngredient(notBunsIngredients, id))
+    };
+
     return (
         <li className={`${LayerStyles.layer_element} pb-4`}
             draggable
@@ -32,7 +41,7 @@ export const Layer: FC<TLayer> = ({ prod, index, handleDelete, handleDrag, handl
                 text={prod.name}
                 price={prod.price}
                 thumbnail={prod.image}
-                handleClose={(e) => handleDelete(e, index)}
+                handleClose={() => handleDelete(index)}
             />
         </li>
     )

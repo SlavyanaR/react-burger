@@ -1,6 +1,6 @@
 import React, { useMemo, FC } from "react";
 import CategoryStyles from './Category.module.css';
-import { Card } from "../Card/Card";
+import { Card}
 import { TIngredientsCategory } from "../../services/types/data";
 
 
@@ -20,7 +20,7 @@ export const Category: FC<TIngredientsCategory> = ({ cards, type, refer, onClick
                 {
                     typeArray.map(card => {
                         return (
-                            <Card card={card} key={card._id} onClick={() => onClick(card)} />
+                            <Card card={card} key={card._id} />
                         )
                     })
                 }

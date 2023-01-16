@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC, ChangeEvent, FormEvent } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, Route, Switch, useLocation, useRouteMatch } from 'react-router-dom';
@@ -7,10 +7,11 @@ import { Orders } from './orders/orders';
 import { OrdersInfo } from '../../components/OrderInfo/OrderInfo';
 import { wsAuthConnectionClosed, wsAuthConnectionOpen } from '../../services/actions/wsAuthAction';
 import ProfileStyles from './profile.module.css';
+import { TLocation } from '../../services/types/data';
 
-export const Profile = () => {
+export const Profile: FC = () => {
     const dispatch = useDispatch();
-    const location = useLocation();
+    const location = useLocation<TLocation>();
     const matchOrderDetails = !!useRouteMatch({ path: '/profile/orders/:id' });
     const background = location.state?.background;
     const { email, name } = useSelector(state => state.auth.user);
@@ -28,11 +29,11 @@ export const Profile = () => {
         email: email,
         password: '',
     });
-    const onChange = (e) => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(updateUser(form.email, form.name, form.password));
     };
@@ -41,7 +42,7 @@ export const Profile = () => {
         dispatch(singOut());
     };
 
-    const onResetForm = (e) => {
+    const onResetForm = (e:ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setForm({
             email: email,

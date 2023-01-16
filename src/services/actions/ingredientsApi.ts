@@ -3,10 +3,11 @@ import {
 	GET_API_ITEMS_SUCCESS,
 	GET_API_ITEMS_FAILED
 } from '../action-types/index';
-import {SET_LOADING_MODE,
+import {
+	SET_LOADING_MODE,
 	RESET_LOADING_MODE
 }
-from '../action-types/index'
+	from '../action-types/index'
 import { TIngredient } from "../types/data";
 import { AppDispatch, AppThunk } from '../types';
 import { getCards } from '../../utils/Api';
@@ -32,38 +33,24 @@ export type TBurgerIngredientsActions =
 	| IBurgerIngredientsFailed
 	| IBurgerIngredientsRequest
 	| IBurgerIngredientsSuccess
-	| ISetLoadingMode
-	| IResetLoadingMode;
-
+	
 export const getApiItems: AppThunk = () => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: GET_API_ITEMS_REQUEST
 		});
-		dispatch({
-			type: SET_LOADING_MODE
-		})
+
 		getCards()
 			.then((res) => {
 				dispatch({
-					type: RESET_LOADING_MODE
-				})
-				if (res && res.success) {
-					dispatch({
-						type: GET_API_ITEMS_SUCCESS,
-						items: res.data
-					});
-				} else {
-					dispatch({
-						type: GET_API_ITEMS_FAILED,
-						error: res
-					});
-				}
+					type: GET_API_ITEMS_SUCCESS,
+					items: res.data
+				});
+
 			})
-			.catch((err) => {
+			.catch(() => {
 				dispatch({
 					type: GET_API_ITEMS_FAILED,
-					error: err
 				});
 			})
 	};
