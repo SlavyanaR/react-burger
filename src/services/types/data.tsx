@@ -84,3 +84,11 @@ export type TUserResponce = {
 	message: string;
 }
 
+export type TWsSocketMiddlewareActions = {
+	wsInit: string;
+	wsSendMessage: string;
+	onOpen: string;
+	onClose: string;
+	onError: string;
+	onMessage: string;
+}
