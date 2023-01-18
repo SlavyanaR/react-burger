@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import OrdersImageStyles from './OrdersImage.module.css';
-import propTypes from "prop-types";
 
-export const OrdersImage = ({ image, alt }) => {
+type TOrdersImage = {
+	image: string;
+	alt: string;
+}
+
+export const OrdersImage: FC<TOrdersImage> = ({ image, alt }) => {
 
 	return (
 		<div className={OrdersImageStyles.border}>
@@ -13,7 +17,3 @@ export const OrdersImage = ({ image, alt }) => {
 	)
 }
 
-OrdersImage.propTypes = {
-	image: propTypes.string.isRequired,
-	alt: propTypes.string.isRequired,
-};

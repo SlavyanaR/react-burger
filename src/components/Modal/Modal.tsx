@@ -1,13 +1,15 @@
-import React from "react";
+import React, { FC, useEffect } from "react";
 import ModalStyles from './Modal.module.css';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
+import { TModal } from "../../services/types/data";
 
-export default function Modal({ title = '', children, onClose }) {
+const modalRoot = document.getElementById('modals') as HTMLElement;
+
+const Modal: FC<TModal> = ({ title = '', children, onClose }) => {
     const [isOpen, setIsOpen] = React.useState(true);
 
-    function onKey(e) {
+    function onKey(e: KeyboardEvent) {
         if (e.key === "Escape") {
             setIsOpen(false);
             onClose()
@@ -35,12 +37,8 @@ export default function Modal({ title = '', children, onClose }) {
                 </>
             </div>
         </section>),
-        document.getElementById('modals')
+        modalRoot
     )
 }
 
-Modal.propTypes = {
-    title: PropTypes.string,
-    onClose: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired
-}
+export default Modal;
