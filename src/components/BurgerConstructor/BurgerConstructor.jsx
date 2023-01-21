@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Layer from "../Layer/Layer";
 import { ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_BUN_IN_CONSTRUCTOR, SORT_INGREDIENTS_IN_CONSTRUCTOR, DELETE_INGREDIENT_FROM_CONSTRUCTOR } from '../../services/action-types/constructorItemsTypes'
-import { postOrder } from "../../services/actions/index";
+import { postOrder } from "../../services/actions/order";
 import { v4 as uuidv4 } from 'uuid';
 import { getCookie } from "../../utils/utils";
 import { useHistory } from 'react-router-dom';

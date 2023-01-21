@@ -1,4 +1,4 @@
-import { SET_LOADING_MODE, RESET_LOADING_MODE } from "../actions/loading";
+import { SET_LOADING_MODE, RESET_LOADING_MODE } from "../action-types/index";
 
 const initialState = false;
 

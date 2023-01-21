@@ -10,7 +10,7 @@ import {
 	WS_CONNECTION_SUCCESS,
 	WS_GET_ORDERS,
 	WS_SEND_ORDERS
-} from './action-types/wsActionTypes';
+} from './action-types/index';
 
 import {
 	WS_AUTH_CONNECTION_SUCCESS,
@@ -19,7 +19,7 @@ import {
 	WS_AUTH_GET_ORDERS,
 	WS_AUTH_SEND_ORDERS,
 	WS_AUTH_CONNECTION_START,
-} from './action-types/wsAuthActionTypes';
+} from './action-types/index';
 
 import { socketMiddleware } from './middleware/socketMiddleware';
 

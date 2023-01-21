@@ -2,10 +2,12 @@ import {
 	RESET_ORDER_NUMBER,
 	POST_CONSTRUCTOR_ITEMS_FAILED,
 	POST_CONSTRUCTOR_ITEMS_SUCCESS,
-	POST_CONSTRUCTOR_ITEMS_REQUEST
+	POST_CONSTRUCTOR_ITEMS_REQUEST,
+	SET_LOADING_MODE,
+	RESET_LOADING_MODE
 }
 	from '../action-types/index';
-import { SET_LOADING_MODE, RESET_LOADING_MODE } from "./loading";
+//import { SET_LOADING_MODE, RESET_LOADING_MODE } from "./loading";
 import { RESET_INGREDIENTS_IN_CONSTRUCTOR } from "../action-types/constructorItemsTypes";
 import { postOrderRequest } from '../../utils/Api';
 import { AppDispatch, AppThunk } from '../types';

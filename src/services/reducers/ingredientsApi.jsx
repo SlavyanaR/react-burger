@@ -1,4 +1,8 @@
-import { GET_API_ITEMS_REQUEST, GET_API_ITEMS_SUCCESS, GET_API_ITEMS_FAILED } from "../actions/ingredientsApi";
+import {
+    GET_API_ITEMS_REQUEST,
+    GET_API_ITEMS_SUCCESS,
+    GET_API_ITEMS_FAILED
+} from "../action-types/index";
 
 const initialState = [];
 

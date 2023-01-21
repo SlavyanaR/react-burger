@@ -13,7 +13,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 
 
-import { getApiItems } from "../../services/actions/index";
+import { getApiItems } from "../../services/actions/ingredientsApi";
 import { Login, Register, ForgotPassword, ResetPassword, Profile, NotFound404, Feed } from '../../pages';
 import { getCookie } from "../../utils/utils";
 import { getUser, updateToken } from "../../services/actions/auth";
