@@ -3,7 +3,7 @@ import {
     POST_CONSTRUCTOR_ITEMS_SUCCESS,
     POST_CONSTRUCTOR_ITEMS_FAILED,
     RESET_ORDER_NUMBER
-} from "../action-types/orderTypes";
+} from "../action-types/index";
 
 const initialState = {
     number: null,

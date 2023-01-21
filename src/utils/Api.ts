@@ -1,38 +1,39 @@
 import { getCookie } from "./utils";
+import { TCardsResponse, TPostOrderResponse, TUserLogoutResponse, TUserResponce } from "../services/types/data";
 
 export const config = {
-    baseUrl: 'https://norma.nomoreparties.space/api',
-    headers: {
-        'Content-Type': 'application/json'
-    }
+	baseUrl: 'https://norma.nomoreparties.space/api',
+	headers: {
+		'Content-Type': 'application/json'
+	}
 }
 
-export async function getCards() {
-    return (await fetch(`${config.baseUrl}/ingredients`, {
-        headers: config.headers
-    })
-        .then(checkRes))
+export const getCards = async () => {
+	return (await fetch(`${config.baseUrl}/ingredients`, {
+		headers: config.headers
+	})
+		.then(res => checkRes<TCardsResponse>(res)))
 }
 
-function checkRes(res) {
-    if (res.ok) {
-        return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+export const checkRes = <T>(res: Response): Promise<T> => {
+	if (res.ok) {
+		return res.json();
+	}
+	return Promise.reject(`Ошибка: ${res.status}`);
 }
 
-export async function postOrderRequest(orderList) {
-    return (await fetch(`${config.baseUrl}/orders`, {
-        headers: {
+export const postOrderRequest = async (orderList: string[]) => {
+	return (await fetch(`${config.baseUrl}/orders`, {
+		headers: {
 			'Content-Type': 'application/json',
 			Authorization: 'Bearer ' + getCookie('token')
 		},
-        method: 'POST',
-        body: JSON.stringify({ ingredients: orderList })
-    })
-        .then(checkRes))
+		method: 'POST',
+		body: JSON.stringify({ ingredients: orderList })
+	})
+		.then(res => checkRes<TPostOrderResponse>(res)))
 }
-export const forgotPassRequest = async email => {
+export const forgotPassRequest = async (email:string) => {
 	return await fetch(`${config.baseUrl}/password-reset`, {
 		method: 'POST',
 		body: JSON.stringify(
@@ -47,7 +48,7 @@ export const forgotPassRequest = async email => {
 		redirect: 'follow',
 		referrerPolicy: 'no-referrer',
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
 export const getUserRequest = async () => {
@@ -58,10 +59,10 @@ export const getUserRequest = async () => {
 			Authorization: 'Bearer ' + getCookie('token'),
 		},
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
-export const loginRequest = async (email, password) => {
+export const loginRequest = async (email: string, password: string) => {
 	return await fetch(`${config.baseUrl}/auth/login`, {
 		method: 'POST',
 		headers: {
@@ -72,7 +73,7 @@ export const loginRequest = async (email, password) => {
 			password: password,
 		}),
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
 export const logoutRequest = async () => {
@@ -85,10 +86,10 @@ export const logoutRequest = async () => {
 			token: localStorage.getItem('refreshToken'),
 		}),
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserLogoutResponse>(res));
 }
 
-export const resetPassRequest = async (password, token) => {
+export const resetPassRequest = async (password: string, token: string | any) => {
 	return await fetch(`${config.baseUrl}/password-reset/reset`, {
 		method: 'POST',
 		body: JSON.stringify(
@@ -99,10 +100,10 @@ export const resetPassRequest = async (password, token) => {
 			'Content-Type': 'application/json',
 		},
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
-export const updateUserRequest = async (email, name, password) => {
+export const updateUserRequest = async (email: string, name: string, password: string) => {
 	return await fetch(`${config.baseUrl}/auth/user`, {
 		method: 'PATCH',
 		headers: {
@@ -115,7 +116,7 @@ export const updateUserRequest = async (email, name, password) => {
 			password: password,
 		}),
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
 export const updateTokenRequest = async () => {
@@ -128,10 +129,10 @@ export const updateTokenRequest = async () => {
 			token: localStorage.getItem('refreshToken'),
 		}),
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }
 
-export const resgisterUserRequest = async (email, password, name) => {
+export const resgisterUserRequest = async (email: string, password: string, name: string) => {
 	return await fetch(`${config.baseUrl}/auth/register`, {
 		method: 'POST',
 		body: JSON.stringify({
@@ -139,7 +140,7 @@ export const resgisterUserRequest = async (email, password, name) => {
 			password: password,
 			name: name,
 		}),
-        headers: config.headers,
+		headers: config.headers,
 	})
-		.then(checkRes);
+		.then(res => checkRes<TUserResponce>(res));
 }

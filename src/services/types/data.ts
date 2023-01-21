@@ -39,7 +39,7 @@ export type TIngredient = {
 	count?: number;
 }
 
-export type TIngredientResponse = {
+export type TCardsResponse = {
 	data: Array<TIngredient>;
 	success: boolean;
 }
@@ -64,7 +64,7 @@ export type TOrder = {
 }
 
 
-export type TOrderDetailsResponse = {
+export type TPostOrderResponse = {
 	name: string
 	order: TOrder;
 	success: boolean;
@@ -91,4 +91,21 @@ export type TWsSocketMiddlewareActions = {
 	onClose: string;
 	onError: string;
 	onMessage: string;
+}
+
+export type TFeed = {
+	createdAt: string;
+	ingredients: string[];
+	name: string;
+	number: number;
+	status: string;
+	updatedAt: string;
+	_id: string;
+}
+
+export type TFeedResponce = {
+	success: boolean;
+	total: number;
+	totalToday: number;
+	orders: Array<TFeed>;
 }
