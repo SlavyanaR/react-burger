@@ -4,14 +4,21 @@ import {
     POST_CONSTRUCTOR_ITEMS_FAILED,
     RESET_ORDER_NUMBER
 } from "../action-types/index";
+import { TOrderDetailsActions } from "../actions/order";
 
-const initialState = {
+export type TOrderInitialState = {
+    orderDetailsFailed: boolean;
+    number: number | null;
+    orderDetailsRequest: boolean;
+}
+
+const initialState: TOrderInitialState = {
     number: null,
     orderDetailsFailed: false,
     orderDetailsRequest: false
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderDetailsActions): TOrderInitialState => {
     switch (action.type) {
         case POST_CONSTRUCTOR_ITEMS_REQUEST: {
             return {
@@ -29,7 +36,7 @@ export const orderReducer = (state = initialState, action) => {
             }
         }
         case POST_CONSTRUCTOR_ITEMS_FAILED: {
-           
+
             return {
                 ...state,
                 orderDetailsFailed: true,
@@ -38,7 +45,7 @@ export const orderReducer = (state = initialState, action) => {
         }
         case RESET_ORDER_NUMBER: {
             return {
-                ...state.order,
+                ...state,
                 number: null,
             }
         }
