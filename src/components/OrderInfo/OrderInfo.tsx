@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, FC } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useParams, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import OrderInfoStyles from './OrderInfo.module.css';
@@ -8,11 +8,12 @@ import { OrdersInfoDetails } from '../OrderInfoDetails/OrderInfoDetails';
 import { wsConnectionClosed, wsConnectionOpen } from '../../services/actions/wsAction';
 import { wsAuthConnectionClosed, wsAuthConnectionOpen } from '../../services/actions/wsAuthAction';
 import { formatDate } from '../../utils/utils';
+import { TIngredient } from '../../services/types/data';
 
-export const OrdersInfo = () => {
+export const OrdersInfo: FC = () => {
 	const dispatch = useDispatch();
 
-	let { id } = useParams();
+	let { id } = useParams<{ id: string }>();
 	let match = useRouteMatch();
 	const isProfile = '/profile/orders/:id';
 	const isFeed = '/feed/:id';
@@ -74,7 +75,7 @@ export const OrdersInfo = () => {
 							</p>}
 						<h3 className={`${OrderInfoStyles.order} text text_type_main-medium pt-15`}>Состав:</h3>
 						<ul className={`${OrderInfoStyles.list}`}>
-							<OrdersInfoDetails details={orderIngredientsData} key={id} />
+							<OrdersInfoDetails details={orderIngredientsData as TIngredient[]} key={id} />
 						</ul>
 						<div className={`${OrderInfoStyles.total} pb-10`}>
 							<p className="text text_type_main-default text_color_inactive">{formatDate(order.createdAt)}</p>
