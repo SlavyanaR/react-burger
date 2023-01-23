@@ -5,8 +5,17 @@ import {
     DELETE_INGREDIENT_FROM_CONSTRUCTOR,
     RESET_INGREDIENTS_IN_CONSTRUCTOR
 } from "../action-types/constructorItemsTypes";
+import { TBurgerConstructorActions, IAddItems} from "../actions/consrtuctorItems";
+import { TIngredient } from "../types/data";
 
-const initialState = {
+export type TBurgerConstructorState = {
+    ingredientsConstructor: Array<TIngredient>,
+    counter: {
+        [name: string]: number
+    }
+}
+
+const initialState: TBurgerConstructorState = {
     ingredientsConstructor: [],
     counter: {},
 }
@@ -14,11 +23,7 @@ const initialState = {
 export const constructorItemsReducer = (state = {
     ingredientsConstructor: initialState.ingredientsConstructor,
     counter: initialState.counter
-}, action) => {
-    function checkExistence(state, action) {
-        return state.ingredientsConstructor.some(item => item._id === action.item._id)
-    }
-    
+}, action: TBurgerConstructorActions) => {
     switch (action.type) {
         case ADD_INGREDIENT_TO_CONSTRUCTOR: {
             return {
@@ -41,7 +46,7 @@ export const constructorItemsReducer = (state = {
             return {
                 ...state,
                 counter:
-                    (hasBun && currentBun._id !== action.item._id) ?
+                    (currentBun && currentBun._id !== action.item._id) ?
                         {
                             ...state.counter,
                             [action.item._id]: 2,
@@ -59,7 +64,7 @@ export const constructorItemsReducer = (state = {
         }
         case SORT_INGREDIENTS_IN_CONSTRUCTOR: {
             const hasBun = state.ingredientsConstructor.some(item => item.type === 'bun');
-            const notBuns = hasBun ? state.ingredientsConstructor.filter(prod => prod.type !== 'bun') : state.ingredientsConstructor ;
+            const notBuns = hasBun ? state.ingredientsConstructor.filter(prod => prod.type !== 'bun') : state.ingredientsConstructor;
             if (action.droppedIndex > action.draggedIndex) {
                 notBuns.splice(action.droppedIndex + 1, 0, action.item);
                 notBuns.splice(action.draggedIndex, 1)
@@ -99,5 +104,8 @@ export const constructorItemsReducer = (state = {
             return state
         }
     }
+}
+function checkExistence(state: TBurgerConstructorState, action: IAddItems) {
+    return state.ingredientsConstructor.some(item => item._id === action.item._id)
 }
 
