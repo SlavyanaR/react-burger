@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react';
+import { useSelector } from '../../../services/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import { OrderCard } from '../../../components/OrderCard/OrderCard';
 import OrdersStyles from './orders.module.css';
 
-export const Orders = () => {
+export const Orders: FC = () => {
 	const location = useLocation();
 	const orders = useSelector(store => store.wsAuthFeed.orders)
 

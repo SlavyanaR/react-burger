@@ -13,8 +13,8 @@ export type TLocation = {
 };
 
 export type TModal = {
-	title: string;
-	children: ReactNode;
+	title?: string;
+	children?: JSX.Element;
 	onClose: () => void;
 }
 
