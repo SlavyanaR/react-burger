@@ -19,7 +19,7 @@ export const ForgotPassword: FC = () => {
 		setEmail(e.target.value);
 	}
 
-	const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const onFormSubmit = (e: FormEvent<HTMLFormElement>)  => {
 		e.preventDefault();
 		dispatch(forgotPassword({ email }));
 	}
@@ -45,16 +45,16 @@ export const ForgotPassword: FC = () => {
 					/>
 				</div>
 				{email ?
-					(<Button type="primary" size="medium">
-						{!!forgetPassSuccess
-							? (<Redirect to='/reset-password' />)
-							: ''
-						}
-						Восстановить
-					</Button>)
-					: (<Button type="primary" size="medium" disabled>
-						Восстановить
-					</Button>)}
+				(<Button type="primary" size="medium">
+					{!!forgetPassSuccess
+						? (<Redirect to='/reset-password' />)
+						: ''
+					}
+					Восстановить
+				</Button>)
+				: (<Button type="primary" size="medium" disabled>
+				Восстановить
+			</Button>)}
 			</form>
 			<p className="text text_type_main-default text_color_inactive pt-20 pb-4">Вспомнили пароль?
 				<Link className={ForgotPasswordStyles.link} to='/login'>Войти</Link>

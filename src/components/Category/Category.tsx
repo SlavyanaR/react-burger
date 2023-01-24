@@ -1,6 +1,6 @@
 import React, { useMemo, FC, RefObject } from "react";
 import CategoryStyles from './Category.module.css';
-import { Card } from "../Card/Card";
+import Card from "../Card/Card";
 
 import { TIngredient } from "../../services/types/data";
 
