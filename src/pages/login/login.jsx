@@ -1,24 +1,23 @@
-import React, { ChangeEvent, FC, FormEvent } from 'react';
-import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from '../../services/hooks';
+import React from 'react';
+import { Button, EmailInput, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { setLoginFormValue, singIn } from '../../services/actions/auth';
 import { getCookie } from '../../utils/utils';
 import LoginStyles from './login.module.css';
-import { TLocation } from '../../services/types/data';
 
-export const Login: FC = () => {
+export const Login = () => {
 	const dispatch = useDispatch();
-	const location = useLocation<TLocation>();
+	const location = useLocation();
 	const cookie = getCookie('token');
 	const { email, password } = useSelector(state => state.auth.form);
 
 
-	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const onChange = e => {
 		dispatch(setLoginFormValue(e.target.name, e.target.value));
 	}
 
-	const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const onFormSubmit = e => {
 		e.preventDefault();
 		dispatch(singIn(email, password));
 	}
@@ -38,13 +37,9 @@ export const Login: FC = () => {
 				<div className="pb-6">
 					<PasswordInput onChange={onChange} value={password} name={'password'} size="default" />
 				</div>
-				{email && password ?
-					(<Button type="primary" size="medium">
-						Войти
-					</Button>)
-					: (<Button type="primary" size="medium" disabled>
-						Войти
-					</Button>)}
+				<Button type="primary" size="medium">
+					Войти
+				</Button>
 			</form>
 			<p className="text text_type_main-default text_color_inactive pt-20 pb-4">Вы — новый пользователь?
 				<Link className={LoginStyles.link} to='/register'>Зарегистрироваться</Link>

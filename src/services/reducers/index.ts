@@ -3,7 +3,7 @@ import { initialItemsReducer } from "./ingredientsApi";
 import { constructorItemsReducer } from "./constructorItems";
 import { orderReducer } from "./order";
 import { chosenIngredientReducer } from "./chosenIngredient";
-import { loadingReducer } from "./loading";
+//import { loadingReducer } from "./loading";
 import { authReducer } from "./auth";
 import { wsAuthReducer } from "./wsAuthReducer";
 import { wsReducer } from "./wsReducer";
@@ -14,7 +14,7 @@ export const rootReducer = combineReducers({
     ingredientsApi: initialItemsReducer,
     constructorItems: constructorItemsReducer,
     chosenIngredient: chosenIngredientReducer,
-    loading: loadingReducer,
+//    loading: loadingReducer,
     auth: authReducer,
     wsFeed: wsReducer,
 	wsAuthFeed: wsAuthReducer,

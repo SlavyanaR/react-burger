@@ -1,24 +1,23 @@
-import React, { ChangeEvent, FC, FormEvent } from 'react';
+import React from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from '../../services/hooks';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { resetPassword, setResetFormValue } from '../../services/actions/auth';
 import { getCookie } from '../../utils/utils';
 import ResetPasswordStyles from './reset-password.module.css';
-import { TLocation } from '../../services/types/data';
 
-export const ResetPassword: FC = () => {
+export const ResetPassword = () => {
     const dispatch = useDispatch();
-    const location = useLocation<TLocation>()
+    const location = useLocation()
     const cookie = getCookie('token');
     const { password, code } = useSelector(state => state.auth.form);
     const { resetPassSuccess, forgetPassSuccess } = useSelector(state => state.auth);
 
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChange = e => {
         dispatch(setResetFormValue(e.target.name, e.target.value));
     }
 
-    const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onFormSubmit = e => {
         e.preventDefault();
         dispatch(resetPassword({ password, token: code }));
     }
@@ -36,6 +35,7 @@ export const ResetPassword: FC = () => {
             <form className={ResetPasswordStyles.form} onSubmit={onFormSubmit}>
                 <div className="pb-6">
                     <PasswordInput
+                        placeholder={'Введите новый пароль'}
                         onChange={onChange}
                         value={password}
                         name={'password'}
@@ -54,17 +54,13 @@ export const ResetPassword: FC = () => {
                         size={'default'}
                     />
                 </div>
-                {code && password ?
-                    (<Button type="primary" size="medium">
-                        {!!resetPassSuccess
-                            ? (<Redirect to={location.state?.from || '/profile'} />)
-                            : ''
-                        }
-                        Сохранить
-                    </Button>)
-                    : (<Button type="primary" size="medium" disabled>
-                        Сохранить
-                    </Button>)}
+                <Button type="primary" size="medium">
+                    {!!resetPassSuccess
+                        ? (<Redirect to={location.state?.from || '/profile'} />)
+                        : ''
+                    }
+                    Сохранить
+                </Button>
             </form>
             <p className="text text_type_main-default text_color_inactive pt-20 pb-4">Вспомнили пароль?
                 <Link className={ResetPasswordStyles.link} to='/login'>Войти</Link>

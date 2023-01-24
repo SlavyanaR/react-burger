@@ -3,8 +3,6 @@ import {
 	POST_CONSTRUCTOR_ITEMS_FAILED,
 	POST_CONSTRUCTOR_ITEMS_SUCCESS,
 	POST_CONSTRUCTOR_ITEMS_REQUEST,
-	SET_LOADING_MODE,
-	RESET_LOADING_MODE
 }
 	from '../action-types/index';
 //import { SET_LOADING_MODE, RESET_LOADING_MODE } from "./loading";
@@ -46,9 +44,6 @@ export const postOrder: AppThunk = (orderList: Array<string>) => {
 		dispatch({
 			type: POST_CONSTRUCTOR_ITEMS_REQUEST
 		});
-		dispatch({
-			type: SET_LOADING_MODE
-		})
 		postOrderRequest(orderList)
 			.then(res => {
 				if (res && res.success) {
@@ -65,9 +60,6 @@ export const postOrder: AppThunk = (orderList: Array<string>) => {
 						error: res
 					});
 				}
-				dispatch({
-					type: RESET_LOADING_MODE
-				})
 			})
 			.catch(err => {
 				dispatch({

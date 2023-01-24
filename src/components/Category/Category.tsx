@@ -16,7 +16,7 @@ const types: { [name: string]: string } = {
     sauce: 'Соусы',
     main: 'Начинки'
 }
-export const Category: FC<TCategory> = ({ cards, type, refer, headerKey }: TCategory) => {
+const Category: FC<TCategory> = ({ cards, type, refer, headerKey }: TCategory) => {
     const typeArray = useMemo(() => { return cards.filter(prod => prod.type === type) }, [cards])
     return (
         <>
@@ -35,3 +35,4 @@ export const Category: FC<TCategory> = ({ cards, type, refer, headerKey }: TCate
         </>
     )
 }
+export default Category;

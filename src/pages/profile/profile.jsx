@@ -1,17 +1,16 @@
-import React, { useState, useEffect, FC, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from '../../services/hooks';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, Route, Switch, useLocation, useRouteMatch } from 'react-router-dom';
 import { singOut, updateUser, getUser } from '../../services/actions/auth';
 import { Orders } from './orders/orders';
 import { OrdersInfo } from '../../components/OrderInfo/OrderInfo';
 import { wsAuthConnectionClosed, wsAuthConnectionOpen } from '../../services/actions/wsAuthAction';
 import ProfileStyles from './profile.module.css';
-import { TLocation } from '../../services/types/data';
 
-export const Profile: FC = () => {
+export const Profile = () => {
     const dispatch = useDispatch();
-    const location = useLocation<TLocation>();
+    const location = useLocation();
     const matchOrderDetails = !!useRouteMatch({ path: '/profile/orders/:id' });
     const background = location.state?.background;
     const { email, name } = useSelector(state => state.auth.user);
@@ -29,11 +28,11 @@ export const Profile: FC = () => {
         email: email,
         password: '',
     });
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
 
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         dispatch(updateUser(form.email, form.name, form.password));
     };
@@ -42,7 +41,7 @@ export const Profile: FC = () => {
         dispatch(singOut());
     };
 
-    const onResetForm = (e: ChangeEvent<HTMLInputElement>) => {
+    const onResetForm = (e) => {
         e.preventDefault();
         setForm({
             email: email,
@@ -140,7 +139,7 @@ export const Profile: FC = () => {
                                 size={'default'}
                             />
                         </div>
-                        <Button type="secondary" size="medium" onClick={() => onResetForm}>
+                        <Button type="secondary" size="medium" onClick={onResetForm}>
                             Oтмена
                         </Button>
                         <Button disabled={!form.password} type="primary" size="medium">
