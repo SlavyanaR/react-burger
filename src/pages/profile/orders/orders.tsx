@@ -17,7 +17,7 @@ export const Orders: FC = () => {
 							to={{ pathname: `/profile/orders/${order._id}`, state: { background: location } }}
 							className={`${OrdersStyles.link}`} key={order._id}
 						>
-							<OrderCard order={order} status={true} />
+							<OrderCard order={order} status={order.status} />
 						</Link>
 					)
 				}))

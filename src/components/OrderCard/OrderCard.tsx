@@ -1,12 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, FC } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { formatDate } from '../../utils/utils';
-import propTypes from "prop-types";
 import OrderCardStyles from './OrderCard.module.css';
 import { OrdersImage } from '../OrdersImage/OrdersImage';
+import { TFeed } from '../../services/types/data';
 
-export const OrderCard = ({ order, status }) => {
+type TOrdersCard = {
+	order: TFeed;
+	status: string;
+}
+
+
+export const OrderCard: FC<TOrdersCard> = ({ order, status }) => {
 	const items = useSelector(store => store.ingredientsApi);
 	const { createdAt, number, name } = order;
 
@@ -19,7 +25,7 @@ export const OrderCard = ({ order, status }) => {
 				return id === item._id
 			})
 		})
-	}, [order?.items, items])
+	}, [order?.ingredients, items])
 
 	const orderTotalPrice = useMemo(() => {
 		return orderIngredientsData?.reduce((sum, item) => {
@@ -83,8 +89,3 @@ export const OrderCard = ({ order, status }) => {
 			</div>
 		</div >)
 }
-
-OrderCard.propTypes = {
-	order: propTypes.object.isRequired,
-	status: propTypes.bool,
-};
