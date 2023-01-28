@@ -1,33 +1,34 @@
-import React, { useRef } from "react";
-import { useSelector } from "react-redux";
+import React, { useRef, FC, useState } from "react";
+import { useSelector } from "../../services/hooks";
 import BurgerIngredientsStyles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Category from "../Category/Category";
 
-export default function BurgerIngredients() {
+const BurgerIngredients: FC = () => {
     const items = useSelector(store => store.ingredientsApi);
-    const [current, setCurrent] = React.useState('bun');
-    const containerRef = useRef();
-    const bunRef = useRef();
-    const mainRef = useRef();
-    const sauceRef = useRef();
+    const [current, setCurrent] = useState<string | undefined>('bun');
+    const containerRef = useRef<HTMLInputElement>(null);
+    const bunRef = useRef<HTMLInputElement>(null);
+    const mainRef = useRef<HTMLInputElement>(null);
+    const sauceRef = useRef<HTMLInputElement>(null);
 
 
     const hightlightTab = () => {
         const refs = [bunRef, mainRef, sauceRef];
-        const positions = refs.map(item => {
-            return Math.abs(item.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top)
+        const positions: Array<number> = refs.map(item => {
+            return Math.abs(item.current!.getBoundingClientRect().top - containerRef.current!.getBoundingClientRect().top)
         })
         const currentTabRef = refs[positions.indexOf(Math.min.apply(null, positions))];
-        const currentSection = currentTabRef.current.dataset.type;
+        const currentSection = currentTabRef.current!.dataset.type;
         setCurrent(currentSection)
     }
 
-    const handlerScroll = (value) => {
+    const handlerScroll = (value:string) => {
         setCurrent(value);
-        if (value === 'bun') { bunRef.current.scrollIntoView({ behavior: "smooth" }) }
-        else if (value === 'sauce') { sauceRef.current.scrollIntoView({ behavior: "smooth" }) }
-        else { mainRef.current.scrollIntoView({ behavior: "smooth" }) }
+        const section: HTMLElement | null = document.getElementById(value);
+		if (section) {
+			section.scrollIntoView({ behavior: "smooth", block: "start" });
+		}
     }
 
     return (
@@ -52,3 +53,5 @@ export default function BurgerIngredients() {
         </section>
     )
 }
+
+export default BurgerIngredients;
