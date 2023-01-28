@@ -1,7 +1,7 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, FC } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { Switch, Route, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 
 import AppHeader from '../AppHeader/AppHeader';
@@ -23,16 +23,19 @@ import { OrdersInfo } from "../OrderInfo/OrderInfo";
 import Appstyles from "./App.module.css";
 import { closePopup } from "../../services/actions/order";
 import { RESET_ORDER_NUMBER } from '../../services/action-types/orderTypes';
+import { TLocation } from "../../services/types/data";
 
-function App() {
+
+
+const App: FC = () => {
     const dispatch = useDispatch();
     const token = localStorage.getItem('refreshToken');
     const cookie = getCookie('token');
-    const location = useLocation();
+    const location = useLocation<TLocation>();
     const background = location.state?.background;
     const orderNum = useSelector((store) => store.order.number);
     const history = useHistory();
-    const idOrderInfo = useRouteMatch([
+    const idOrderInfo = useRouteMatch<{[id: string] : string} | null>([
         '/profile/orders/:id',
         '/feed/:id',
     ])?.params?.id;
@@ -60,7 +63,7 @@ function App() {
         history.goBack();
     }, [dispatch]);
 
-    const handleCloseOrderDetail = useCallback(() =>  {
+    const handleCloseOrderDetail = useCallback(() => {
         dispatch(closePopup());
         dispatch({
             type: RESET_ORDER_NUMBER
@@ -138,7 +141,7 @@ function App() {
             }
             {!!orderNum &&
                 (<Modal title=' ' onClose={handleCloseOrderDetail} >
-                    <OrderDetails/>
+                    <OrderDetails />
                 </Modal>)
             }
         </div>
