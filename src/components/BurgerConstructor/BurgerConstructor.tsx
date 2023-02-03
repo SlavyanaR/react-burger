@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState, FC, DragEvent } from "react";
+import React, { useEffect, useMemo, useState, DragEvent, FC } from "react";
+
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "../../services/hooks";
@@ -13,7 +14,8 @@ import { TLocation } from "../../services/types/data";
 import { TIngredient } from "../../services/types/data";
 
 
-const BurgerConstructor: FC = () => {
+const  BurgerConstructor: FC =()=> {
+
     const dispatch = useDispatch();
     const itemsMenu = useSelector((store) => store.ingredientsApi);
     const ingredientsConstructor = useSelector((store) => store.constructorItems.ingredientsConstructor);
@@ -30,31 +32,40 @@ const BurgerConstructor: FC = () => {
     const history = useHistory<TLocation>();
     const { orderDetailsRequest } = useSelector((state) => state.order);
 
-    const handleDrag = (draggedTargetIndex: number) => {
+
+    const handleDrag = (draggedTargetIndex:number) => {
+
         setIsSort(true);
         setDraggedIndex(draggedTargetIndex)
     };
 
-    const handleDrop = (e: DragEvent<HTMLLIElement>, droppedTargetIndex: number) => {
+
+    const handleDrop = (e:DragEvent<HTMLLIElement>, droppedTargetIndex:number) => {
         e.preventDefault();
         setDroppedIndex(droppedTargetIndex)
     };
 
     const [, targetDrop] = useDrop({
         accept: 'item',
-        drop(item: TIngredient) {
+
+        drop(item:TIngredient) {
+
             if (isSort) sortIngredientsInConstructor(item, droppedIndex!, draggedIndex!)
             else {
                 const key = uuidv4();
                 item.type === 'bun' ?
-                    dispatch(changeBunInConstructor(item)) :
-                    dispatch(addIngredientToConstructor({ ...item, key: key }))
+
+                dispatch(changeBunInConstructor(item)) :
+                dispatch(addIngredientToConstructor({ ...item, key: key }))
+
             };
 
         }
     })
 
-    const addIngredientToConstructor = (prod: TIngredient) => {
+
+    const addIngredientToConstructor = (prod:TIngredient) => {
+
         dispatch({
             type: ADD_INGREDIENT_TO_CONSTRUCTOR,
             item: {
@@ -64,14 +75,18 @@ const BurgerConstructor: FC = () => {
         });
     }
 
-    const changeBunInConstructor = (bun: TIngredient) => {
+
+    const changeBunInConstructor = (bun:TIngredient) => {
+
         dispatch({
             type: ADD_BUN_IN_CONSTRUCTOR,
             item: bun,
         })
     }
 
-    const sortIngredientsInConstructor = (item: TIngredient, droppedIndex: number, draggedIndex: number) => {
+
+    const sortIngredientsInConstructor = (item:TIngredient, droppedIndex:number, draggedIndex:number) => {
+
         dispatch({
             type: SORT_INGREDIENTS_IN_CONSTRUCTOR,
             draggedIndex: draggedIndex,
@@ -83,7 +98,9 @@ const BurgerConstructor: FC = () => {
         setDroppedIndex(null);
     };
 
-    const handleDeleteItem = (e: DragEvent<HTMLLIElement>, index: number) => {
+
+    const handleDeleteItem = (index:number) => {
+
         const id = notBunsIngredients[index]._id;
         const item = notBunsIngredients.splice(index, 1)[0];
         dispatch({
@@ -93,7 +110,9 @@ const BurgerConstructor: FC = () => {
         })
     };
 
-    const makeOrder = () => {
+
+    const makeOrder = (idList:string[]) => {
+
         cookie && dispatch(postOrder(idList));
         !cookie && history.push('/login')
         setOpeningOrder(true);
@@ -163,7 +182,9 @@ const BurgerConstructor: FC = () => {
                             ? (<Button type="primary" size="large">
                                 {orderDetailsRequest ? '...Заказ оформляется' : 'Оформить заказ'}
                             </Button>)
-                            : (<Button type="primary" size="large" onClick={makeOrder} disabled={!BunElement}>
+
+                            : (<Button type="primary" size="large" onClick={() => { makeOrder(idList) }} disabled={!BunElement}>
+
                                 Оформить заказ
                             </Button>)}
                     </div>
