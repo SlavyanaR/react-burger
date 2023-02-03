@@ -1,9 +1,12 @@
 .constructor {
-    width: 600px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	max-width: 600px;
+	width: 100%;
+	margin: 0;
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: column;
+	align-content: flex-end;
+	align-items: stretch;
 }
 
 .constructor_element {

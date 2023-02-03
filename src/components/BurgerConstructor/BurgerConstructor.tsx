@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState, DragEvent, FC } from "react";
+
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "../../services/hooks";
@@ -14,6 +15,7 @@ import { TIngredient } from "../../services/types/data";
 
 
 const  BurgerConstructor: FC =()=> {
+
     const dispatch = useDispatch();
     const itemsMenu = useSelector((store) => store.ingredientsApi);
     const ingredientsConstructor = useSelector((store) => store.constructorItems.ingredientsConstructor);
@@ -30,10 +32,13 @@ const  BurgerConstructor: FC =()=> {
     const history = useHistory<TLocation>();
     const { orderDetailsRequest } = useSelector((state) => state.order);
 
+
     const handleDrag = (draggedTargetIndex:number) => {
+
         setIsSort(true);
         setDraggedIndex(draggedTargetIndex)
     };
+
 
     const handleDrop = (e:DragEvent<HTMLLIElement>, droppedTargetIndex:number) => {
         e.preventDefault();
@@ -42,19 +47,25 @@ const  BurgerConstructor: FC =()=> {
 
     const [, targetDrop] = useDrop({
         accept: 'item',
+
         drop(item:TIngredient) {
+
             if (isSort) sortIngredientsInConstructor(item, droppedIndex!, draggedIndex!)
             else {
                 const key = uuidv4();
                 item.type === 'bun' ?
+
                 dispatch(changeBunInConstructor(item)) :
                 dispatch(addIngredientToConstructor({ ...item, key: key }))
+
             };
 
         }
     })
 
+
     const addIngredientToConstructor = (prod:TIngredient) => {
+
         dispatch({
             type: ADD_INGREDIENT_TO_CONSTRUCTOR,
             item: {
@@ -64,14 +75,18 @@ const  BurgerConstructor: FC =()=> {
         });
     }
 
+
     const changeBunInConstructor = (bun:TIngredient) => {
+
         dispatch({
             type: ADD_BUN_IN_CONSTRUCTOR,
             item: bun,
         })
     }
 
+
     const sortIngredientsInConstructor = (item:TIngredient, droppedIndex:number, draggedIndex:number) => {
+
         dispatch({
             type: SORT_INGREDIENTS_IN_CONSTRUCTOR,
             draggedIndex: draggedIndex,
@@ -83,7 +98,9 @@ const  BurgerConstructor: FC =()=> {
         setDroppedIndex(null);
     };
 
+
     const handleDeleteItem = (index:number) => {
+
         const id = notBunsIngredients[index]._id;
         const item = notBunsIngredients.splice(index, 1)[0];
         dispatch({
@@ -93,7 +110,9 @@ const  BurgerConstructor: FC =()=> {
         })
     };
 
+
     const makeOrder = (idList:string[]) => {
+
         cookie && dispatch(postOrder(idList));
         !cookie && history.push('/login')
         setOpeningOrder(true);
@@ -163,7 +182,9 @@ const  BurgerConstructor: FC =()=> {
                             ? (<Button type="primary" size="large">
                                 {orderDetailsRequest ? '...Заказ оформляется' : 'Оформить заказ'}
                             </Button>)
+
                             : (<Button type="primary" size="large" onClick={() => { makeOrder(idList) }} disabled={!BunElement}>
+
                                 Оформить заказ
                             </Button>)}
                     </div>
@@ -175,6 +196,7 @@ const  BurgerConstructor: FC =()=> {
             }
 
         </section>
+
     )
 }
 export default BurgerConstructor
