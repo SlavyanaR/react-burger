@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, DragEvent, FC } from "react";
 import BurgerConstructorStyles from './BurgerConstructor.module.css';
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Layer from "../Layer/Layer";
 import { ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_BUN_IN_CONSTRUCTOR, SORT_INGREDIENTS_IN_CONSTRUCTOR, DELETE_INGREDIENT_FROM_CONSTRUCTOR } from '../../services/action-types/constructorItemsTypes'
@@ -9,49 +9,52 @@ import { postOrder } from "../../services/actions/order";
 import { v4 as uuidv4 } from 'uuid';
 import { getCookie } from "../../utils/utils";
 import { useHistory } from 'react-router-dom';
+import { TLocation } from "../../services/types/data";
+import { TIngredient } from "../../services/types/data";
 
 
-export default function BurgerConstructor() {
+const  BurgerConstructor: FC =()=> {
     const dispatch = useDispatch();
     const itemsMenu = useSelector((store) => store.ingredientsApi);
     const ingredientsConstructor = useSelector((store) => store.constructorItems.ingredientsConstructor);
     const idList = useMemo(() => {
         return ingredientsConstructor.map((item) => item._id);
     }, [ingredientsConstructor]);
-    const [BunElement, setBunElement] = useState(null);
+    const [BunElement, setBunElement] = useState<TIngredient | null>(null);
     const notBunsIngredients = ingredientsConstructor.filter((prod) => prod.type !== 'bun')
     const [isSort, setIsSort] = useState(false);
-    const [droppedIndex, setDroppedIndex] = useState(null);
-    const [draggedIndex, setDraggedIndex] = useState(null);
+    const [droppedIndex, setDroppedIndex] = useState<number | null>(null);
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
     const [openingOrder, setOpeningOrder] = React.useState(false);
     const cookie = getCookie('token');
-    const history = useHistory();
+    const history = useHistory<TLocation>();
     const { orderDetailsRequest } = useSelector((state) => state.order);
 
-    const handleDrag = (draggedTargetIndex) => {
+    const handleDrag = (draggedTargetIndex:number) => {
         setIsSort(true);
         setDraggedIndex(draggedTargetIndex)
     };
 
-    const handleDrop = (e, droppedTargetIndex) => {
+    const handleDrop = (e:DragEvent<HTMLLIElement>, droppedTargetIndex:number) => {
         e.preventDefault();
         setDroppedIndex(droppedTargetIndex)
     };
 
     const [, targetDrop] = useDrop({
         accept: 'item',
-        drop(item) {
-            if (isSort) sortIngredientsInConstructor(item, droppedIndex, draggedIndex)
+        drop(item:TIngredient) {
+            if (isSort) sortIngredientsInConstructor(item, droppedIndex!, draggedIndex!)
             else {
+                const key = uuidv4();
                 item.type === 'bun' ?
-                    changeBunInConstructor(item) :
-                    addIngredientToConstructor(item)
+                dispatch(changeBunInConstructor(item)) :
+                dispatch(addIngredientToConstructor({ ...item, key: key }))
             };
 
         }
     })
 
-    const addIngredientToConstructor = (prod) => {
+    const addIngredientToConstructor = (prod:TIngredient) => {
         dispatch({
             type: ADD_INGREDIENT_TO_CONSTRUCTOR,
             item: {
@@ -61,14 +64,14 @@ export default function BurgerConstructor() {
         });
     }
 
-    const changeBunInConstructor = (bun) => {
+    const changeBunInConstructor = (bun:TIngredient) => {
         dispatch({
             type: ADD_BUN_IN_CONSTRUCTOR,
             item: bun,
         })
     }
 
-    const sortIngredientsInConstructor = (item, droppedIndex, draggedIndex) => {
+    const sortIngredientsInConstructor = (item:TIngredient, droppedIndex:number, draggedIndex:number) => {
         dispatch({
             type: SORT_INGREDIENTS_IN_CONSTRUCTOR,
             draggedIndex: draggedIndex,
@@ -80,7 +83,7 @@ export default function BurgerConstructor() {
         setDroppedIndex(null);
     };
 
-    const handleDeleteItem = (e, index) => {
+    const handleDeleteItem = (index:number) => {
         const id = notBunsIngredients[index]._id;
         const item = notBunsIngredients.splice(index, 1)[0];
         dispatch({
@@ -90,7 +93,7 @@ export default function BurgerConstructor() {
         })
     };
 
-    const makeOrder = () => {
+    const makeOrder = (idList:string[]) => {
         cookie && dispatch(postOrder(idList));
         !cookie && history.push('/login')
         setOpeningOrder(true);
@@ -130,8 +133,8 @@ export default function BurgerConstructor() {
                                         <Layer
                                             prod={item}
                                             index={index}
-                                            key={item.uuid}
-                                            handleDelete={handleDeleteItem}
+                                            key={item.key}
+                                            //handleDelete={handleDeleteItem}
                                             handleDrag={handleDrag}
                                             handleDrop={handleDrop}
                                         />
@@ -160,7 +163,7 @@ export default function BurgerConstructor() {
                             ? (<Button type="primary" size="large">
                                 {orderDetailsRequest ? '...Заказ оформляется' : 'Оформить заказ'}
                             </Button>)
-                            : (<Button type="primary" size="large" onClick={makeOrder} disabled={!BunElement}>
+                            : (<Button type="primary" size="large" onClick={() => { makeOrder(idList) }} disabled={!BunElement}>
                                 Оформить заказ
                             </Button>)}
                     </div>
@@ -174,3 +177,4 @@ export default function BurgerConstructor() {
         </section>
     )
 }
+export default BurgerConstructor
