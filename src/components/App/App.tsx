@@ -22,7 +22,7 @@ import { closeOrderInfo } from "../../services/actions/orderInfoDetail";
 import { OrdersInfo } from "../OrderInfo/OrderInfo";
 import Appstyles from "./App.module.css";
 import { closePopup } from "../../services/actions/order";
-import {RESET_INGREDIENTS_IN_CONSTRUCTOR } from '../../services/action-types/index';
+import { RESET_ORDER_NUMBER } from '../../services/action-types/orderTypes';
 import { TLocation } from "../../services/types/data";
 
 declare module 'react' {
@@ -70,7 +70,7 @@ const App: FC = () => {
     const handleCloseOrderDetail = useCallback(() => {
         dispatch(closePopup());
         dispatch({
-            type: RESET_INGREDIENTS_IN_CONSTRUCTOR
+            type: RESET_ORDER_NUMBER
         })
     }, [dispatch]);
 

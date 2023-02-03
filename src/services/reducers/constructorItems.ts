@@ -5,85 +5,107 @@ import {
     DELETE_INGREDIENT_FROM_CONSTRUCTOR,
     RESET_INGREDIENTS_IN_CONSTRUCTOR
 } from "../action-types/constructorItemsTypes";
-import { TBurgerConstructorActions, IAddItems } from "../actions/consrtuctorItems";
+import { TBurgerConstructorActions, IAddItems} from "../actions/consrtuctorItems";
 import { TIngredient } from "../types/data";
 
-export type TInitialState = {
-    items: TIngredient[];
-    bun: TIngredient;
-    idList: string[];
-    bunRequestSuccess: boolean;
+export type TBurgerConstructorState = {
+    ingredientsConstructor: Array<TIngredient>,
+    counter: {
+        [name: string]: number
+    }
 }
 
-const initialState: TInitialState = {
-    items: [],
-    bun: {
-        calories: 0,
-        carbohydrates: 0,
-        fat: 0,
-        image: '',
-        image_large: '',
-        image_mobile: '',
-        name: '',
-        price: 0,
-        proteins: 0,
-        type: "bun",
-        __v: 0,
-        _id: '',
-        id: '',
-        count: 0,
-    },
-    bunRequestSuccess: false,
-    idList: [],
+const initialState: TBurgerConstructorState = {
+    ingredientsConstructor: [],
+    counter: {},
 }
 
-export const constructorItemsReducer = (
-    state = initialState,
-    action: TBurgerConstructorActions):
-    TInitialState => {
+export const constructorItemsReducer = (state = {
+    ingredientsConstructor: initialState.ingredientsConstructor,
+    counter: initialState.counter
+}, action: TBurgerConstructorActions) => {
     switch (action.type) {
-        case DELETE_INGREDIENT_FROM_CONSTRUCTOR: {
-            return {
-				...state,
-				items: [...state.items].filter(
-					(item) => {
-						return item.id !== action.id;
-					}
-				),
-			};
-        }
-
         case ADD_INGREDIENT_TO_CONSTRUCTOR: {
             return {
-				...state,
-				items: [...state.items, action.data],
-				idList: [...state.idList, action.data._id]
-			};
+                ...state,
+                counter: checkExistence(state, action) ?
+                    {
+                        ...state.counter,
+                        [action.item._id]: state.counter[action.item._id] + 1
+                    } : {
+                        ...state.counter,
+                        [action.item._id]: 1
+                    },
+                ingredientsConstructor: state.ingredientsConstructor.concat(action.item),
+
+            }
         }
         case ADD_BUN_IN_CONSTRUCTOR: {
+            const hasBun = state.ingredientsConstructor.some(item => item.type === 'bun');
+            const currentBun = hasBun ? state.ingredientsConstructor.find(item => item.type === 'bun') : null;
             return {
-				...state,
-				bun: action.data,
-				idList: [...state.idList, action.data._id],
-				bunRequestSuccess: true,
-			};
+                ...state,
+                counter:
+                    (currentBun && currentBun._id !== action.item._id) ?
+                        {
+                            ...state.counter,
+                            [action.item._id]: 2,
+                            [currentBun._id]: 0
+                        } :
+                        {
+                            ...state.counter,
+                            [action.item._id]: 2
+                        },
+                ingredientsConstructor:
+                    hasBun ?
+                        [action.item, ...state.ingredientsConstructor.slice(1)] :
+                        [action.item, ...state.ingredientsConstructor],
+            }
         }
         case SORT_INGREDIENTS_IN_CONSTRUCTOR: {
-            const dragConstructor = [...state.items];
-			dragConstructor.splice(
-				action.data.dragIndex,
-				0,
-				dragConstructor.splice(action.data.hoverIndex, 1)[0]
-			);
-
-			return {
-				...state,
-				items: dragConstructor
-			};
+            const hasBun = state.ingredientsConstructor.some(item => item.type === 'bun');
+            const notBuns = hasBun ? state.ingredientsConstructor.filter(prod => prod.type !== 'bun') : state.ingredientsConstructor;
+            if (action.droppedIndex > action.draggedIndex) {
+                notBuns.splice(action.droppedIndex + 1, 0, action.item);
+                notBuns.splice(action.draggedIndex, 1)
+            }
+            if (action.droppedIndex < action.draggedIndex) {
+                notBuns.splice(action.draggedIndex, 1);
+                notBuns.splice(action.droppedIndex, 0, action.item)
+            }
+            return {
+                ...state,
+                ingredientsConstructor: hasBun ? state.ingredientsConstructor.slice(0, 1).concat(notBuns) : notBuns
+            }
         }
+        case DELETE_INGREDIENT_FROM_CONSTRUCTOR: {
+            if (state.counter[action.id] === 1) { delete state.counter[action.id] };
+            return {
+                ...state,
+                ingredientsConstructor: state.ingredientsConstructor
+                    .filter(item => item.type === 'bun')
+                    .concat(action.ingredients),
+                counter: state.counter[action.id] ?
+                    {
+                        ...state.counter,
+                        [action.id]: state.counter[action.id] - 1
+                    } :
+                    state.counter
 
-                default: {
+            }
+        }
+        case RESET_INGREDIENTS_IN_CONSTRUCTOR: {
+            return {
+                ingredientsConstructor: initialState.ingredientsConstructor,
+                counter: initialState.counter
+            }
+        }
+        default: {
             return state
         }
     }
 }
+function checkExistence(state: TBurgerConstructorState, action: IAddItems) {
+    return state.ingredientsConstructor.some(item => item._id === action.item._id)
+}
+
