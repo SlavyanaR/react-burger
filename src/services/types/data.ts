@@ -37,6 +37,7 @@ export type TIngredient = {
 	_id: string;
 	id?: string;
 	count?: number;
+	key?: string;
 }
 
 export type TCardsResponse = {
