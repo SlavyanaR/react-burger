@@ -33,9 +33,17 @@ export type TOrderDetailsActions =
 	| IPostConstructorItemRequest
 	| IPostConstructorItemSuccess;
 
-export function closePopup() {
+export interface IIngredientCloseModal {
+	readonly type: typeof RESET_INGREDIENTS_IN_CONSTRUCTOR;
+}
+
+export type TIngredientModalActions =
+	| IIngredientCloseModal;
+
+
+export const closePopup = (): TIngredientModalActions => {
 	return {
-		type: RESET_ORDER_NUMBER,
+		type: RESET_INGREDIENTS_IN_CONSTRUCTOR,
 	};
 }
 
@@ -51,9 +59,7 @@ export const postOrder: AppThunk = (orderList: Array<string>) => {
 						type: POST_CONSTRUCTOR_ITEMS_SUCCESS,
 						number: res.order.number
 					})
-					dispatch({
-						type: RESET_INGREDIENTS_IN_CONSTRUCTOR
-					});
+					
 				} else {
 					dispatch({
 						type: POST_CONSTRUCTOR_ITEMS_FAILED,

@@ -10,7 +10,7 @@ import { AppDispatch, AppThunk } from "../types";
 
 export interface IApiItemsFailed {
     readonly type: typeof GET_API_ITEMS_FAILED;
-}
+    }
 
 export interface IApiItemsRequest {
     readonly type: typeof GET_API_ITEMS_REQUEST;
@@ -39,7 +39,7 @@ export const getApiItems: AppThunk = () => {
                     items: res.data
                 });
             })
-            .catch(err => {
+            .catch(() => {
                 dispatch({
                     type: GET_API_ITEMS_FAILED,
                 });

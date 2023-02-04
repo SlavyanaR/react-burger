@@ -9,11 +9,13 @@ import { TOrderDetailsActions } from '../actions/order';
 import { TOrderInfoDetailsModalActions } from '../actions/orderInfoDetail';
 import { TWsActions } from '../actions/wsAction';
 import { TWsAuthActions } from '../actions/wsAuthAction';
+import { TIngredientModalActions } from '../actions/order';
 
 type TApplicationActions =
 	| TBurgerIngredientsActions
 	| TBurgerConstructorActions
 	| TOrderDetailsActions
+	| TIngredientModalActions
 	| TOrderInfoDetailsModalActions
 	| TAuthActions
 	| TWsActions

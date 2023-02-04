@@ -3,10 +3,13 @@ import {
     GET_API_ITEMS_SUCCESS,
     GET_API_ITEMS_FAILED
 } from "../action-types/index";
+import { TIngredient } from "../types/data";
+import { TBurgerIngredientsActions } from "../actions/ingredientsApi";
 
-const initialState = [];
+export type TIngredientsState = Array<TIngredient>;
+const initialState: TIngredientsState = [];
 
-export const initialItemsReducer = (state = initialState, action) => {
+export const initialItemsReducer = (state = initialState, action: TBurgerIngredientsActions) => {
     switch (action.type) {
         case GET_API_ITEMS_REQUEST: {
             return state
@@ -17,7 +20,6 @@ export const initialItemsReducer = (state = initialState, action) => {
             ]
         }
         case GET_API_ITEMS_FAILED: {
-            console.error(action.error);
             return state
         }
         default: {
